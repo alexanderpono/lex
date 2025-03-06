@@ -14,6 +14,7 @@ interface AppConfig {
     spaces: string[];
     limiters: string[];
     maxCalcStep: number;
+    inputString: string;
 }
 
 const defaultAppConfig: AppConfig = {
@@ -23,7 +24,8 @@ const defaultAppConfig: AppConfig = {
     showSimControls: false,
     spaces: [],
     limiters: [],
-    maxCalcStep: 0
+    maxCalcStep: 0,
+    inputString: ''
 };
 
 class LexRunner {
@@ -40,6 +42,7 @@ class LexRunner {
                 .setShowSimControls(config.showSimControls)
                 .setSpaces(config.spaces)
                 .setLimiters(config.limiters)
+                .setInputString(config.inputString)
                 .setMaxCalcStep(config.maxCalcStep),
             stateManager
         );
@@ -61,7 +64,8 @@ if (window['demo'] === true) {
         simControlsTarget: 'controls',
         showSimControls: true,
         maxCalcStep: 1,
-        spaces: [' '],
-        limiters: [';', '(', ')', '{', '}']
+        spaces: [' ', '\n'],
+        limiters: [';', '='],
+        inputString: 'let a = 1;'
     });
 }

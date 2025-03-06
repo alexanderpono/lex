@@ -13,7 +13,9 @@ export class AppController {
         this.stateManager.setStepNo(this.builder.maxCalcStep);
         this.stateManager.setLimiters(this.builder.limiters);
         this.stateManager.setSpaces(this.builder.spaces);
+        this.stateManager.setInputString(this.builder.inputString);
         this.compile();
+        // this.runToStep(this.builder.maxCalcStep);
         if (this.builder.showSimControls) {
             this.renderControls();
         }
@@ -49,7 +51,15 @@ export class AppController {
             console.error('target not found:', this.builder.target);
             return;
         }
-        render(<LexView />, target);
+        render(
+            <LexView
+                inputString={this.stateManager.getInputString()}
+                limiters={this.stateManager.getLimiters()}
+                spaces={this.stateManager.getSpaces()}
+                ids={this.stateManager.getIds()}
+            />,
+            target
+        );
         return this;
     };
 

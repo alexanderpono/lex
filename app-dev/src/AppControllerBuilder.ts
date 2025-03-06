@@ -8,6 +8,7 @@ export class AppControllerBuilder {
     maxCalcStep: number = 0;
     spaces: string[] = [];
     limiters: string[] = [];
+    inputString: string = '';
 
     setTarget = (target: string) => {
         this.target = target;
@@ -35,6 +36,10 @@ export class AppControllerBuilder {
     };
     setLimiters = (limiters: string[]) => {
         this.limiters = limiters;
+        return this;
+    };
+    setInputString = (inputString: string) => {
+        this.inputString = inputString;
         return this;
     };
 }

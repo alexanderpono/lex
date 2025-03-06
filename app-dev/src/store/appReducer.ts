@@ -12,6 +12,7 @@ export interface AppState {
     limiters: string[];
     ids: string[];
     compiled: CompiledLine[];
+    inputString: string;
 }
 
 export const defaultSimState: AppState = {
@@ -20,7 +21,8 @@ export const defaultSimState: AppState = {
     spaces: [],
     limiters: [],
     ids: [],
-    compiled: []
+    compiled: [],
+    inputString: ''
 };
 
 export interface SetAppStateAction {
@@ -31,6 +33,7 @@ export interface SetAppStateAction {
         limiters: string[];
         ids: string[];
         compiled: CompiledLine[];
+        inputString: string;
     };
 }
 
@@ -41,6 +44,7 @@ export const app = {
         limiters: string[];
         ids: string[];
         compiled: CompiledLine[];
+        inputString: string;
     }): SetAppStateAction => ({
         type: AppActions.APP_STATE,
         payload: state
@@ -61,7 +65,8 @@ export function appReducer(state: AppState = defaultSimState, action: Action): A
                 spaces: (action as SetAppStateAction).payload.spaces,
                 limiters: (action as SetAppStateAction).payload.limiters,
                 ids: (action as SetAppStateAction).payload.ids,
-                compiled: (action as SetAppStateAction).payload.compiled
+                compiled: (action as SetAppStateAction).payload.compiled,
+                inputString: (action as SetAppStateAction).payload.inputString
             };
         }
     }
