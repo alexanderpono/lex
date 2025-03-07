@@ -188,7 +188,7 @@ export class AppController {
 
         let iter = 0;
         const MAX_ITER = this.stateManager.getStepNo();
-        let currentPosInLine = 0;
+        let currentPosInLine = 1;
         let text: CanonicTextItem[] = [];
         let lineNo = 1;
 
@@ -204,6 +204,10 @@ export class AppController {
                     currentPosInLine += newId.length;
                     buf = buf.substring(indexData.pos);
                 } else {
+                    if (indexData.lexem.lexem === '\n') {
+                        lineNo++;
+                        currentPosInLine = 1;
+                    }
                     text = this.addLimiterOrSpaceToText(indexData, lineNo, currentPosInLine, text);
                     currentPosInLine += indexData.lexem.lexem.length;
                     buf = buf.substring(indexData.lexem.lexem.length);

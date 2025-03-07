@@ -41,7 +41,7 @@
     </script>
 
     <section class="slide">
-        <h3>1. Лексический анализ</h3>
+        <h3>1. Лексический анализ. 1 строка</h3>
         <div id="lex1" class="lex"></div>
         <div id="lex1-controls" class="game controls">switch-on-q1-controls</div>
         <script>
@@ -56,6 +56,27 @@
                     spaces: [' ', '\n'],
                     limiters: [';', '='],
                     inputString: 'let a = 1;'
+                });
+            });
+        </script>
+    </section>
+
+    <section class="slide">
+        <h3>1. Лексический анализ. 2 строки</h3>
+        <div id="lex2" class="lex"></div>
+        <div id="lex2-controls" class="game controls">switch-on-q1-controls</div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'lex2',
+                    target: 'lex2',
+                    simControlsTarget: 'lex2-controls',
+                    showSimControls: true,
+                    maxCalcStep: 0,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '='],
+                    inputString: 'let a = 2;\nlet b = 3;'
                 });
             });
         </script>
