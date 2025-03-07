@@ -11,7 +11,7 @@
 
     </style>
 
-    <script defer src="./app-static/game.js"></script>
+    <script defer src="./app-static/app.js"></script>
 </head>
 <body class="shower list">
     <script>window.demo = true;</script>
@@ -28,13 +28,36 @@
     </section>
 
     <script>
+        const defaultAppConfig = {
+            name: '',
+            target: '',
+            simControlsTarget: '',
+            showSimControls: false,
+            spaces: [],
+            limiters: [],
+            maxCalcStep: 0,
+            inputString: ''
+        };
     </script>
 
     <section class="slide">
-        <h3>1. RS-триггер - включение, Q=1</h3>
-        <div id="switch-on-q1" class="arcade"></div>
-        <div id="switch-on-q1-controls" class="game controls">switch-on-q1-controls</div>
+        <h3>1. Лексический анализ</h3>
+        <div id="lex1" class="lex"></div>
+        <div id="lex1-controls" class="game controls">switch-on-q1-controls</div>
         <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'lex1',
+                    target: 'lex1',
+                    simControlsTarget: 'lex1-controls',
+                    showSimControls: true,
+                    maxCalcStep: 0,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '='],
+                    inputString: 'let a = 1;'
+                });
+            });
         </script>
     </section>
 

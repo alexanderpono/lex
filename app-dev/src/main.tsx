@@ -51,13 +51,13 @@ class LexRunner {
     };
 }
 
-const rs = new LexRunner();
-window['rs'] = rs;
+const lex = new LexRunner();
+window['lex'] = lex;
 if (window['demo'] === true) {
     console.log('demo === true!');
 } else {
     console.log('demo !== true!');
-    rs.run({
+    lex.run({
         ...defaultAppConfig,
         name: 'rs',
         target: 'viewport',

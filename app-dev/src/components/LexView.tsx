@@ -22,12 +22,12 @@ const formatLexem = (s: string) => {
 
 export const LexView: React.FC<LexViewProps> = ({ inputString, limiters, spaces, ids, text }) => {
     return (
-        <div>
-            <pre className={styles.inputString}>{inputString ? inputString : ' '}</pre>
-            <div className={styles.tables}>
+        <div className={styles.tmp}>
+            <pre className="inputString">{inputString ? inputString : '  '}</pre>
+            <div className="tables">
                 <section>
                     <p>limiters:</p>
-                    <table className={styles.lexTable}>
+                    <table className="lexTable">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -49,7 +49,7 @@ export const LexView: React.FC<LexViewProps> = ({ inputString, limiters, spaces,
 
                 <section>
                     <p>spaces:</p>
-                    <table className={styles.lexTable}>
+                    <table className="lexTable">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -71,7 +71,7 @@ export const LexView: React.FC<LexViewProps> = ({ inputString, limiters, spaces,
 
                 <section>
                     <p>ids:</p>
-                    <table className={styles.lexTable}>
+                    <table className="lexTable">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -93,8 +93,8 @@ export const LexView: React.FC<LexViewProps> = ({ inputString, limiters, spaces,
 
                 <section>
                     <p>text:</p>
-                    <div className={styles.text}>
-                        <table className={styles.lexTable}>
+                    <div className="text">
+                        <table className="lexTable">
                             <thead>
                                 <tr>
                                     <th>table</th>

@@ -84,116 +84,7 @@ h4 {
     padding: 0px;
     margin: 0px 0px 17px 0px;
 }
-th {
-    color: #00aae6;
-}
 
-.speaker .content {
-    display: grid;
-    grid-template-areas: "photo photo quizes" "experience games river" "e e e";
-    grid-template-columns: 1fr 1fr auto;
-    grid-template-rows: 200px 200px auto;
-    grid-column-gap: 20px;
-    grid-row-gap: 20px;
-    padding: 0px 0px 50px 0px;
-}
-.speaker .photo-caption {
-    grid-area: photo;
-    display: flex;
-}
-
-.speaker .photo {
-    margin: 0px 50px 0px 0px;
-    width: 200px;
-    height: 200px;
-    border-radius: 100px;
-    overflow: hidden;
-}
-
-.speaker .experience {
-    grid-area: experience;
-    background: var(--corporate-color);
-    border-radius: 10px;
-}
-
-.speaker .games {
-    grid-area: games;
-    background: var(--corporate-color);
-    border-radius: 10px;
-}
-
-.speaker p {
-    color: white;
-}
-
-.speaker .top {
-    padding: 40px 20px 10px 20px;
-}
-.speaker .bottom {
-    padding: 0px 20px 0px 20px;
-}
-.speaker .number {
-    font-size: 300%;
-}
-.speaker .units {
-    font-size: 150%;
-}
-.speaker .position {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    color: var(--corporate-color);
-}
-
-.speaker .text {
-    margin-top: 35px;
-}
-
-.e {
-    grid-area: e;
-}
-
-.img1 {
-    grid-area: quizes;
-}
-.img2 {
-    grid-area: river;
-}
-
-.vmiddle {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.text {
-    padding-left: 30px;
-}
-
-.dijkstra {
-    padding-right: 0px;
-    position: relative;
-}
-
-.dijkstra .photo {
-    position: absolute;
-    right: 0px;
-    top: -90px;
-    width: 338px;
-}
-
-.lobachevskiy {
-    padding-right: 0px;
-    position: relative;
-}
-
-.lobachevskiy .photo {
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    width: 338px;
-    border-radius: 20px;
-    overflow: hidden;
-}
 
 .slide.title::before, .nologo::before {
     display: none;
@@ -269,26 +160,9 @@ h1, h3, p, label, li {
     margin-right: 40%;
     padding-left: 20px;
 }
-.tg {
-    display: flex;
-    align-items: center;
-}
 
-.tg p {
-    margin-right: 20px;
-}
-
-.smaller {
-    font-size: 80%;
-}
-.smaller70 {
-    font-size: 70%;
-}
 .pic {
     padding: var(--slide-side) var(--slide-side) 0px var(--slide-side);
-}
-.text {
-    padding-left: 30px;
 }
 .slide {
     padding: var(--slide-side) var(--slide-side) 0px var(--slide-side);
@@ -350,8 +224,20 @@ p, label, li {
 }
 
 .slide p, .slide li {
-    max-width: 70%;
-    margin-bottom: 1rem;
+    margin-bottom: 0px;
+}
+
+.slide th:first-child, .slide td:first-child {
+    padding-left: 0px;
+}
+.slide th:last-child, .slide td:last-child {
+    padding-right: 0px;
+}
+.slide table {
+    margin-left: 0px;
+    width: auto;
+    margin-bottom: 0px;
+    line-height: 1em;
 }
 .slide p.pretty, .slide li.pretty {
     text-indent: -1em;
@@ -375,156 +261,9 @@ p, label, li {
     max-width: 100%;
 }
 
-.abstractGraph .canvas {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.impulse-logo {
-    position: relative;
-    top: -35px;
-}
-.tg {
-    display: flex;
-    align-items: center;
-}
-
-.tg p {
-    margin-right: 20px;
-}
-
-.smaller, #smaller {
-    font-size: 80%;
-    padding-left: 26px;
-}
-.smaller70 {
-    font-size: 70%;
-}
-
-.slide pre {
-    margin-left: calc(var(--slide-side) * 2);
-}
-.slide pre code {
-    line-height: 130%;
-}
 .progress {
     --color-blue: #00aae6;
 }
-.lh110 p, .lh110 pre code {
-    line-height: 110%;
-}
-
-.lh100 p, .lh100 pre code {
-    line-height: 100%;
-}
-
-.lh90 p, .lh90 pre code {
-    line-height: 90%;
-}
-
-.slide li::before {
-    color: #00aae6;
-}
-
-.link {
-    color: #00aae6;
-}
-
-.qrs {
-    display: grid;
-    grid-template-areas: "ap links inno" "ap_qr links_qr inno_qr";
-    grid-template-columns: 30% 30% 30%;
-    grid-template-rows: auto 220px;
-    grid-column-gap: 5%;
-}
-.links, .inno, .ap {
-    line-height: 1.1em;
-    padding-bottom: 25px;
-    font-weight: bold;
-    color: var(--corporate-color);
-}
-
-.ap {
-    grid-area: ap;
-}
-.ap_qr {
-    grid-area: ap_qr;
-}
-.ap_qr_i, .links_qr_i, .inno_qr_i {
-    width: 200px;
-    height: 200px;
-    padding: 20px;
-    border: 2px solid var(--corporate-color);
-    border-radius: 10px;
-}
-
-.e {
-    grid-area: e;
-    background: green;
-}
-
-.links {
-    grid-area: links;
-}
-.links_qr {
-    grid-area: links_qr;
-}
-
-.inno {
-    grid-area: inno;
-}
-.inno_qr {
-    grid-area: inno_qr;
-}
-
-
-table {
-    margin: 0px 0px 50px 0px;
-    width: 70%;
-}
-strong {
-    font-weight: normal;
-    color: #00aae6;
-}
-.ok strong {
-    color: inherit;
-}
-.schemeContainer {
-    overflow: hidden;
-}
-.scheme {
-    position: relative;
-    top: -100px;
-}
-.q {
-    quotes: "«" "»";
-}
-
-.bricks {
-    background: black;
-}
-
-.bricks .txt {
-    color: #ffff40;
-}
-
-#brief_8 {
-    width: 690px;
-    overflow: hidden;
-}
-
-.selectOne p {
-    font-family: 'RobotoBold';
-    width: 40%;
-    color: #00aae6;
-    border: 2px solid #00aae6;
-    float: left;
-    margin-right: 20px;
-    padding: 20px;
-    border-radius: 10px;
-}
-
 
 .game .canvas {
     display: flex;
@@ -666,110 +405,48 @@ strong {
     width: 720px;
 }
 
-.playerControls {
-    grid-area: playerCtrl;
+.lex {
+    font-size: 15px;
+}
+
+.lex pre {
+    margin-left: 0px;
+    white-space: pre;
+}
+
+.inputString {
+    border: 1px solid red;
+}
+
+.lexTable {
+	margin-bottom: 20px;
+	border: 1px solid #dddddd;
+	border-collapse: collapse; 
+}
+
+.lexTable th {
+    font-weight: bold !important;
+    padding: 5px !important;
+    background: #efefef !important;
+    border: 1px solid #dddddd !important;
+}
+
+.lexTable td {
+    border: 1px solid #dddddd !important;
+    padding: 5px !important;
+}  
+
+.tables {
     display: flex;
-    button {
-        width: 30px;
-    }
+    flex-direction: row;
 }
 
-.guardianControls {
-    grid-area: guardCtrl;
-    display: flex;
-    justify-content: flex-end;
-    button {
-        width: 30px;
-    }
+.tables section {
+    margin-right: 20px;
+    font-family: 'Courier New', Courier, monospace;
 }
 
-.guardCtrl2 {
-    grid-area: guardCtrl2;
-    display: flex;
-}
-
-.manCtrl2 {
-    grid-area: manCtrl2;
-    display: flex;
-}
-
-.guardCtrl2, .uiOptions, .manCtrl2 {
-    font-family: Arial, Helvetica, sans-serif;
-    label {
-        margin: 0px 0px 0px 0px;
-        padding-left: 0px;
-        position: relative;
-    }    
-    input[type='checkbox'] {
-        visibility: hidden;
-    }
-    input[type="checkbox"]:checked + b, 
-    input[type="checkbox"]:not(:checked) + b {
-        display: inline-block;
-        content: "";
-        margin: 0px 0px 0px 0px;
-        position: relative;
-        width: 18px;
-        height: 18px;
-        border: 1px solid black;
-    
-        border-radius: 2px;
-    }
-    input[type="checkbox"]:checked + b {
-        background: black;
-    }
-    
-    input[type="checkbox"]:not(:checked) + b {
-        background: white;
-    }
-
-    input[type="checkbox"]:checked + b:after, 
-    input[type="checkbox"]:not(:checked) + b:after {
-        display: inline-block;
-        content: "";
-        position: absolute;
-        left: 3px;
-        top: 4px;
-        width: 10px;
-        height: 5px;
-        border-radius: 1px;
-        border-left: 4px solid white;
-        border-bottom: 4px solid white;
-        -webkit-transform: rotate(-45deg);
-        -moz-transform: rotate(-45deg);
-        -o-transform: rotate(-45deg);
-        -ms-transform: rotate(-45deg);
-        transform: rotate(-45deg);
-    }
-
-    input[type="checkbox"]:checked + b:after {
-        opacity: 1;
-    }
-    
-    input[type="checkbox"]:not(:checked) + b:after {
-        opacity: 0;
-    }
-
-    :global(.checkText) {
-        display: inline-block;
-        line-height: 30px;
-        height: 30px;
-        padding-left: 45px;
-    }
-
-    :global(.checkBox) {
-        position: absolute;
-        left: 0px;
-        top: 3px;
-    }
-}
-
-.uiOptions {
-    grid-area: uiOptions;
-    display: flex;
-    justify-content: center;
-}
-
-.arcade label .checkText {
-    display: none;
+.text {
+    height: 200px;
+    overflow-y: auto;
 }
