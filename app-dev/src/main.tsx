@@ -63,7 +63,7 @@ if (window['demo'] === true) {
         target: 'viewport',
         simControlsTarget: 'controls',
         showSimControls: true,
-        maxCalcStep: 1,
+        maxCalcStep: 0,
         spaces: [' ', '\n'],
         limiters: [';', '='],
         inputString: 'let a = 1;'

@@ -1,6 +1,6 @@
 import { store } from '@src/store/store';
 import { app } from '@src/store/appReducer';
-import { CompiledLine } from './app.types';
+import { CanonicTextItem, CompiledLine } from './app.types';
 
 export class AppStateManager {
     private stepNo: number = 0;
@@ -9,6 +9,9 @@ export class AppStateManager {
     private ids: string[] = [];
     private compiled: CompiledLine[];
     private inputString: string = '';
+    private lineNo: number = 0;
+    private currentPosInLine: number = 0;
+    private text: CanonicTextItem[] = [];
 
     getStepNo = () => this.stepNo;
     getSpaces = () => this.spaces;
@@ -16,6 +19,9 @@ export class AppStateManager {
     getIds = () => this.ids;
     getCompiled = () => this.compiled;
     getInputString = () => this.inputString;
+    getLineNo = () => this.lineNo;
+    getCurrentPosInLine = () => this.currentPosInLine;
+    getText = () => this.text;
 
     setStepNo = (stepNo: number) => (this.stepNo = stepNo);
     setSpaces = (spaces: string[]) => (this.spaces = spaces);
@@ -23,6 +29,9 @@ export class AppStateManager {
     setIds = (ids: string[] = []) => (this.ids = ids);
     setCompiled = (compiled: CompiledLine[]) => (this.compiled = compiled);
     setInputString = (inputString: string) => (this.inputString = inputString);
+    setLineNo = (lineNo: number) => (this.lineNo = lineNo);
+    setCurrentPosInLine = (currentPosInLine: number) => (this.currentPosInLine = currentPosInLine);
+    setText = (text: CanonicTextItem[]) => (this.text = text);
 
     getAppState = () => {
         return {
@@ -31,7 +40,10 @@ export class AppStateManager {
             limiters: this.getLimiters(),
             ids: this.getIds(),
             compiled: this.getCompiled(),
-            inputString: this.getInputString()
+            inputString: this.getInputString(),
+            lineNo: this.getLineNo(),
+            currentPosInLine: this.getCurrentPosInLine(),
+            text: this.getText()
         };
     };
 

@@ -1,4 +1,4 @@
-import { CompiledLine } from '@src/app.types';
+import { CanonicTextItem, CompiledLine } from '@src/app.types';
 
 export enum AppActions {
     DEFAULT = 'DEFAULT',
@@ -13,6 +13,9 @@ export interface AppState {
     ids: string[];
     compiled: CompiledLine[];
     inputString: string;
+    lineNo: number;
+    currentPosInLine: number;
+    text: CanonicTextItem[];
 }
 
 export const defaultSimState: AppState = {
@@ -22,7 +25,10 @@ export const defaultSimState: AppState = {
     limiters: [],
     ids: [],
     compiled: [],
-    inputString: ''
+    inputString: '',
+    lineNo: 0,
+    currentPosInLine: 0,
+    text: []
 };
 
 export interface SetAppStateAction {
@@ -34,6 +40,9 @@ export interface SetAppStateAction {
         ids: string[];
         compiled: CompiledLine[];
         inputString: string;
+        lineNo: number;
+        currentPosInLine: number;
+        text: CanonicTextItem[];
     };
 }
 
@@ -45,6 +54,9 @@ export const app = {
         ids: string[];
         compiled: CompiledLine[];
         inputString: string;
+        lineNo: number;
+        currentPosInLine: number;
+        text: CanonicTextItem[];
     }): SetAppStateAction => ({
         type: AppActions.APP_STATE,
         payload: state
@@ -66,7 +78,10 @@ export function appReducer(state: AppState = defaultSimState, action: Action): A
                 limiters: (action as SetAppStateAction).payload.limiters,
                 ids: (action as SetAppStateAction).payload.ids,
                 compiled: (action as SetAppStateAction).payload.compiled,
-                inputString: (action as SetAppStateAction).payload.inputString
+                inputString: (action as SetAppStateAction).payload.inputString,
+                lineNo: (action as SetAppStateAction).payload.lineNo,
+                currentPosInLine: (action as SetAppStateAction).payload.currentPosInLine,
+                text: (action as SetAppStateAction).payload.text
             };
         }
     }
