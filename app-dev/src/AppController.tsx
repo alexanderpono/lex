@@ -202,10 +202,12 @@ export class AppController {
                     const newId = buf.substring(0, indexData.pos);
                     text = this.addIdToText(newId, lineNo, currentPosInLine, text);
                     currentPosInLine += newId.length;
+                    buf = buf.substring(indexData.pos);
+                } else {
+                    text = this.addLimiterOrSpaceToText(indexData, lineNo, currentPosInLine, text);
+                    currentPosInLine += indexData.lexem.lexem.length;
+                    buf = buf.substring(indexData.lexem.lexem.length);
                 }
-                text = this.addLimiterOrSpaceToText(indexData, lineNo, currentPosInLine, text);
-                currentPosInLine += indexData.lexem.lexem.length;
-                buf = buf.substring(indexData.pos + indexData.lexem.lexem.length);
             } else {
                 text = this.addIdToText(buf, lineNo, currentPosInLine, text);
                 buf = '';

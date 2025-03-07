@@ -93,30 +93,32 @@ export const LexView: React.FC<LexViewProps> = ({ inputString, limiters, spaces,
 
                 <section>
                     <p>text:</p>
-                    <table className={styles.lexTable}>
-                        <thead>
-                            <tr>
-                                <th>table</th>
-                                <th>t-index</th>
-                                <th>line</th>
-                                <th>pos</th>
-                                <th>string</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {text.map((token: CanonicTextItem, index) => {
-                                return (
-                                    <tr key={`text-${index}`}>
-                                        <td>{token.tableId}</td>
-                                        <td>{token.tableIndex}</td>
-                                        <td>{token.lineNo}</td>
-                                        <td>{token.pos}</td>
-                                        <td>{formatLexem(token.lexem)}</td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
+                    <div className={styles.text}>
+                        <table className={styles.lexTable}>
+                            <thead>
+                                <tr>
+                                    <th>table</th>
+                                    <th>t-index</th>
+                                    <th>line</th>
+                                    <th>pos</th>
+                                    <th>string</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {text.map((token: CanonicTextItem, index) => {
+                                    return (
+                                        <tr key={`text-${index}`}>
+                                            <td>{token.tableId}</td>
+                                            <td>{token.tableIndex}</td>
+                                            <td>{token.lineNo}</td>
+                                            <td>{token.pos}</td>
+                                            <td>{formatLexem(token.lexem)}</td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
                 </section>
             </div>
         </div>
