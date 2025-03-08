@@ -8,6 +8,14 @@ interface LexViewProps {
     spaces: string[];
     ids: string[];
     text: CanonicTextItem[];
+    showInputFile: boolean;
+    showPrettyText: boolean;
+    showLimitersTable: boolean;
+    showSpacesTable: boolean;
+    showIdsTable: boolean;
+    showCanonicText: boolean;
+    formatIds: boolean;
+    formatComments: boolean;
 }
 
 const formatLexem = (s: string) => {
@@ -20,106 +28,199 @@ const formatLexem = (s: string) => {
     return s;
 };
 
-export const LexView: React.FC<LexViewProps> = ({ inputString, limiters, spaces, ids, text }) => {
+const prettify = (
+    text: CanonicTextItem[],
+    formatIds: boolean,
+    formatComments: boolean
+): React.ReactElement => {
+    let lineNo = 0;
+    let curLineContent = [];
+    let lines = [];
+    let isComment = false;
+    const getIdClassName = () => (formatIds ? (isComment ? 'comment' : 'id') : '');
+    const getLimiterClassName = () => (formatComments ? (isComment ? 'comment' : 'limiter') : '');
+    text.forEach((token: CanonicTextItem, index: number) => {
+        if (token.lineNo > lineNo) {
+            if (curLineContent.length > 0) {
+                const prevLine = <p key={lineNo}>{curLineContent}</p>;
+                lines.push(prevLine);
+            }
+            curLineContent = [];
+            isComment = false;
+            lineNo = token.lineNo;
+            curLineContent.push(<span className="line-number" key={0}>{`${lineNo}: `}</span>);
+        }
+        let formattedLexem = <span key={token.pos}>{token.lexem}</span>;
+        if (token.tableId === 'i') {
+            formattedLexem = (
+                <span key={token.pos} className={getIdClassName()}>
+                    {token.lexem}
+                </span>
+            );
+        }
+        if (token.tableId === 'l') {
+            if (token.lexem === '/') {
+                if (index + 1 < text.length) {
+                    const nextToken = text[index + 1];
+                    if (nextToken.lexem === '/' && nextToken.lineNo === token.lineNo) {
+                        if (formatComments) {
+                            isComment = true;
+                        }
+                    }
+                }
+            }
+            formattedLexem = (
+                <span key={token.pos} className={getLimiterClassName()}>
+                    {token.lexem}
+                </span>
+            );
+        }
+        curLineContent.push(formattedLexem);
+    });
+    if (curLineContent.length > 0) {
+        const prevLine = <p key={lineNo}>{curLineContent}</p>;
+        lines.push(prevLine);
+    }
+
+    return <section>{lines}</section>;
+};
+export const LexView: React.FC<LexViewProps> = ({
+    inputString,
+    limiters,
+    spaces,
+    ids,
+    text,
+    showInputFile,
+    showPrettyText,
+    showLimitersTable,
+    showSpacesTable,
+    showIdsTable,
+    showCanonicText,
+    formatIds,
+    formatComments
+}) => {
     return (
         <div className={styles.tmp}>
-            <pre className="inputString">{inputString ? inputString : '  '}</pre>
             <div className="tables">
-                <section>
-                    <p>limiters:</p>
-                    <table className="lexTable">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Lexem</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {limiters.map((lexem, index) => {
-                                return (
-                                    <tr key={`limiters-${index}`}>
-                                        <td>{index + 1}</td>
-                                        <td>{lexem}</td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
-                </section>
+                {showInputFile && (
+                    <section>
+                        <p>input file:</p>
+                        <pre className="inputString">{inputString ? inputString : '  '}</pre>
+                    </section>
+                )}
 
-                <section>
-                    <p>spaces:</p>
-                    <table className="lexTable">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Lexem</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {spaces.map((lexem, index) => {
-                                return (
-                                    <tr key={`spaces-${index}`}>
-                                        <td>{index + 1}</td>
-                                        <td>{lexem !== '\n' ? `'${lexem}'` : `'\\n'`}</td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
-                </section>
-
-                <section>
-                    <p>ids:</p>
-                    <table className="lexTable">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Lexem</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {ids.map((lexem, index) => {
-                                return (
-                                    <tr key={`ids-${index}`}>
-                                        <td>{index + 1}</td>
-                                        <td>{lexem}</td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
-                </section>
-
-                <section>
-                    <p>text:</p>
-                    <div className="text">
+                {showLimitersTable && (
+                    <section>
+                        <p>limiters:</p>
                         <table className="lexTable">
                             <thead>
                                 <tr>
-                                    <th>table</th>
-                                    <th>t-index</th>
-                                    <th>line</th>
-                                    <th>pos</th>
-                                    <th>string</th>
+                                    <th>ID</th>
+                                    <th>Lexem</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {text.map((token: CanonicTextItem, index) => {
+                                {limiters.map((lexem, index) => {
                                     return (
-                                        <tr key={`text-${index}`}>
-                                            <td>{token.tableId}</td>
-                                            <td>{token.tableIndex}</td>
-                                            <td>{token.lineNo}</td>
-                                            <td>{token.pos}</td>
-                                            <td>{formatLexem(token.lexem)}</td>
+                                        <tr key={`limiters-${index}`}>
+                                            <td>{index + 1}</td>
+                                            <td>{lexem}</td>
                                         </tr>
                                     );
                                 })}
                             </tbody>
                         </table>
-                    </div>
-                </section>
+                    </section>
+                )}
+
+                {showSpacesTable && (
+                    <section>
+                        <p>spaces:</p>
+                        <table className="lexTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Lexem</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {spaces.map((lexem, index) => {
+                                    return (
+                                        <tr key={`spaces-${index}`}>
+                                            <td>{index + 1}</td>
+                                            <td>{lexem !== '\n' ? `'${lexem}'` : `'\\n'`}</td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </section>
+                )}
+
+                {showIdsTable && (
+                    <section>
+                        <p>ids:</p>
+                        <table className="lexTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Lexem</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {ids.map((lexem, index) => {
+                                    return (
+                                        <tr key={`ids-${index}`}>
+                                            <td>{index + 1}</td>
+                                            <td>{lexem}</td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </section>
+                )}
+
+                {showCanonicText && (
+                    <section>
+                        <p>canonic text:</p>
+                        <div className="text">
+                            <table className="lexTable">
+                                <thead>
+                                    <tr>
+                                        <th>table</th>
+                                        <th>t-index</th>
+                                        <th>line</th>
+                                        <th>pos</th>
+                                        <th>string</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {text.map((token: CanonicTextItem, index) => {
+                                        return (
+                                            <tr key={`text-${index}`}>
+                                                <td>{token.tableId}</td>
+                                                <td>{token.tableIndex}</td>
+                                                <td>{token.lineNo}</td>
+                                                <td>{token.pos}</td>
+                                                <td>{formatLexem(token.lexem)}</td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                )}
+
+                {showPrettyText && (
+                    <section>
+                        <p>pretty text:</p>
+                        <pre className="text-restored">
+                            {prettify(text, formatIds, formatComments)}
+                        </pre>
+                    </section>
+                )}
             </div>
         </div>
     );

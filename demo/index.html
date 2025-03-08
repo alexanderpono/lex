@@ -36,14 +36,24 @@
             spaces: [],
             limiters: [],
             maxCalcStep: 0,
-            inputString: ''
+            endCalcStep: 1000,
+            xCalcStep: 0,
+            inputString: '',
+            showInputFile: false,
+            showPrettyText: false,
+            showLimitersTable: false,
+            showSpacesTable: false,
+            showIdsTable: false,
+            showCanonicText: false,
+            formatIds: false,
+            formatComments: false
         };
     </script>
 
     <section class="slide">
         <h3>1. Лексический анализ. 1 строка</h3>
         <div id="lex1" class="lex"></div>
-        <div id="lex1-controls" class="game controls">switch-on-q1-controls</div>
+        <div id="lex1-controls" class="game controls"></div>
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 lex.run({
@@ -53,9 +63,16 @@
                     simControlsTarget: 'lex1-controls',
                     showSimControls: true,
                     maxCalcStep: 0,
+                    endCalcStep: 8,
                     spaces: [' ', '\n'],
                     limiters: [';', '='],
-                    inputString: 'let a = 1;'
+                    inputString: 'let a = 1;',
+                    showInputFile: true,
+                    showPrettyText: false,
+                    showLimitersTable: true,
+                    showSpacesTable: true,
+                    showIdsTable: true,
+                    showCanonicText: true
                 });
             });
         </script>
@@ -64,7 +81,7 @@
     <section class="slide">
         <h3>1. Лексический анализ. 2 строки</h3>
         <div id="lex2" class="lex"></div>
-        <div id="lex2-controls" class="game controls">switch-on-q1-controls</div>
+        <div id="lex2-controls" class="game controls"></div>
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 lex.run({
@@ -74,14 +91,231 @@
                     simControlsTarget: 'lex2-controls',
                     showSimControls: true,
                     maxCalcStep: 0,
+                    endCalcStep: 17,
                     spaces: [' ', '\n'],
                     limiters: [';', '='],
-                    inputString: 'let a = 2;\nlet b = 3;'
+                    inputString: 'let a = 2;\nlet b = 3;',
+                    showInputFile: true,
+                    showPrettyText: false,
+                    showLimitersTable: true,
+                    showSpacesTable: true,
+                    showIdsTable: true,
+                    showCanonicText: true
                 });
             });
         </script>
     </section>
 
+    <section class="slide">
+        <h3>1. Лексический анализ. Комментарий</h3>
+        <div id="lex-comment" class="lex"></div>
+        <div id="lex-comment-controls" class="game controls">Комментарий</div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'lex-comment',
+                    target: 'lex-comment',
+                    simControlsTarget: 'lex-comment-controls',
+                    showSimControls: true,
+                    maxCalcStep: 0,
+                    endCalcStep: 17,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '='],
+                    inputString: 'let a = 2;\n//let b = 3;',
+                    showInputFile: true,
+                    showPrettyText: false,
+                    showLimitersTable: true,
+                    showSpacesTable: true,
+                    showIdsTable: true,
+                    showCanonicText: true
+                });
+            });
+        </script>
+    </section>
+
+    <section class="slide">
+        <h3>1. Лексический анализ. Комментарий</h3>
+        <div id="lex-comment2" class="lex"></div>
+        <div id="lex-comment2-controls" class="game controls">Комментарий</div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'lex-comment2',
+                    target: 'lex-comment2',
+                    simControlsTarget: 'lex-comment2-controls',
+                    showSimControls: true,
+                    maxCalcStep: 0,
+                    endCalcStep: 19,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '=', '/'],
+                    inputString: 'let a = 2;\n//let b = 3;',
+                    showInputFile: true,
+                    showPrettyText: false,
+                    showLimitersTable: true,
+                    showSpacesTable: true,
+                    showIdsTable: true,
+                    showCanonicText: true
+                });
+            });
+        </script>
+    </section>
+
+    <section class="slide">
+        <h3>1. Как это можно использовать?</h3>
+        <div id="lex-comment3" class="lex"></div>
+        <div id="lex-comment3-controls" class="game controls"></div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'lex-comment3',
+                    target: 'lex-comment3',
+                    simControlsTarget: 'lex-comment3-controls',
+                    showSimControls: true,
+                    maxCalcStep: 19,
+                    endCalcStep: 19,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '=', '/'],
+                    inputString: 'let a = 2;\n//let b = 3;',
+                    showPrettyText: false,
+                    showLimitersTable: true,
+                    showSpacesTable: false,
+                    showIdsTable: true,
+                    showCanonicText: true
+                });
+            });
+        </script>
+    </section>
+
+    <section class="slide">
+        <h3>1. Форматирование текста программы</h3>
+        <div id="lex-format0" class="lex"></div>
+        <div id="lex-format0-controls" class="game controls"></div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'lex-format0',
+                    target: 'lex-format0',
+                    simControlsTarget: 'lex-format0-controls',
+                    showSimControls: true,
+                    maxCalcStep: 19,
+                    endCalcStep: 19,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '=', '/'],
+                    inputString: 'let a = 2;\n//let b = 3;',
+                    showPrettyText: true,
+                    showLimitersTable: true,
+                    showSpacesTable: false,
+                    showIdsTable: true,
+                    showCanonicText: true
+                });
+            });
+        </script>
+    </section>
+
+
+    <section class="slide">
+        <h3>1. Форматирование: нумерация строк</h3>
+        <div id="lex-format1" class="lex"></div>
+        <div id="lex-format1-controls" class="game controls"></div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'lex-format1',
+                    target: 'lex-format1',
+                    simControlsTarget: 'lex-format1-controls',
+                    showSimControls: true,
+                    maxCalcStep: 19,
+                    endCalcStep: 19,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '=', '/'],
+                    inputString: 'let a = 2;\n//let b = 3;',
+                    showPrettyText: true,
+                    showLimitersTable: true,
+                    showSpacesTable: false,
+                    showIdsTable: true,
+                    showCanonicText: true
+                });
+            });
+        </script>
+    </section>
+
+    <section class="slide">
+        <h3>1. Форматирование: идентификаторы</h3>
+        <div id="lex-format2" class="lex"></div>
+        <div id="lex-format2-controls" class="game controls"></div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'lex-format2',
+                    target: 'lex-format2',
+                    simControlsTarget: 'lex-format2-controls',
+                    showSimControls: true,
+                    maxCalcStep: 19,
+                    endCalcStep: 19,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '=', '/'],
+                    inputString: 'let a = 2;\n//let b = 3;',
+                    showPrettyText: true,
+                    showLimitersTable: true,
+                    showSpacesTable: false,
+                    showIdsTable: true,
+                    showCanonicText: true,
+                    formatIds: true
+                });
+            });
+        </script>
+    </section>
+
+    <section class="slide">
+        <h3>1. Форматирование: комментарии</h3>
+        <div id="lex-format3" class="lex"></div>
+        <div id="lex-format3-controls" class="game controls"></div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'lex-format3',
+                    target: 'lex-format3',
+                    simControlsTarget: 'lex-format3-controls',
+                    showSimControls: true,
+                    maxCalcStep: 19,
+                    endCalcStep: 19,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '=', '/'],
+                    inputString: 'let a = 2;\n//let b = 3;',
+                    showPrettyText: true,
+                    showLimitersTable: true,
+                    showSpacesTable: false,
+                    showIdsTable: true,
+                    showCanonicText: true,
+                    formatIds: true,
+                    formatComments: true
+                });
+            });
+        </script>
+    </section>
+
+    <section class="slide">
+        <h3>1. Строковая константа</h3>
+        <div id="lex2" class="lex"></div>
+        <div id="lex2-controls" class="game controls">Строковая константа</div>
+        <script>
+        </script>
+    </section>
+
+    <section class="slide">
+        <h3>1. Убираем пробелы</h3>
+        <div id="lex2" class="lex"></div>
+        <div id="lex2-controls" class="game controls">Убираем пробелы</div>
+        <script>
+        </script>
+    </section>
 
     <footer class="badge">
         <a href="https://github.com/alexanderpono/">Проект на GitHub</a>

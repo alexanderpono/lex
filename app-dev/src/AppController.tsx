@@ -38,6 +38,9 @@ export class AppController {
         this.stateManager.setText([]);
 
         this.parseText(this.stateManager.getInputString());
+        if (this.stateManager.getInputString() === '') {
+            console.log('lex parse OK', this.stateManager.getStepNo());
+        }
     };
 
     onBtToStartClick = () => {
@@ -73,7 +76,7 @@ export class AppController {
     };
 
     onBtToFinishClick = () => {
-        this.stateManager.setStepNo(1000);
+        this.stateManager.setStepNo(this.builder.endCalcStep);
         this.reRun();
         this.updateUI();
     };
@@ -97,6 +100,14 @@ export class AppController {
                 spaces={this.stateManager.getSpaces()}
                 ids={this.stateManager.getIds()}
                 text={this.stateManager.getText()}
+                showInputFile={this.builder.showInputFile}
+                showPrettyText={this.builder.showPrettyText}
+                showLimitersTable={this.builder.showLimitersTable}
+                showSpacesTable={this.builder.showSpacesTable}
+                showIdsTable={this.builder.showIdsTable}
+                showCanonicText={this.builder.showCanonicText}
+                formatIds={this.builder.formatIds}
+                formatComments={this.builder.formatComments}
             />,
             target
         );
@@ -204,13 +215,13 @@ export class AppController {
                     currentPosInLine += newId.length;
                     buf = buf.substring(indexData.pos);
                 } else {
+                    text = this.addLimiterOrSpaceToText(indexData, lineNo, currentPosInLine, text);
+                    currentPosInLine += indexData.lexem.lexem.length;
+                    buf = buf.substring(indexData.lexem.lexem.length);
                     if (indexData.lexem.lexem === '\n') {
                         lineNo++;
                         currentPosInLine = 1;
                     }
-                    text = this.addLimiterOrSpaceToText(indexData, lineNo, currentPosInLine, text);
-                    currentPosInLine += indexData.lexem.lexem.length;
-                    buf = buf.substring(indexData.lexem.lexem.length);
                 }
             } else {
                 text = this.addIdToText(buf, lineNo, currentPosInLine, text);

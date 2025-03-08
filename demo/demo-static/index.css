@@ -407,6 +407,7 @@ p, label, li {
 
 .lex {
     font-size: 15px;
+    height: 320px;
 }
 
 .lex pre {
@@ -415,7 +416,10 @@ p, label, li {
 }
 
 .inputString {
-    border: 1px solid red;
+    height: 280px;
+    width: 200px;
+    border: 1px solid #00aae6;
+    margin-right: 20px;
 }
 
 .lexTable {
@@ -447,6 +451,35 @@ p, label, li {
 }
 
 .text {
-    height: 200px;
+    height: 280px;
     overflow-y: auto;
+}
+
+.text-restored {
+    background: #1f1f1f;
+    color: white;
+    height: 280px;
+    width: 200px;
+    border: 1px solid #00aae6;
+    overflow: auto;
+}
+
+.text-restored p {
+    color: white;
+}
+
+.slide pre.text-restored .line-number {
+    color: #527181;
+}
+
+.slide pre.text-restored .id {
+    color: #6BCDF7;
+}
+
+.slide pre.text-restored .limiter {
+    color: #FFF;
+}
+
+.slide pre.text-restored .comment {
+    color: #609755;
 }

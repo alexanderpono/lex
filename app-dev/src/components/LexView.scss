@@ -1,4 +1,6 @@
 :global(.inputString) {
+    height: 200px;
+    width: 200px;
     border: 1px solid red;
 }
 
@@ -37,4 +39,30 @@
 
 .tmp {
     color: black;
+}
+
+:global(.text-restored) {
+    font-size: 1.2em;
+    background: #1f1f1f;
+    color: white;
+    height: 200px;
+    width: 200px;
+    border: 1px solid red;
+    overflow: auto;
+}
+
+:global(.line-number) {
+    color: #527181;
+}
+
+:global(.id) {
+    color: #6BCDF7;
+}
+
+:global(.limiter) {
+    color: #FFF;
+}
+
+:global(.comment) {
+    color: #609755;
 }

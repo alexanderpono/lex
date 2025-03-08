@@ -9,6 +9,15 @@ export class AppControllerBuilder {
     spaces: string[] = [];
     limiters: string[] = [];
     inputString: string = '';
+    endCalcStep: number = 0;
+    showInputFile: boolean = false;
+    showPrettyText: boolean = false;
+    showLimitersTable: boolean = false;
+    showSpacesTable: boolean = false;
+    showIdsTable: boolean = false;
+    showCanonicText: boolean = false;
+    formatIds: boolean = false;
+    formatComments: boolean = false;
 
     setTarget = (target: string) => {
         this.target = target;
@@ -40,6 +49,42 @@ export class AppControllerBuilder {
     };
     setInputString = (inputString: string) => {
         this.inputString = inputString;
+        return this;
+    };
+    setEndCalcStep = (endCalcStep: number) => {
+        this.endCalcStep = endCalcStep;
+        return this;
+    };
+    setShowInputFile = (showInputFile: boolean) => {
+        this.showInputFile = showInputFile;
+        return this;
+    };
+    setShowPrettyText = (showPrettyText: boolean) => {
+        this.showPrettyText = showPrettyText;
+        return this;
+    };
+    setShowLimitersTable = (showLimitersTable: boolean) => {
+        this.showLimitersTable = showLimitersTable;
+        return this;
+    };
+    setShowSpacesTable = (showSpacesTable: boolean) => {
+        this.showSpacesTable = showSpacesTable;
+        return this;
+    };
+    setShowIdsTable = (showIdsTable: boolean) => {
+        this.showIdsTable = showIdsTable;
+        return this;
+    };
+    setShowCanonicText = (showCanonicText: boolean) => {
+        this.showCanonicText = showCanonicText;
+        return this;
+    };
+    setFormatIds = (formatIds: boolean) => {
+        this.formatIds = formatIds;
+        return this;
+    };
+    setFormatComments = (formatComments: boolean) => {
+        this.formatComments = formatComments;
         return this;
     };
 }

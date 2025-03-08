@@ -15,6 +15,15 @@ interface AppConfig {
     limiters: string[];
     maxCalcStep: number;
     inputString: string;
+    endCalcStep: number;
+    showInputFile: boolean;
+    showPrettyText: boolean;
+    showLimitersTable: boolean;
+    showSpacesTable: boolean;
+    showIdsTable: boolean;
+    showCanonicText: boolean;
+    formatIds: boolean;
+    formatComments: boolean;
 }
 
 const defaultAppConfig: AppConfig = {
@@ -25,7 +34,16 @@ const defaultAppConfig: AppConfig = {
     spaces: [],
     limiters: [],
     maxCalcStep: 0,
-    inputString: ''
+    endCalcStep: 1000,
+    inputString: '',
+    showInputFile: false,
+    showPrettyText: false,
+    showLimitersTable: false,
+    showSpacesTable: false,
+    showIdsTable: false,
+    showCanonicText: false,
+    formatIds: false,
+    formatComments: false
 };
 
 class LexRunner {
@@ -43,6 +61,15 @@ class LexRunner {
                 .setSpaces(config.spaces)
                 .setLimiters(config.limiters)
                 .setInputString(config.inputString)
+                .setEndCalcStep(config.endCalcStep)
+                .setShowInputFile(config.showInputFile)
+                .setShowPrettyText(config.showPrettyText)
+                .setShowLimitersTable(config.showLimitersTable)
+                .setShowSpacesTable(config.showSpacesTable)
+                .setShowIdsTable(config.showIdsTable)
+                .setShowCanonicText(config.showCanonicText)
+                .setFormatIds(config.formatIds)
+                .setFormatComments(config.formatComments)
                 .setMaxCalcStep(config.maxCalcStep),
             stateManager
         );
@@ -63,9 +90,17 @@ if (window['demo'] === true) {
         target: 'viewport',
         simControlsTarget: 'controls',
         showSimControls: true,
-        maxCalcStep: 0,
+        maxCalcStep: 19,
+        endCalcStep: 19,
         spaces: [' ', '\n'],
-        limiters: [';', '='],
-        inputString: 'let a = 1;'
+        limiters: [';', '=', '/'],
+        inputString: 'let a = 1;\n//let b = 2;',
+        showPrettyText: true,
+        showLimitersTable: true,
+        showSpacesTable: true,
+        showIdsTable: true,
+        showCanonicText: true,
+        formatIds: true,
+        formatComments: true
     });
 }
