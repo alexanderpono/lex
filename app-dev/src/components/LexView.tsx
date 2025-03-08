@@ -16,6 +16,7 @@ interface LexViewProps {
     showCanonicText: boolean;
     formatIds: boolean;
     formatComments: boolean;
+    showLineNumbers: boolean;
 }
 
 const formatLexem = (s: string) => {
@@ -31,7 +32,8 @@ const formatLexem = (s: string) => {
 const prettify = (
     text: CanonicTextItem[],
     formatIds: boolean,
-    formatComments: boolean
+    formatComments: boolean,
+    showLineNumbers: boolean
 ): React.ReactElement => {
     let lineNo = 0;
     let curLineContent = [];
@@ -48,7 +50,9 @@ const prettify = (
             curLineContent = [];
             isComment = false;
             lineNo = token.lineNo;
-            curLineContent.push(<span className="line-number" key={0}>{`${lineNo}: `}</span>);
+            if (showLineNumbers) {
+                curLineContent.push(<span className="line-number" key={0}>{`${lineNo}: `}</span>);
+            }
         }
         let formattedLexem = <span key={token.pos}>{token.lexem}</span>;
         if (token.tableId === 'i') {
@@ -97,7 +101,8 @@ export const LexView: React.FC<LexViewProps> = ({
     showIdsTable,
     showCanonicText,
     formatIds,
-    formatComments
+    formatComments,
+    showLineNumbers
 }) => {
     return (
         <div className={styles.tmp}>
@@ -217,7 +222,7 @@ export const LexView: React.FC<LexViewProps> = ({
                     <section>
                         <p>pretty text:</p>
                         <pre className="text-restored">
-                            {prettify(text, formatIds, formatComments)}
+                            {prettify(text, formatIds, formatComments, showLineNumbers)}
                         </pre>
                     </section>
                 )}

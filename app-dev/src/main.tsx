@@ -24,6 +24,7 @@ interface AppConfig {
     showCanonicText: boolean;
     formatIds: boolean;
     formatComments: boolean;
+    showLineNumbers: boolean;
 }
 
 const defaultAppConfig: AppConfig = {
@@ -43,7 +44,8 @@ const defaultAppConfig: AppConfig = {
     showIdsTable: false,
     showCanonicText: false,
     formatIds: false,
-    formatComments: false
+    formatComments: false,
+    showLineNumbers: false
 };
 
 class LexRunner {
@@ -70,6 +72,7 @@ class LexRunner {
                 .setShowCanonicText(config.showCanonicText)
                 .setFormatIds(config.formatIds)
                 .setFormatComments(config.formatComments)
+                .setShowLineNumbers(config.showLineNumbers)
                 .setMaxCalcStep(config.maxCalcStep),
             stateManager
         );
@@ -101,6 +104,7 @@ if (window['demo'] === true) {
         showIdsTable: true,
         showCanonicText: true,
         formatIds: true,
-        formatComments: true
+        formatComments: true,
+        showLineNumbers: true
     });
 }

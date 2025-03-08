@@ -108,6 +108,7 @@ export class AppController {
                 showCanonicText={this.builder.showCanonicText}
                 formatIds={this.builder.formatIds}
                 formatComments={this.builder.formatComments}
+                showLineNumbers={this.builder.showLineNumbers}
             />,
             target
         );

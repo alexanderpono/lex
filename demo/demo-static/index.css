@@ -424,19 +424,19 @@ p, label, li {
 
 .lexTable {
 	margin-bottom: 20px;
-	border: 1px solid #dddddd;
+	border: 1px solid #00aae6;
 	border-collapse: collapse; 
 }
 
 .lexTable th {
     font-weight: bold !important;
     padding: 5px !important;
-    background: #efefef !important;
-    border: 1px solid #dddddd !important;
+    background: #CBF0FD !important;
+    border: 1px solid #00aae6 !important;
 }
 
 .lexTable td {
-    border: 1px solid #dddddd !important;
+    border: 1px solid #00aae6 !important;
     padding: 5px !important;
 }  
 

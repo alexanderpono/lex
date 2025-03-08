@@ -18,6 +18,7 @@ export class AppControllerBuilder {
     showCanonicText: boolean = false;
     formatIds: boolean = false;
     formatComments: boolean = false;
+    showLineNumbers: boolean = false;
 
     setTarget = (target: string) => {
         this.target = target;
@@ -85,6 +86,10 @@ export class AppControllerBuilder {
     };
     setFormatComments = (formatComments: boolean) => {
         this.formatComments = formatComments;
+        return this;
+    };
+    setShowLineNumbers = (showLineNumbers: boolean) => {
+        this.showLineNumbers = showLineNumbers;
         return this;
     };
 }
