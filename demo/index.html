@@ -47,7 +47,8 @@
             showCanonicText: false,
             formatIds: false,
             formatComments: false,
-            showLineNumbers: false
+            showLineNumbers: false,
+            showStringsTable: false
         };
     </script>
 
@@ -162,6 +163,64 @@
             });
         </script>
     </section>
+
+    <section class="slide">
+        <h3>1. Строковые константы</h3>
+        <div id="lex-const" class="lex"></div>
+        <div id="lex-const-controls" class="game controls">Строковая константа</div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'lex-const',
+                    target: 'lex-const',
+                    simControlsTarget: 'lex-const-controls',
+                    showSimControls: true,
+                    maxCalcStep: 0,
+                    endCalcStep: 12,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '=', '/', '\''],
+                    inputString: 'let a = \'Hello World\';',
+                    showInputFile: true,
+                    showPrettyText: false,
+                    showLimitersTable: true,
+                    showSpacesTable: true,
+                    showIdsTable: true,
+                    showCanonicText: true
+                });
+            });
+        </script>
+    </section>
+
+    <section class="slide">
+        <h3>1. Строковые константы</h3>
+        <div id="lex-const2" class="lex"></div>
+        <div id="lex-const2-controls" class="game controls">Строковая константа</div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'lex-const2',
+                    target: 'lex-const2',
+                    simControlsTarget: 'lex-const2-controls',
+                    showSimControls: true,
+                    maxCalcStep: 13,
+                    endCalcStep: 13,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '=', '/', '\''],
+                    inputString: 'let a = \'Hello World\';',
+                    showInputFile: true,
+                    showPrettyText: false,
+                    showLimitersTable: true,
+                    showSpacesTable: true,
+                    showIdsTable: true,
+                    showCanonicText: true,
+                    showStringsTable: true
+                });
+            });
+        </script>
+    </section>
+
 
     <section class="slide">
         <h3>1. Как это можно использовать?</h3>
@@ -302,14 +361,6 @@
                     showLineNumbers: true
                 });
             });
-        </script>
-    </section>
-
-    <section class="slide">
-        <h3>1. Строковая константа</h3>
-        <div id="lex2" class="lex"></div>
-        <div id="lex2-controls" class="game controls">Строковая константа</div>
-        <script>
         </script>
     </section>
 

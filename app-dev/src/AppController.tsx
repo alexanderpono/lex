@@ -3,7 +3,14 @@ import { render } from 'react-dom';
 import { AppStateManager } from './AppStateManager';
 import { AppControllerBuilder } from './AppControllerBuilder';
 import { LexView } from './components/LexView';
-import { CanonicTextItem, CompiledLine, defaultCompiledLine, IndexData, Table } from './app.types';
+import {
+    AppDocument,
+    CanonicTextItem,
+    CompiledLine,
+    defaultCompiledLine,
+    IndexData,
+    Table
+} from './app.types';
 import { SimControls } from './components/SimControls';
 
 const NOT_FOUND = 10000;
@@ -36,10 +43,17 @@ export class AppController {
         this.stateManager.setLineNo(0);
         this.stateManager.setCurrentPosInLine(0);
         this.stateManager.setText([]);
+        this.stateManager.setStrings([]);
 
-        this.parseText(this.stateManager.getInputString());
+        let usedIterations = this.parseText(this.stateManager.getInputString());
         if (this.stateManager.getInputString() === '') {
-            console.log('lex parse OK', this.stateManager.getStepNo());
+            console.log('lex parse OK', this.stateManager.getStepNo(), usedIterations);
+            if (usedIterations < this.stateManager.getStepNo()) {
+                console.log('to buildStrings()');
+                this.buildStrings();
+                usedIterations++;
+                console.log('after buildStrings() usedIterations=', usedIterations);
+            }
         }
     };
 
@@ -109,6 +123,8 @@ export class AppController {
                 formatIds={this.builder.formatIds}
                 formatComments={this.builder.formatComments}
                 showLineNumbers={this.builder.showLineNumbers}
+                strings={this.stateManager.getStrings()}
+                showStringsTable={this.builder.showStringsTable}
             />,
             target
         );
@@ -144,10 +160,10 @@ export class AppController {
         newId: string,
         lineNo: number,
         currentPosInLine: number,
-        text: CanonicTextItem[]
-    ): CanonicTextItem[] => {
-        let idsTable = this.stateManager.getIds();
-        const posInIds = idsTable.findIndex((id: string) => id === newId);
+        doc: AppDocument
+    ): AppDocument => {
+        const posInIds = doc.ids.findIndex((id: string) => id === newId);
+        const newDoc = { ...doc };
         let newTextItem: CanonicTextItem = {
             tableId: Table.IDS,
             tableIndex: posInIds,
@@ -156,18 +172,43 @@ export class AppController {
             lexem: newId
         };
         if (posInIds < 0) {
-            idsTable = [...idsTable, newId];
-            newTextItem.tableIndex = idsTable.length - 1;
+            newDoc.ids = [...newDoc.ids, newId];
+            newTextItem.tableIndex = newDoc.ids.length - 1;
         }
-        this.stateManager.setIds(idsTable);
-        return [...text, newTextItem];
+
+        newDoc.text = [...newDoc.text, newTextItem];
+        return newDoc;
+    };
+
+    addStringToText = (
+        newId: string,
+        lineNo: number,
+        currentPosInLine: number,
+        doc: AppDocument
+    ): AppDocument => {
+        const posInStrings = doc.strings.findIndex((id: string) => id === newId);
+        const newDoc = { ...doc };
+        let newTextItem: CanonicTextItem = {
+            tableId: Table.STRINGS,
+            tableIndex: posInStrings,
+            lineNo,
+            pos: currentPosInLine,
+            lexem: newId
+        };
+        if (posInStrings < 0) {
+            newDoc.strings = [...newDoc.strings, newId];
+            newTextItem.tableIndex = newDoc.strings.length - 1;
+        }
+
+        newDoc.text = [...newDoc.text, newTextItem];
+        return newDoc;
     };
 
     addLimiterOrSpaceToText = (
         indexData: IndexData,
         lineNo: number,
         currentPosInLine: number,
-        text: CanonicTextItem[]
+        doc: AppDocument
     ) => {
         const newTextItem: CanonicTextItem = {
             tableId: indexData.lexem.tableId,
@@ -176,7 +217,7 @@ export class AppController {
             pos: currentPosInLine,
             lexem: indexData.lexem.lexem
         };
-        return [...text, newTextItem];
+        return { ...doc, text: [...doc.text, newTextItem] };
     };
 
     getIndex = (s: string, compiled: CompiledLine[]): IndexData => {
@@ -201,22 +242,33 @@ export class AppController {
         let iter = 0;
         const MAX_ITER = this.stateManager.getStepNo();
         let currentPosInLine = 1;
-        let text: CanonicTextItem[] = [];
         let lineNo = 1;
 
-        const compiled = this.stateManager.getCompiled();
+        let document: AppDocument = {
+            spaces: this.stateManager.getSpaces(),
+            limiters: this.stateManager.getLimiters(),
+            ids: [],
+            compiled: this.stateManager.getCompiled(),
+            text: [],
+            strings: []
+        };
 
         while (buf.length > 0 && iter < MAX_ITER) {
-            const indexData = this.getIndex(buf, compiled);
+            const indexData = this.getIndex(buf, document.compiled);
             if (indexData.pos !== NOT_FOUND) {
                 const limiterOrSpaceNotInBufStart = indexData.pos > 0;
                 if (limiterOrSpaceNotInBufStart) {
                     const newId = buf.substring(0, indexData.pos);
-                    text = this.addIdToText(newId, lineNo, currentPosInLine, text);
+                    document = this.addIdToText(newId, lineNo, currentPosInLine, document);
                     currentPosInLine += newId.length;
                     buf = buf.substring(indexData.pos);
                 } else {
-                    text = this.addLimiterOrSpaceToText(indexData, lineNo, currentPosInLine, text);
+                    document = this.addLimiterOrSpaceToText(
+                        indexData,
+                        lineNo,
+                        currentPosInLine,
+                        document
+                    );
                     currentPosInLine += indexData.lexem.lexem.length;
                     buf = buf.substring(indexData.lexem.lexem.length);
                     if (indexData.lexem.lexem === '\n') {
@@ -225,15 +277,75 @@ export class AppController {
                     }
                 }
             } else {
-                text = this.addIdToText(buf, lineNo, currentPosInLine, text);
+                document = this.addIdToText(buf, lineNo, currentPosInLine, document);
                 buf = '';
             }
             iter++;
         }
 
         this.stateManager.setInputString(buf);
-        this.stateManager.setText(text);
+        this.stateManager.setText(document.text);
+        this.stateManager.setIds(document.ids);
         this.stateManager.setLineNo(lineNo);
         this.stateManager.setCurrentPosInLine(currentPosInLine);
+        return iter;
+    };
+
+    concatString = (text: CanonicTextItem[]): string => {
+        return text.map((token: CanonicTextItem) => token.lexem).join('');
+    };
+
+    buildStrings = () => {
+        const srcText = this.stateManager.getText();
+        let state = 'work';
+        let buffer: CanonicTextItem[] = [];
+
+        let document: AppDocument = {
+            spaces: this.stateManager.getSpaces(),
+            limiters: this.stateManager.getLimiters(),
+            ids: [],
+            compiled: this.stateManager.getCompiled(),
+            text: [],
+            strings: []
+        };
+
+        srcText.forEach((token: CanonicTextItem) => {
+            if (state === 'work' && token.lexem === "'") {
+                state = 'openedString';
+                return;
+            }
+            if (state === 'openedString' && token.lexem === "'") {
+                const newId = this.concatString(buffer);
+
+                document = this.addStringToText(newId, buffer[0].lineNo, buffer[0].pos, document);
+                buffer = [];
+                state = 'work';
+                return;
+            }
+            if (state === 'openedString' && token.lexem === '\n') {
+                console.error('Незавершенная строковая константа', buffer[0].lineNo, buffer[0].pos);
+                document.text = [...document.text, ...buffer];
+                buffer = [];
+                return;
+            }
+
+            if (state === 'openedString') {
+                buffer = [...buffer, token];
+                return;
+            }
+
+            if (state === 'work') {
+                if (token.tableId === 'i') {
+                    document = this.addIdToText(token.lexem, token.lineNo, token.pos, document);
+                } else {
+                    document.text = [...document.text, token];
+                }
+                return;
+            }
+        });
+
+        this.stateManager.setText(document.text);
+        this.stateManager.setIds(document.ids);
+        this.stateManager.setStrings(document.strings);
     };
 }

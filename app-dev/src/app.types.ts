@@ -2,7 +2,8 @@ export enum Table {
     DEFAULT = '',
     LIMITERS = 'l',
     SPACES = 's',
-    IDS = 'i'
+    IDS = 'i',
+    STRINGS = 'str'
 }
 
 export interface CompiledLine {
@@ -37,3 +38,21 @@ export interface IndexData {
     pos: number;
     lexem: CompiledLine;
 }
+
+export interface AppDocument {
+    spaces: string[];
+    limiters: string[];
+    ids: string[];
+    compiled: CompiledLine[];
+    text: CanonicTextItem[];
+    strings: string[];
+}
+
+export const defaultDocument: AppDocument = {
+    spaces: [],
+    limiters: [],
+    ids: [],
+    compiled: [],
+    text: [],
+    strings: []
+};

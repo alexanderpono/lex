@@ -25,6 +25,7 @@ interface AppConfig {
     formatIds: boolean;
     formatComments: boolean;
     showLineNumbers: boolean;
+    showStringsTable: boolean;
 }
 
 const defaultAppConfig: AppConfig = {
@@ -45,7 +46,8 @@ const defaultAppConfig: AppConfig = {
     showCanonicText: false,
     formatIds: false,
     formatComments: false,
-    showLineNumbers: false
+    showLineNumbers: false,
+    showStringsTable: false
 };
 
 class LexRunner {
@@ -73,6 +75,7 @@ class LexRunner {
                 .setFormatIds(config.formatIds)
                 .setFormatComments(config.formatComments)
                 .setShowLineNumbers(config.showLineNumbers)
+                .setShowStringsTable(config.showStringsTable)
                 .setMaxCalcStep(config.maxCalcStep),
             stateManager
         );
@@ -93,11 +96,11 @@ if (window['demo'] === true) {
         target: 'viewport',
         simControlsTarget: 'controls',
         showSimControls: true,
-        maxCalcStep: 19,
-        endCalcStep: 19,
+        maxCalcStep: 12,
+        endCalcStep: 12,
         spaces: [' ', '\n'],
-        limiters: [';', '=', '/'],
-        inputString: 'let a = 1;\n//let b = 2;',
+        limiters: [';', '=', '/', "'"],
+        inputString: "let a = 'Hello World';",
         showPrettyText: true,
         showLimitersTable: true,
         showSpacesTable: true,
@@ -105,6 +108,7 @@ if (window['demo'] === true) {
         showCanonicText: true,
         formatIds: true,
         formatComments: true,
-        showLineNumbers: true
+        showLineNumbers: true,
+        showStringsTable: true
     });
 }

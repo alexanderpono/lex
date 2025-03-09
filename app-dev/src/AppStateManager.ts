@@ -7,6 +7,7 @@ export class AppStateManager {
     private spaces: string[] = [];
     private limiters: string[] = [];
     private ids: string[] = [];
+    private strings: string[] = [];
     private compiled: CompiledLine[];
     private inputString: string = '';
     private lineNo: number = 0;
@@ -17,6 +18,7 @@ export class AppStateManager {
     getSpaces = () => this.spaces;
     getLimiters = () => this.limiters;
     getIds = () => this.ids;
+    getStrings = () => this.strings;
     getCompiled = () => this.compiled;
     getInputString = () => this.inputString;
     getLineNo = () => this.lineNo;
@@ -27,6 +29,7 @@ export class AppStateManager {
     setSpaces = (spaces: string[]) => (this.spaces = spaces);
     setLimiters = (limiters: string[]) => (this.limiters = limiters);
     setIds = (ids: string[] = []) => (this.ids = ids);
+    setStrings = (strings: string[] = []) => (this.strings = strings);
     setCompiled = (compiled: CompiledLine[]) => (this.compiled = compiled);
     setInputString = (inputString: string) => (this.inputString = inputString);
     setLineNo = (lineNo: number) => (this.lineNo = lineNo);

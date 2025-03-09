@@ -19,6 +19,7 @@ export class AppControllerBuilder {
     formatIds: boolean = false;
     formatComments: boolean = false;
     showLineNumbers: boolean = false;
+    showStringsTable: boolean = false;
 
     setTarget = (target: string) => {
         this.target = target;
@@ -90,6 +91,10 @@ export class AppControllerBuilder {
     };
     setShowLineNumbers = (showLineNumbers: boolean) => {
         this.showLineNumbers = showLineNumbers;
+        return this;
+    };
+    setShowStringsTable = (showStringsTable: boolean) => {
+        this.showStringsTable = showStringsTable;
         return this;
     };
 }

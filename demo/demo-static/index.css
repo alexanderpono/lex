@@ -428,6 +428,11 @@ p, label, li {
 	border-collapse: collapse; 
 }
 
+.stringsTable {
+    position: absolute;
+    left: 270px;
+    top: 300px;
+}
 .lexTable th {
     font-weight: bold !important;
     padding: 5px !important;

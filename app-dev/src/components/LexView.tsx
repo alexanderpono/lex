@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './LexView.scss';
-import { CanonicTextItem } from '@src/app.types';
+import { CanonicTextItem, Table } from '@src/app.types';
 
 interface LexViewProps {
     inputString: string;
@@ -17,6 +17,8 @@ interface LexViewProps {
     formatIds: boolean;
     formatComments: boolean;
     showLineNumbers: boolean;
+    strings: string[];
+    showStringsTable: boolean;
 }
 
 const formatLexem = (s: string) => {
@@ -55,14 +57,21 @@ const prettify = (
             }
         }
         let formattedLexem = <span key={token.pos}>{token.lexem}</span>;
-        if (token.tableId === 'i') {
+        if (token.tableId === Table.IDS) {
             formattedLexem = (
                 <span key={token.pos} className={getIdClassName()}>
                     {token.lexem}
                 </span>
             );
         }
-        if (token.tableId === 'l') {
+        if (token.tableId === Table.STRINGS) {
+            formattedLexem = (
+                <span key={token.pos} className={getIdClassName()}>
+                    '{token.lexem}'
+                </span>
+            );
+        }
+        if (token.tableId === Table.LIMITERS) {
             if (token.lexem === '/') {
                 if (index + 1 < text.length) {
                     const nextToken = text[index + 1];
@@ -102,21 +111,23 @@ export const LexView: React.FC<LexViewProps> = ({
     showCanonicText,
     formatIds,
     formatComments,
-    showLineNumbers
+    showLineNumbers,
+    strings,
+    showStringsTable
 }) => {
     return (
         <div className={styles.tmp}>
             <div className="tables">
                 {showInputFile && (
                     <section>
-                        <p>input file:</p>
+                        <p>input file</p>
                         <pre className="inputString">{inputString ? inputString : '  '}</pre>
                     </section>
                 )}
 
                 {showLimitersTable && (
                     <section>
-                        <p>limiters:</p>
+                        <p>limiters(l)</p>
                         <table className="lexTable">
                             <thead>
                                 <tr>
@@ -140,7 +151,7 @@ export const LexView: React.FC<LexViewProps> = ({
 
                 {showSpacesTable && (
                     <section>
-                        <p>spaces:</p>
+                        <p>spaces(s)</p>
                         <table className="lexTable">
                             <thead>
                                 <tr>
@@ -164,7 +175,7 @@ export const LexView: React.FC<LexViewProps> = ({
 
                 {showIdsTable && (
                     <section>
-                        <p>ids:</p>
+                        <p>ids(i)</p>
                         <table className="lexTable">
                             <thead>
                                 <tr>
@@ -186,9 +197,33 @@ export const LexView: React.FC<LexViewProps> = ({
                     </section>
                 )}
 
+                {showStringsTable && (
+                    <section className="stringsTable">
+                        <p>strings(str)</p>
+                        <table className="lexTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Lexem</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {strings.map((lexem, index) => {
+                                    return (
+                                        <tr key={`limiters-${index}`}>
+                                            <td>{index + 1}</td>
+                                            <td>{lexem}</td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </section>
+                )}
+
                 {showCanonicText && (
                     <section>
-                        <p>canonic text:</p>
+                        <p>canonic text</p>
                         <div className="text">
                             <table className="lexTable">
                                 <thead>
@@ -220,7 +255,7 @@ export const LexView: React.FC<LexViewProps> = ({
 
                 {showPrettyText && (
                     <section>
-                        <p>pretty text:</p>
+                        <p>pretty text</p>
                         <pre className="text-restored">
                             {prettify(text, formatIds, formatComments, showLineNumbers)}
                         </pre>
