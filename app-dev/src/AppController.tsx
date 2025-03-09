@@ -54,6 +54,12 @@ export class AppController {
                 usedIterations++;
                 console.log('after buildStrings() usedIterations=', usedIterations);
             }
+            if (usedIterations < this.stateManager.getStepNo()) {
+                console.log('to removeComments()');
+                this.removeComments();
+                usedIterations++;
+                console.log('after removeComments() usedIterations=', usedIterations);
+            }
         }
     };
 
@@ -339,6 +345,71 @@ export class AppController {
                     document = this.addIdToText(token.lexem, token.lineNo, token.pos, document);
                 } else {
                     document.text = [...document.text, token];
+                }
+                return;
+            }
+        });
+
+        this.stateManager.setText(document.text);
+        this.stateManager.setIds(document.ids);
+        this.stateManager.setStrings(document.strings);
+    };
+
+    removeComments = () => {
+        const srcText = this.stateManager.getText();
+        let state = 'work';
+        let buffer: CanonicTextItem[] = [];
+
+        let document: AppDocument = {
+            spaces: this.stateManager.getSpaces(),
+            limiters: this.stateManager.getLimiters(),
+            ids: [],
+            compiled: this.stateManager.getCompiled(),
+            text: [],
+            strings: []
+        };
+
+        srcText.forEach((token: CanonicTextItem) => {
+            if (state === 'work' && token.lexem === '/') {
+                buffer = [token];
+                state = 'firstSlash';
+                return;
+            }
+            if (state === 'firstSlash' && token.lexem === '/') {
+                state = 'comment';
+                return;
+            }
+            if (state === 'comment' && token.lexem === '\n') {
+                document.text = [...document.text, token];
+                state = 'work';
+                return;
+            }
+
+            if (state === 'firstSlash') {
+                document.text = [...document.text, buffer[0]];
+                buffer = [];
+                document.text = [...document.text, token];
+                state = 'work';
+                return;
+            }
+
+            if (state === 'work') {
+                switch (token.tableId) {
+                    case Table.IDS:
+                        document = this.addIdToText(token.lexem, token.lineNo, token.pos, document);
+                        break;
+
+                    case Table.STRINGS:
+                        document = this.addStringToText(
+                            token.lexem,
+                            token.lineNo,
+                            token.pos,
+                            document
+                        );
+                        break;
+
+                    default:
+                        document.text = [...document.text, token];
                 }
                 return;
             }

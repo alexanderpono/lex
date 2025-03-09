@@ -365,6 +365,68 @@
     </section>
 
     <section class="slide">
+        <h3>1. Убираем комментарии</h3>
+        <div id="lex-remove-comments" class="lex"></div>
+        <div id="lex-remove-comments-controls" class="game controls">Убираем комментарии</div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'lex-remove-comments',
+                    target: 'lex-remove-comments',
+                    simControlsTarget: 'lex-remove-comments-controls',
+                    showSimControls: true,
+                    maxCalcStep: 33,
+                    endCalcStep: 33,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '=', '/', "'"],
+                    inputString: "let a = 2;\n//let b = 3;\nlet b = 'Hello world';",
+                    showInputFile: false,
+                    showPrettyText: true,
+                    showLimitersTable: true,
+                    showSpacesTable: false,
+                    showIdsTable: true,
+                    showCanonicText: true,
+                    formatIds: true,
+                    formatComments: true,
+                    showLineNumbers: false
+                });
+            });
+        </script>
+    </section>
+
+    <section class="slide">
+        <h3>1. Убираем комментарии</h3>
+        <div id="lex-remove-comments2" class="lex"></div>
+        <div id="lex-remove-comments2-controls" class="game controls">Убираем комментарии</div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'lex-remove-comments2',
+                    target: 'lex-remove-comments2',
+                    simControlsTarget: 'lex-remove-comments2-controls',
+                    showSimControls: true,
+                    maxCalcStep: 34,
+                    endCalcStep: 34,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '=', '/', "'"],
+                    inputString: "let a = 2;\n//let b = 3;\nlet b = 'Hello world';",
+                    showInputFile: false,
+                    showPrettyText: true,
+                    showLimitersTable: true,
+                    showSpacesTable: false,
+                    showIdsTable: true,
+                    showCanonicText: true,
+                    formatIds: true,
+                    formatComments: true,
+                    showLineNumbers: false
+                });
+            });
+        </script>
+    </section>
+
+    <section class="slide">
         <h3>1. Убираем пробелы</h3>
         <div id="lex2" class="lex"></div>
         <div id="lex2-controls" class="game controls">Убираем пробелы</div>
