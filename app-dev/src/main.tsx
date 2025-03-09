@@ -26,6 +26,7 @@ interface AppConfig {
     formatComments: boolean;
     showLineNumbers: boolean;
     showStringsTable: boolean;
+    showText: boolean;
 }
 
 const defaultAppConfig: AppConfig = {
@@ -47,7 +48,8 @@ const defaultAppConfig: AppConfig = {
     formatIds: false,
     formatComments: false,
     showLineNumbers: false,
-    showStringsTable: false
+    showStringsTable: false,
+    showText: false
 };
 
 class LexRunner {
@@ -76,6 +78,7 @@ class LexRunner {
                 .setFormatComments(config.formatComments)
                 .setShowLineNumbers(config.showLineNumbers)
                 .setShowStringsTable(config.showStringsTable)
+                .setShowText(config.showText)
                 .setMaxCalcStep(config.maxCalcStep),
             stateManager
         );
@@ -96,20 +99,21 @@ if (window['demo'] === true) {
         target: 'viewport',
         simControlsTarget: 'controls',
         showSimControls: true,
-        maxCalcStep: 38,
-        endCalcStep: 38,
+        maxCalcStep: 39,
+        endCalcStep: 39,
         spaces: [' ', '\n'],
         limiters: [';', '=', '/', "'"],
         inputString: "let a = 2 / 1;\n//let b = 3;\nlet b = 'Hello world';",
         // showInputFile: true,
-        showPrettyText: true,
+        // showPrettyText: true,
         // showLimitersTable: true,
         showSpacesTable: false,
         showIdsTable: true,
         showCanonicText: true,
         formatIds: true,
         formatComments: true,
-        showLineNumbers: true,
-        showStringsTable: true
+        // showLineNumbers: true,
+        showStringsTable: true,
+        showText: true
     });
 }

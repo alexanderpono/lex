@@ -488,3 +488,15 @@ p, label, li {
 .slide pre.text-restored .comment {
     color: #609755;
 }
+
+.simple-text {
+    height: 280px;
+    width: 200px;
+    border: 1px solid #00aae6;
+    margin-right: 20px;
+    white-space: wrap !important;
+}
+
+.simple-text span {
+    margin-right: 2px;
+}

@@ -60,6 +60,12 @@ export class AppController {
                 usedIterations++;
                 console.log('after removeComments() usedIterations=', usedIterations);
             }
+            if (usedIterations < this.stateManager.getStepNo()) {
+                console.log('to removeWhitespace()');
+                this.removeWhitespace();
+                usedIterations++;
+                console.log('after removeWhitespace() usedIterations=', usedIterations);
+            }
         }
     };
 
@@ -131,6 +137,7 @@ export class AppController {
                 showLineNumbers={this.builder.showLineNumbers}
                 strings={this.stateManager.getStrings()}
                 showStringsTable={this.builder.showStringsTable}
+                showText={this.builder.showText}
             />,
             target
         );
@@ -393,6 +400,51 @@ export class AppController {
                 return;
             }
 
+            if (state === 'work') {
+                switch (token.tableId) {
+                    case Table.IDS:
+                        document = this.addIdToText(token.lexem, token.lineNo, token.pos, document);
+                        break;
+
+                    case Table.STRINGS:
+                        document = this.addStringToText(
+                            token.lexem,
+                            token.lineNo,
+                            token.pos,
+                            document
+                        );
+                        break;
+
+                    default:
+                        document.text = [...document.text, token];
+                }
+                return;
+            }
+        });
+
+        this.stateManager.setText(document.text);
+        this.stateManager.setIds(document.ids);
+        this.stateManager.setStrings(document.strings);
+    };
+
+    removeWhitespace = () => {
+        const srcText = this.stateManager.getText();
+        let state = 'work';
+
+        let document: AppDocument = {
+            spaces: this.stateManager.getSpaces(),
+            limiters: this.stateManager.getLimiters(),
+            ids: [],
+            compiled: this.stateManager.getCompiled(),
+            text: [],
+            strings: []
+        };
+
+        srcText.forEach((token: CanonicTextItem) => {
+            if (state === 'work' && token.tableId === Table.SPACES) {
+                state = 'work';
+                return;
+            }
             if (state === 'work') {
                 switch (token.tableId) {
                     case Table.IDS:

@@ -48,7 +48,8 @@
             formatIds: false,
             formatComments: false,
             showLineNumbers: false,
-            showStringsTable: false
+            showStringsTable: false,
+            showText: false
         };
     </script>
 
@@ -365,7 +366,7 @@
     </section>
 
     <section class="slide">
-        <h3>1. Убираем комментарии</h3>
+        <h3>1. Убираем из текста комментарии</h3>
         <div id="lex-remove-comments" class="lex"></div>
         <div id="lex-remove-comments-controls" class="game controls">Убираем комментарии</div>
         <script>
@@ -396,7 +397,7 @@
     </section>
 
     <section class="slide">
-        <h3>1. Убираем комментарии</h3>
+        <h3>1. Убираем из текста комментарии</h3>
         <div id="lex-remove-comments2" class="lex"></div>
         <div id="lex-remove-comments2-controls" class="game controls">Убираем комментарии</div>
         <script>
@@ -427,12 +428,68 @@
     </section>
 
     <section class="slide">
-        <h3>1. Убираем пробелы</h3>
-        <div id="lex2" class="lex"></div>
-        <div id="lex2-controls" class="game controls">Убираем пробелы</div>
+        <h3>1. Убираем из текста whitespace</h3>
+        <div id="lex-remove-whitespace" class="lex"></div>
+        <div id="lex-remove-whitespace-controls" class="game controls">Убираем пробелы</div>
         <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'lex-remove-whitespace',
+                    target: 'lex-remove-whitespace',
+                    simControlsTarget: 'lex-remove-whitespace-controls',
+                    showSimControls: true,
+                    maxCalcStep: 34,
+                    endCalcStep: 34,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '=', '/', "'"],
+                    inputString: "let a = 2;\n//let b = 3;\nlet b = 'Hello world';",
+                    showInputFile: false,
+                    showPrettyText: false,
+                    showLimitersTable: true,
+                    showSpacesTable: true,
+                    showIdsTable: true,
+                    showCanonicText: true,
+                    formatIds: true,
+                    formatComments: true,
+                    showLineNumbers: false
+                });
+            });
         </script>
     </section>
+
+    <section class="slide">
+        <h3>1. Убираем из текста whitespace</h3>
+        <div id="lex-remove-whitespace2" class="lex"></div>
+        <div id="lex-remove-whitespace2-controls" class="game controls">Убираем пробелы</div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'lex-remove-whitespace2',
+                    target: 'lex-remove-whitespace2',
+                    simControlsTarget: 'lex-remove-whitespace2-controls',
+                    showSimControls: true,
+                    maxCalcStep: 35,
+                    endCalcStep: 35,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '=', '/', "'"],
+                    inputString: "let a = 2;\n//let b = 3;\nlet b = 'Hello world';",
+                    showInputFile: false,
+                    showPrettyText: false,
+                    showLimitersTable: true,
+                    showSpacesTable: true,
+                    showIdsTable: true,
+                    showCanonicText: true,
+                    formatIds: true,
+                    formatComments: true,
+                    showLineNumbers: false,
+                    showText: true
+                });
+            });
+        </script>
+    </section>
+
 
     <footer class="badge">
         <a href="https://github.com/alexanderpono/">Проект на GitHub</a>

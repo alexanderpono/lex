@@ -66,3 +66,10 @@
 :global(.comment) {
     color: #609755;
 }
+
+:global(.simple-text) {
+    height: 200px;
+    width: 200px;
+    border: 1px solid red;
+    white-space: wrap;
+}

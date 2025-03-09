@@ -19,6 +19,7 @@ interface LexViewProps {
     showLineNumbers: boolean;
     strings: string[];
     showStringsTable: boolean;
+    showText: boolean;
 }
 
 const formatLexem = (s: string) => {
@@ -97,6 +98,19 @@ const prettify = (
 
     return <section>{lines}</section>;
 };
+
+const toText = (text: CanonicTextItem[]): React.ReactElement => {
+    const els = text.map((token: CanonicTextItem) => {
+        if (token.tableId === Table.STRINGS) {
+            return <span>{`'${token.lexem}'`}</span>;
+        }
+
+        return <span>{token.lexem}</span>;
+    });
+
+    return <section>{els}</section>;
+};
+
 export const LexView: React.FC<LexViewProps> = ({
     inputString,
     limiters,
@@ -113,7 +127,8 @@ export const LexView: React.FC<LexViewProps> = ({
     formatComments,
     showLineNumbers,
     strings,
-    showStringsTable
+    showStringsTable,
+    showText
 }) => {
     return (
         <div className={styles.tmp}>
@@ -259,6 +274,13 @@ export const LexView: React.FC<LexViewProps> = ({
                         <pre className="text-restored">
                             {prettify(text, formatIds, formatComments, showLineNumbers)}
                         </pre>
+                    </section>
+                )}
+
+                {showText && (
+                    <section>
+                        <p>text</p>
+                        <pre className="simple-text">{toText(text)}</pre>
                     </section>
                 )}
             </div>
