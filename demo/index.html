@@ -490,6 +490,94 @@
         </script>
     </section>
 
+    <section class="slide">
+        <h3>2. Синтаксический анализ</h3>
+        <p>2.1. БНФ-нотация описания грамматик языков</p>
+        <p>2.2. Грамматика простого языка</p>
+        <p></p>
+        <p></p>
+    </section>
+
+    <section class="slide">
+        <h3>2. Простейшая программа</h3>
+        <pre>log('Hello world');</pre>
+    </section>
+
+    <section class="slide">
+        <h3>2. Грамматика простого языка</h3>
+        <p>&lt;Program&gt; ::= &lt;callFunction&gt;</p>
+        <p>&lt;callFunction&gt; ::= &lt;ID&gt; <strong>(</strong> <strong>)</strong> | &lt;ID&gt; (&lt;parameterList&gt;)</p>
+        <p>&lt;parameterList&gt; ::= &lt;string&gt; | &lt;string&gt; <strong>,</strong> &lt;parameterList&gt;</p>
+        <br />
+        <p>&lt;ID&gt; &mdash; идентификатор</p>
+        <p><strong>( ) ,</strong> &mdash; разделители из таблицы limiters лексического анализатора</p>
+        <p>| &mdash; обозначение альтернативы</p>
+    </section>
+
+    <section class="slide">
+        <h3>2. Программа на простом языке</h3>
+        <div id="syntax-gramma" class="lex"></div>
+        <div id="syntax-gramma-controls" class="game controls"></div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'syntax-gramma',
+                    target: 'syntax-gramma',
+                    simControlsTarget: 'syntax-gramma-controls',
+                    showSimControls: true,
+                    maxCalcStep: 12,
+                    endCalcStep: 12,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '=', '/', "'", '(', ')'],
+                    inputString: "log('Hello world');",
+                    showInputFile: false,
+                    showPrettyText: false,
+                    showLimitersTable: true,
+                    showSpacesTable: true,
+                    showIdsTable: true,
+                    showCanonicText: true,
+                    formatIds: true,
+                    formatComments: true,
+                    showLineNumbers: false,
+                    showText: true
+                });
+            });
+        </script>
+    </section>
+
+    <section class="slide">
+        <h3>2. Синтаксический разбор программы</h3>
+        <div id="syntax-2" class="lex"></div>
+        <div id="syntax-2-controls" class="game controls"></div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'syntax-2',
+                    target: 'syntax-2',
+                    simControlsTarget: 'syntax-2-controls',
+                    showSimControls: true,
+                    maxCalcStep: 12,
+                    endCalcStep: 12,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '=', '/', "'", '(', ')'],
+                    inputString: "log('Hello world');",
+                    showInputFile: false,
+                    showPrettyText: false,
+                    showLimitersTable: false,
+                    showSpacesTable: false,
+                    showIdsTable: true,
+                    showCanonicText: true,
+                    formatIds: true,
+                    formatComments: true,
+                    showLineNumbers: false,
+                    showText: true
+                });
+            });
+        </script>
+    </section>
+
 
     <footer class="badge">
         <a href="https://github.com/alexanderpono/">Проект на GitHub</a>

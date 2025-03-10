@@ -66,6 +66,12 @@ export class AppController {
                 usedIterations++;
                 console.log('after removeWhitespace() usedIterations=', usedIterations);
             }
+            if (usedIterations < this.stateManager.getStepNo()) {
+                console.log('to syntax()');
+                this.analyzeSyntax();
+                usedIterations++;
+                console.log('after analyzeSyntax() usedIterations=', usedIterations);
+            }
         }
     };
 
@@ -471,4 +477,106 @@ export class AppController {
         this.stateManager.setIds(document.ids);
         this.stateManager.setStrings(document.strings);
     };
+
+    analyzeSyntax = () => {
+        const text = this.stateManager.getText();
+        console.log('analyzeSyntax() text=', text);
+        const state: SyntaxAnalyzeState = {
+            code: false,
+            pos: 0
+        };
+
+        const isProgram = this.isProgram(state);
+        console.log('analyzeSyntax() isProgram=', isProgram);
+
+        if (isProgram.code && isProgram.pos === text.length) {
+            console.log('analyzeSyntax() syntax check OK');
+        } else {
+            console.log('analyzeSyntax() syntax check failed');
+        }
+    };
+
+    isProgram = (state: SyntaxAnalyzeState): SyntaxAnalyzeState => {
+        return this.isCall(state);
+    };
+
+    isCall = (state: SyntaxAnalyzeState): SyntaxAnalyzeState => {
+        const NO = { code: false, pos: state.pos };
+
+        const isId = this.isAnyId(state);
+        if (!isId.code) {
+            return NO;
+        }
+        const isOpen = this.isLimiter(isId, '(');
+        if (!isOpen.code) {
+            return NO;
+        }
+        const isParametersList = this.isParametersList(isOpen);
+        if (!isParametersList.code) {
+            return NO;
+        }
+
+        const isClose = this.isLimiter(isParametersList, ')');
+        if (!isClose.code) {
+            return NO;
+        }
+
+        const isSemicolon = this.isLimiter(isClose, ';');
+        if (!isSemicolon.code) {
+            return { code: false, pos: isClose.pos };
+        }
+
+        return isSemicolon;
+    };
+
+    isAnyId = (state: SyntaxAnalyzeState): SyntaxAnalyzeState => {
+        const text = this.stateManager.getText();
+        const token = text[state.pos];
+        if (token.tableId === Table.IDS) {
+            return { code: true, pos: state.pos + 1 };
+        }
+        return { code: false, pos: state.pos };
+    };
+
+    isLimiter = (state: SyntaxAnalyzeState, lexem: string): SyntaxAnalyzeState => {
+        const text = this.stateManager.getText();
+        const token = text[state.pos];
+        if (token.tableId === Table.LIMITERS && token.lexem === lexem) {
+            return { code: true, pos: state.pos + 1 };
+        }
+        return { code: false, pos: state.pos };
+    };
+
+    isParametersList = (state: SyntaxAnalyzeState): SyntaxAnalyzeState => {
+        const NO = { code: false, pos: state.pos };
+
+        const isString = this.isAnyString(state);
+        if (!isString.code) {
+            return NO;
+        }
+        const isColon = this.isLimiter(isString, ',');
+        if (!isColon.code) {
+            return isString;
+        }
+        const isParametersList = this.isParametersList(isColon);
+        if (!isParametersList.code) {
+            return { code: false, pos: isColon.pos };
+        }
+
+        return isParametersList;
+    };
+
+    isAnyString = (state: SyntaxAnalyzeState): SyntaxAnalyzeState => {
+        const text = this.stateManager.getText();
+        const token = text[state.pos];
+        if (token.tableId === Table.STRINGS) {
+            return { code: true, pos: state.pos + 1 };
+        }
+        return { code: false, pos: state.pos };
+    };
+}
+
+interface SyntaxAnalyzeState {
+    code: boolean;
+    pos: number;
 }

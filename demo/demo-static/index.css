@@ -500,3 +500,8 @@ p, label, li {
 .simple-text span {
     margin-right: 2px;
 }
+
+strong {
+    font-weight: normal;
+    color: #00aae6;
+}
