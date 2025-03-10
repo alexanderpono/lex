@@ -493,7 +493,6 @@ p, label, li {
     height: 280px;
     width: 200px;
     border: 1px solid #00aae6;
-    margin-right: 20px;
     white-space: wrap !important;
 }
 
@@ -504,4 +503,11 @@ p, label, li {
 strong {
     font-weight: normal;
     color: #00aae6;
+}
+
+.program {
+    height: 280px;
+    width: 230px;
+    border: 1px solid #00aae6;
+    white-space: wrap !important;
 }

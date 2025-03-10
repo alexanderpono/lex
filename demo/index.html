@@ -49,7 +49,8 @@
             formatComments: false,
             showLineNumbers: false,
             showStringsTable: false,
-            showText: false
+            showText: false,
+            showProgram: false
         };
     </script>
 
@@ -547,7 +548,7 @@
     </section>
 
     <section class="slide">
-        <h3>2. Синтаксический разбор программы</h3>
+        <h3>2. Синтаксический анализ и компиляция</h3>
         <div id="syntax-2" class="lex"></div>
         <div id="syntax-2-controls" class="game controls"></div>
         <script>
@@ -573,6 +574,39 @@
                     formatComments: true,
                     showLineNumbers: false,
                     showText: true
+                });
+            });
+        </script>
+    </section>
+
+    <section class="slide">
+        <h3>2. Синтаксический анализ и компиляция</h3>
+        <div id="syntax-3" class="lex"></div>
+        <div id="syntax-3-controls" class="game controls"></div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'syntax-3',
+                    target: 'syntax-3',
+                    simControlsTarget: 'syntax-3-controls',
+                    showSimControls: true,
+                    maxCalcStep: 13,
+                    endCalcStep: 13,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '=', '/', "'", '(', ')'],
+                    inputString: "log('Hello world');",
+                    showInputFile: false,
+                    showPrettyText: false,
+                    showLimitersTable: false,
+                    showSpacesTable: false,
+                    showIdsTable: true,
+                    showCanonicText: true,
+                    formatIds: true,
+                    formatComments: true,
+                    showLineNumbers: false,
+                    showText: true,
+                    showProgram: true
                 });
             });
         </script>

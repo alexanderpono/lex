@@ -1,6 +1,11 @@
 import { store } from '@src/store/store';
 import { app } from '@src/store/appReducer';
-import { CanonicTextItem, CompiledLine } from './app.types';
+import {
+    CanonicTextItem,
+    CompiledLine,
+    defaultSyntaxAnalyzeState,
+    SyntaxAnalyzeState
+} from './app.types';
 
 export class AppStateManager {
     private stepNo: number = 0;
@@ -13,6 +18,7 @@ export class AppStateManager {
     private lineNo: number = 0;
     private currentPosInLine: number = 0;
     private text: CanonicTextItem[] = [];
+    private program: SyntaxAnalyzeState = { ...defaultSyntaxAnalyzeState };
 
     getStepNo = () => this.stepNo;
     getSpaces = () => this.spaces;
@@ -24,6 +30,7 @@ export class AppStateManager {
     getLineNo = () => this.lineNo;
     getCurrentPosInLine = () => this.currentPosInLine;
     getText = () => this.text;
+    getProgram = () => this.program;
 
     setStepNo = (stepNo: number) => (this.stepNo = stepNo);
     setSpaces = (spaces: string[]) => (this.spaces = spaces);
@@ -35,6 +42,7 @@ export class AppStateManager {
     setLineNo = (lineNo: number) => (this.lineNo = lineNo);
     setCurrentPosInLine = (currentPosInLine: number) => (this.currentPosInLine = currentPosInLine);
     setText = (text: CanonicTextItem[]) => (this.text = text);
+    setProgram = (program: SyntaxAnalyzeState) => (this.program = program);
 
     getAppState = () => {
         return {
@@ -46,7 +54,8 @@ export class AppStateManager {
             inputString: this.getInputString(),
             lineNo: this.getLineNo(),
             currentPosInLine: this.getCurrentPosInLine(),
-            text: this.getText()
+            text: this.getText(),
+            program: this.getProgram()
         };
     };
 

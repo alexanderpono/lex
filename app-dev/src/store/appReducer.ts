@@ -1,4 +1,9 @@
-import { CanonicTextItem, CompiledLine } from '@src/app.types';
+import {
+    CanonicTextItem,
+    CompiledLine,
+    defaultSyntaxAnalyzeState,
+    SyntaxAnalyzeState
+} from '@src/app.types';
 
 export enum AppActions {
     DEFAULT = 'DEFAULT',
@@ -16,6 +21,7 @@ export interface AppState {
     lineNo: number;
     currentPosInLine: number;
     text: CanonicTextItem[];
+    program: SyntaxAnalyzeState;
 }
 
 export const defaultSimState: AppState = {
@@ -28,7 +34,8 @@ export const defaultSimState: AppState = {
     inputString: '',
     lineNo: 0,
     currentPosInLine: 0,
-    text: []
+    text: [],
+    program: defaultSyntaxAnalyzeState
 };
 
 export interface SetAppStateAction {
@@ -43,6 +50,7 @@ export interface SetAppStateAction {
         lineNo: number;
         currentPosInLine: number;
         text: CanonicTextItem[];
+        program: SyntaxAnalyzeState;
     };
 }
 
@@ -57,6 +65,7 @@ export const app = {
         lineNo: number;
         currentPosInLine: number;
         text: CanonicTextItem[];
+        program: SyntaxAnalyzeState;
     }): SetAppStateAction => ({
         type: AppActions.APP_STATE,
         payload: state
@@ -81,7 +90,8 @@ export function appReducer(state: AppState = defaultSimState, action: Action): A
                 inputString: (action as SetAppStateAction).payload.inputString,
                 lineNo: (action as SetAppStateAction).payload.lineNo,
                 currentPosInLine: (action as SetAppStateAction).payload.currentPosInLine,
-                text: (action as SetAppStateAction).payload.text
+                text: (action as SetAppStateAction).payload.text,
+                program: (action as SetAppStateAction).payload.program
             };
         }
     }

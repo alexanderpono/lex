@@ -21,6 +21,7 @@ export class AppControllerBuilder {
     showLineNumbers: boolean = false;
     showStringsTable: boolean = false;
     showText: boolean = false;
+    showProgram: boolean = false;
 
     setTarget = (target: string) => {
         this.target = target;
@@ -100,6 +101,10 @@ export class AppControllerBuilder {
     };
     setShowText = (showText: boolean) => {
         this.showText = showText;
+        return this;
+    };
+    setShowProgram = (showProgram: boolean) => {
+        this.showProgram = showProgram;
         return this;
     };
 }

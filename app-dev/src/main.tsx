@@ -27,6 +27,7 @@ interface AppConfig {
     showLineNumbers: boolean;
     showStringsTable: boolean;
     showText: boolean;
+    showProgram: boolean;
 }
 
 const defaultAppConfig: AppConfig = {
@@ -49,7 +50,8 @@ const defaultAppConfig: AppConfig = {
     formatComments: false,
     showLineNumbers: false,
     showStringsTable: false,
-    showText: false
+    showText: false,
+    showProgram: false
 };
 
 class LexRunner {
@@ -79,6 +81,7 @@ class LexRunner {
                 .setShowLineNumbers(config.showLineNumbers)
                 .setShowStringsTable(config.showStringsTable)
                 .setShowText(config.showText)
+                .setShowProgram(config.showProgram)
                 .setMaxCalcStep(config.maxCalcStep),
             stateManager
         );
@@ -114,6 +117,7 @@ if (window['demo'] === true) {
         formatComments: true,
         // showLineNumbers: true,
         showStringsTable: true,
-        showText: true
+        showText: true,
+        showProgram: true
     });
 }

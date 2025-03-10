@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './LexView.scss';
-import { CanonicTextItem, Table } from '@src/app.types';
+import { CanonicTextItem, SyntaxAnalyzeState, Table } from '@src/app.types';
 
 interface LexViewProps {
     inputString: string;
@@ -20,6 +20,8 @@ interface LexViewProps {
     strings: string[];
     showStringsTable: boolean;
     showText: boolean;
+    program: SyntaxAnalyzeState;
+    showProgram: boolean;
 }
 
 const formatLexem = (s: string) => {
@@ -111,6 +113,19 @@ const toText = (text: CanonicTextItem[]): React.ReactElement => {
     return <section>{els}</section>;
 };
 
+const printProgramInstructions = (text: CanonicTextItem[], program: SyntaxAnalyzeState) => {
+    const id: CanonicTextItem = text[program.id];
+    const params = program.parameters?.map((tokenId: number) => {
+        const param: CanonicTextItem = text[tokenId];
+        if (param.tableId === Table.STRINGS) {
+            return `'${param.lexem}'`;
+        } else {
+            return param.lexem;
+        }
+    });
+    return `CALL ${id.lexem} [${params.join(',')}]`;
+};
+
 export const LexView: React.FC<LexViewProps> = ({
     inputString,
     limiters,
@@ -128,7 +143,9 @@ export const LexView: React.FC<LexViewProps> = ({
     showLineNumbers,
     strings,
     showStringsTable,
-    showText
+    showText,
+    program,
+    showProgram
 }) => {
     return (
         <div className={styles.tmp}>
@@ -281,6 +298,13 @@ export const LexView: React.FC<LexViewProps> = ({
                     <section>
                         <p>text</p>
                         <pre className="simple-text">{toText(text)}</pre>
+                    </section>
+                )}
+
+                {showProgram && (
+                    <section>
+                        <p>instructions</p>
+                        <pre className="program">{printProgramInstructions(text, program)}</pre>
                     </section>
                 )}
             </div>

@@ -56,3 +56,28 @@ export const defaultDocument: AppDocument = {
     text: [],
     strings: []
 };
+
+export enum SyntaxNode {
+    DEFAULT = '',
+    PARAMETERS = 'PARAMETERS',
+    STRING = 'STRING',
+    ID = 'ID',
+    LIMITER = 'LIMITER',
+    CALL = 'CALL'
+}
+
+export interface SyntaxAnalyzeState {
+    code: boolean;
+    pos: number;
+    parameters?: number[];
+    id?: number;
+    type: SyntaxNode;
+}
+
+export const defaultSyntaxAnalyzeState: SyntaxAnalyzeState = {
+    code: false,
+    pos: 0,
+    parameters: [],
+    id: -1,
+    type: SyntaxNode.DEFAULT
+};
