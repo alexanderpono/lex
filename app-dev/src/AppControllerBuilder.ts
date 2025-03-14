@@ -1,3 +1,7 @@
+import { Interpreter } from './app/Interpreter';
+import { LexAnalyzer } from './app/LexAnalyzer';
+import { SyntaxAnalyzer } from './app/SyntaxAnalyzer';
+
 export type ObjectsState = Record<string, object>;
 
 export class AppControllerBuilder {
@@ -22,6 +26,10 @@ export class AppControllerBuilder {
     showStringsTable: boolean = false;
     showText: boolean = false;
     showProgram: boolean = false;
+    syntax: SyntaxAnalyzer = null;
+    lex: LexAnalyzer = null;
+    showConsole: boolean = false;
+    interpreter: Interpreter = null;
 
     setTarget = (target: string) => {
         this.target = target;
@@ -105,6 +113,22 @@ export class AppControllerBuilder {
     };
     setShowProgram = (showProgram: boolean) => {
         this.showProgram = showProgram;
+        return this;
+    };
+    setSyntax = (syntax: SyntaxAnalyzer) => {
+        this.syntax = syntax;
+        return this;
+    };
+    setLex = (lex: LexAnalyzer) => {
+        this.lex = lex;
+        return this;
+    };
+    setShowConsole = (showConsole: boolean) => {
+        this.showConsole = showConsole;
+        return this;
+    };
+    setInterpreter = (interpreter: Interpreter) => {
+        this.interpreter = interpreter;
         return this;
     };
 }

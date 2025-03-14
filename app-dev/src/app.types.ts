@@ -81,3 +81,8 @@ export const defaultSyntaxAnalyzeState: SyntaxAnalyzeState = {
     id: -1,
     type: SyntaxNode.DEFAULT
 };
+
+export interface CallData {
+    funcName: string;
+    params: string[];
+}

@@ -50,7 +50,8 @@
             showLineNumbers: false,
             showStringsTable: false,
             showText: false,
-            showProgram: false
+            showProgram: false,
+            showConsole: false
         };
     </script>
 
@@ -607,6 +608,39 @@
                     showLineNumbers: false,
                     showText: true,
                     showProgram: true
+                });
+            });
+        </script>
+    </section>
+
+    <section class="slide">
+        <h3>2. Исполнение программы</h3>
+        <div id="exec" class="lex"></div>
+        <div id="exec-controls" class="game controls"></div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'exec',
+                    target: 'exec',
+                    simControlsTarget: 'exec-controls',
+                    showSimControls: true,
+                    maxCalcStep: 14,
+                    endCalcStep: 14,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '=', '/', "'", '(', ')'],
+                    inputString: "log('Hello world');",
+                    showInputFile: false,
+                    showPrettyText: false,
+                    showLimitersTable: false,
+                    showSpacesTable: false,
+                    showIdsTable: true,
+                    showCanonicText: true,
+                    formatIds: true,
+                    formatComments: true,
+                    showLineNumbers: false,
+                    showProgram: true,
+                    showConsole: true
                 });
             });
         </script>

@@ -22,6 +22,8 @@ interface LexViewProps {
     showText: boolean;
     program: SyntaxAnalyzeState;
     showProgram: boolean;
+    consoleText: string;
+    showConsole: boolean;
 }
 
 const formatLexem = (s: string) => {
@@ -145,7 +147,9 @@ export const LexView: React.FC<LexViewProps> = ({
     showStringsTable,
     showText,
     program,
-    showProgram
+    showProgram,
+    consoleText,
+    showConsole
 }) => {
     return (
         <div className={styles.tmp}>
@@ -305,6 +309,13 @@ export const LexView: React.FC<LexViewProps> = ({
                     <section>
                         <p>instructions</p>
                         <pre className="program">{printProgramInstructions(text, program)}</pre>
+                    </section>
+                )}
+
+                {showConsole && (
+                    <section>
+                        <p>console</p>
+                        <pre className="console">{consoleText}</pre>
                     </section>
                 )}
             </div>

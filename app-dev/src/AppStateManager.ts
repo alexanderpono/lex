@@ -19,6 +19,7 @@ export class AppStateManager {
     private currentPosInLine: number = 0;
     private text: CanonicTextItem[] = [];
     private program: SyntaxAnalyzeState = { ...defaultSyntaxAnalyzeState };
+    private consoleText: string = '';
 
     getStepNo = () => this.stepNo;
     getSpaces = () => this.spaces;
@@ -31,6 +32,7 @@ export class AppStateManager {
     getCurrentPosInLine = () => this.currentPosInLine;
     getText = () => this.text;
     getProgram = () => this.program;
+    getConsoleText = () => this.consoleText;
 
     setStepNo = (stepNo: number) => (this.stepNo = stepNo);
     setSpaces = (spaces: string[]) => (this.spaces = spaces);
@@ -43,6 +45,7 @@ export class AppStateManager {
     setCurrentPosInLine = (currentPosInLine: number) => (this.currentPosInLine = currentPosInLine);
     setText = (text: CanonicTextItem[]) => (this.text = text);
     setProgram = (program: SyntaxAnalyzeState) => (this.program = program);
+    setConsoleText = (consoleText: string) => (this.consoleText = consoleText);
 
     getAppState = () => {
         return {

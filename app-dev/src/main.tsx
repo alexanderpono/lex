@@ -1,6 +1,9 @@
 import { AppFactory } from './AppFactory';
 import { AppController } from './AppController';
 import { AppControllerBuilder } from './AppControllerBuilder';
+import { SyntaxAnalyzer } from './app/SyntaxAnalyzer';
+import { LexAnalyzer } from './app/LexAnalyzer';
+import { Interpreter } from './app/Interpreter';
 
 console.log('main!');
 
@@ -28,6 +31,7 @@ interface AppConfig {
     showStringsTable: boolean;
     showText: boolean;
     showProgram: boolean;
+    showConsole: boolean;
 }
 
 const defaultAppConfig: AppConfig = {
@@ -51,7 +55,8 @@ const defaultAppConfig: AppConfig = {
     showLineNumbers: false,
     showStringsTable: false,
     showText: false,
-    showProgram: false
+    showProgram: false,
+    showConsole: false
 };
 
 class LexRunner {
@@ -82,7 +87,11 @@ class LexRunner {
                 .setShowStringsTable(config.showStringsTable)
                 .setShowText(config.showText)
                 .setShowProgram(config.showProgram)
-                .setMaxCalcStep(config.maxCalcStep),
+                .setMaxCalcStep(config.maxCalcStep)
+                .setShowConsole(config.showConsole)
+                .setSyntax(new SyntaxAnalyzer(stateManager))
+                .setInterpreter(new Interpreter(stateManager))
+                .setLex(new LexAnalyzer(stateManager)),
             stateManager
         );
 
@@ -102,8 +111,8 @@ if (window['demo'] === true) {
         target: 'viewport',
         simControlsTarget: 'controls',
         showSimControls: true,
-        maxCalcStep: 13,
-        endCalcStep: 13,
+        maxCalcStep: 14,
+        endCalcStep: 14,
         spaces: [' ', '\n'],
         limiters: [';', '=', '/', "'", '(', ')'],
         inputString: "log('Hello world');",
@@ -111,13 +120,14 @@ if (window['demo'] === true) {
         // showPrettyText: true,
         // showLimitersTable: true,
         showSpacesTable: false,
-        showIdsTable: true,
+        // showIdsTable: true,
         showCanonicText: true,
         formatIds: true,
         formatComments: true,
         // showLineNumbers: true,
-        showStringsTable: true,
+        // showStringsTable: true,
         showText: true,
-        showProgram: true
+        showProgram: true,
+        showConsole: true
     });
 }
