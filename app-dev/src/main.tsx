@@ -4,6 +4,7 @@ import { AppControllerBuilder } from './AppControllerBuilder';
 import { SyntaxAnalyzer } from './app/SyntaxAnalyzer';
 import { LexAnalyzer } from './app/LexAnalyzer';
 import { Interpreter } from './app/Interpreter';
+import { Language2SyntaxAnalyzer } from './app/Language2SyntaxAnalyzer';
 
 console.log('main!');
 
@@ -62,7 +63,7 @@ const defaultAppConfig: AppConfig = {
 class LexRunner {
     private slides: AppController[] = [];
 
-    run = (config: AppConfig) => {
+    private _run = (config: AppConfig) => {
         const stateManager = factory.getStateManager(config.name);
         stateManager.mirrorState();
 
@@ -89,7 +90,7 @@ class LexRunner {
                 .setShowProgram(config.showProgram)
                 .setMaxCalcStep(config.maxCalcStep)
                 .setShowConsole(config.showConsole)
-                .setSyntax(new SyntaxAnalyzer(stateManager))
+                .setSyntax(new Language2SyntaxAnalyzer(stateManager))
                 .setInterpreter(new Interpreter(stateManager))
                 .setLex(new LexAnalyzer(stateManager)),
             stateManager
@@ -97,6 +98,12 @@ class LexRunner {
 
         this.slides[config.name].run();
     };
+    public get run() {
+        return this._run;
+    }
+    public set run(value) {
+        this._run = value;
+    }
 }
 
 const lex = new LexRunner();
@@ -111,11 +118,11 @@ if (window['demo'] === true) {
         target: 'viewport',
         simControlsTarget: 'controls',
         showSimControls: true,
-        maxCalcStep: 14,
-        endCalcStep: 14,
+        maxCalcStep: 12,
+        endCalcStep: 12,
         spaces: [' ', '\n'],
-        limiters: [';', '=', '/', "'", '(', ')'],
-        inputString: "log('Hello world');",
+        limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
+        inputString: "log(22+1);",
         // showInputFile: true,
         // showPrettyText: true,
         // showLimitersTable: true,

@@ -1,6 +1,6 @@
+import { ISyntax } from './app.types';
 import { Interpreter } from './app/Interpreter';
 import { LexAnalyzer } from './app/LexAnalyzer';
-import { SyntaxAnalyzer } from './app/SyntaxAnalyzer';
 
 export type ObjectsState = Record<string, object>;
 
@@ -26,7 +26,7 @@ export class AppControllerBuilder {
     showStringsTable: boolean = false;
     showText: boolean = false;
     showProgram: boolean = false;
-    syntax: SyntaxAnalyzer = null;
+    syntax: ISyntax = null;
     lex: LexAnalyzer = null;
     showConsole: boolean = false;
     interpreter: Interpreter = null;
@@ -115,7 +115,7 @@ export class AppControllerBuilder {
         this.showProgram = showProgram;
         return this;
     };
-    setSyntax = (syntax: SyntaxAnalyzer) => {
+    setSyntax = (syntax: ISyntax) => {
         this.syntax = syntax;
         return this;
     };

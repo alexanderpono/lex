@@ -1,7 +1,7 @@
-import { SyntaxAnalyzeState, SyntaxNode, Table } from '@src/app.types';
+import { ISyntax, SyntaxAnalyzeState, SyntaxNode, Table } from '@src/app.types';
 import { AppStateManager } from '@src/AppStateManager';
 
-export class SyntaxAnalyzer {
+export class SyntaxAnalyzer implements ISyntax {
     constructor(private stateManager: AppStateManager) {}
 
     analyzeSyntax = () => {
@@ -57,7 +57,7 @@ export class SyntaxAnalyzer {
         return {
             ...isSemicolon,
             type: SyntaxNode.CALL,
-            id: isId.id,
+            id: isId.valPos,
             parameters: isParametersList.parameters
         };
     };
@@ -66,7 +66,7 @@ export class SyntaxAnalyzer {
         const text = this.stateManager.getText();
         const token = text[state.pos];
         if (token.tableId === Table.IDS) {
-            return { code: true, pos: state.pos + 1, type: SyntaxNode.ID, id: state.pos };
+            return { code: true, pos: state.pos + 1, type: SyntaxNode.ID, valPos: state.pos };
         }
         return { code: false, pos: state.pos, type: SyntaxNode.DEFAULT };
     };
