@@ -63,26 +63,41 @@ export enum SyntaxNode {
     STRING = 'STRING',
     ID = 'ID',
     LIMITER = 'LIMITER',
-    CALL = 'CALL'
+    CALL = 'CALL',
+    EXPRESSION = 'EXPRESSION'
 }
 
 export interface SyntaxAnalyzeState {
     code: boolean;
     pos: number;
-    parameters?: number[];
+    parameters?: SyntaxAnalyzeState;
     id?: number;
+    valPos?: number;
     type: SyntaxNode;
+    error?: string;
+    operation?: string;
+    operand1?: SyntaxAnalyzeState;
+    operand2?: SyntaxAnalyzeState;
 }
 
 export const defaultSyntaxAnalyzeState: SyntaxAnalyzeState = {
     code: false,
     pos: 0,
-    parameters: [],
+    parameters: null,
     id: -1,
-    type: SyntaxNode.DEFAULT
+    valPos: -1,
+    type: SyntaxNode.DEFAULT,
+    error: '',
+    operation: '',
+    operand1: null,
+    operand2: null
 };
 
 export interface CallData {
     funcName: string;
     params: string[];
+}
+
+export interface ISyntax {
+    analyzeSyntax: () => void;
 }

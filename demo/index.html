@@ -55,6 +55,15 @@
         };
     </script>
 
+    <section class="slide contents">
+        <h3>Содержание</h3>
+        <p><strong>1.</strong> Лексический анализатор</p>
+        <p><strong>2.</strong> Синтаксический анализатор простейшего языка</p>
+        <p><strong>3.</strong> Интерпретатор простейшего языка</p>
+        <p><strong>4.</strong> Вычисление математических выражений</p>
+    </section>
+
+
     <section class="slide">
         <h3>1. Лексический анализ. 1 строка</h3>
         <div id="lex1" class="lex"></div>
@@ -614,7 +623,7 @@
     </section>
 
     <section class="slide">
-        <h3>2. Исполнение программы</h3>
+        <h3>3. Исполнение программы</h3>
         <div id="exec" class="lex"></div>
         <div id="exec-controls" class="game controls"></div>
         <script>
@@ -641,6 +650,98 @@
                     showLineNumbers: false,
                     showProgram: true,
                     showConsole: true
+                });
+            });
+        </script>
+    </section>
+
+    <section class="slide">
+        <h3>4. Лексический анализ</h3>
+        <div id="mathLex1" class="lex"></div>
+        <div id="mathLex1-controls" class="game controls"></div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'mathLex1',
+                    target: 'mathLex1',
+                    simControlsTarget: 'mathLex1-controls',
+                    showSimControls: true,
+                    maxCalcStep: 8,
+                    endCalcStep: 8,
+                    spaces: [' ', '\n'],
+                    limiters: ['+'],
+                    inputString: '2 + 2',
+                    showInputFile: true,
+                    showPrettyText: false,
+                    showLimitersTable: true,
+                    showSpacesTable: true,
+                    showIdsTable: true,
+                    showCanonicText: true
+                });
+            });
+        </script>
+    </section>
+
+    <section class="slide">
+        <h3>4. Как задать приоритета операций в математическом выражении?</h3>
+        <p><strong>1.</strong> Отразить приоритет в правилах грамматики</p>
+        <p><strong>2.</strong> Использовать алгоритм "Сортировочная станция" Дейкстры</p>
+        <p><strong>3.</strong>...</p>
+        <p></p>
+        <p></p>
+    </section>
+
+    <section class="slide">
+        <h3>2. Грамматика математического выражения</h3>
+        <p>&lt;MathExpression&gt; ::= &lt;therm&gt; | &lt;MathExpression&gt; <strong>+</strong> &lt;therm&gt; &lt;MathExpression&gt; <strong>-</strong> &lt;therm&gt; </p>
+        <p>&lt;therm&gt; ::= &lt;factor&gt; | &lt;therm&gt; <strong>*</strong> &lt;factor&gt; | &lt;therm&gt; <strong>/</strong> &lt;factor&gt;</p>
+        <p>&lt;factor&gt; ::= &lt;number&gt; | <strong>(</strong> &lt;MathExpression&gt; <strong>)</strong> | &lt;factor&gt; <strong>^</strong> &lt;factor&gt; </p>
+        <p>&lt;number&gt; ::= &lt;ID&gt;</p>
+        <br />
+        <p>&lt;ID&gt; &mdash; идентификатор</p>
+        <p><strong>( ) + - * / ^</strong> &mdash; разделители из таблицы limiters лексического анализатора</p>
+        <p>| &mdash; обозначение альтернативы</p>
+    </section>
+
+    <section class="slide">
+        <h3>2. Простой язык с математическими выражениями</h3>
+        <p>&lt;Program&gt; ::= &lt;callFunction&gt;</p>
+        <p>&lt;callFunction&gt; ::= &lt;ID&gt; <strong>(</strong> <strong>)</strong> | &lt;ID&gt; (&lt;parameterList&gt;)</p>
+        <p>&lt;parameterList&gt; ::= &lt;expression&gt; | &lt;string&gt; [ <strong>,</strong> &lt;parameterList&gt; ]</p>
+        <p>&lt;expression&gt; ::= &lt;therm&gt; <strong>+</strong> &lt;expression&gt; | &lt;therm&gt; <strong>-</strong> &lt;expression&gt; | &lt;therm&gt;</p>
+        <p>&lt;therm&gt; ::= &lt;factor&gt; | &lt;therm&gt; <strong>*</strong> &lt;factor&gt; | &lt;therm&gt; <strong>/</strong> &lt;factor&gt;</p>
+        <p>&lt;factor&gt; ::= &lt;number&gt; | <strong>(</strong> &lt;expression&gt; <strong>)</strong> | &lt;factor&gt; <strong>^</strong> &lt;factor&gt; </p>
+        <p>&lt;number&gt; ::= &lt;ID&gt;</p>
+        <br />
+        <p>&lt;ID&gt; &mdash; идентификатор</p>
+        <p><strong>( ) + - * / ^</strong> &mdash; разделители из таблицы limiters лексического анализатора</p>
+        <p>| &mdash; обозначение альтернативы</p>
+    </section>
+
+    <section class="slide">
+        <h3>4. Лексический анализ</h3>
+        <div id="mathLex2" class="lex"></div>
+        <div id="mathLex2-controls" class="game controls"></div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'mathLex2',
+                    target: 'mathLex2',
+                    simControlsTarget: 'mathLex2-controls',
+                    showSimControls: true,
+                    maxCalcStep: 0,
+                    endCalcStep: 8,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
+                    inputString: 'log(2);',
+                    showInputFile: true,
+                    showPrettyText: false,
+                    showLimitersTable: true,
+                    showSpacesTable: true,
+                    showIdsTable: true,
+                    showCanonicText: true
                 });
             });
         </script>

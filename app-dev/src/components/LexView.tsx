@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './LexView.scss';
-import { CanonicTextItem, SyntaxAnalyzeState, Table } from '@src/app.types';
+import { CanonicTextItem, SyntaxAnalyzeState, SyntaxNode, Table } from '@src/app.types';
 
 interface LexViewProps {
     inputString: string;
@@ -115,17 +115,41 @@ const toText = (text: CanonicTextItem[]): React.ReactElement => {
     return <section>{els}</section>;
 };
 
-const printProgramInstructions = (text: CanonicTextItem[], program: SyntaxAnalyzeState) => {
-    const id: CanonicTextItem = text[program.id];
-    const params = program.parameters?.map((tokenId: number) => {
-        const param: CanonicTextItem = text[tokenId];
-        if (param.tableId === Table.STRINGS) {
-            return `'${param.lexem}'`;
-        } else {
-            return param.lexem;
+const operandToString = (text: CanonicTextItem[], node: SyntaxAnalyzeState) => {
+    if (node.type === SyntaxNode.ID) {
+        const token = text[node.valPos];
+        return token.lexem;
+    }
+    if (node.type === SyntaxNode.EXPRESSION) {
+        return operandToString(text, node.operand1);
+    }
+    return '';
+};
+
+const paramsToString = (text: CanonicTextItem[], program: SyntaxAnalyzeState) => {
+    switch (program.parameters.type) {
+        case SyntaxNode.STRING:
+            return text[program.parameters.id].lexem;
+        case SyntaxNode.EXPRESSION: {
+            const op1 = operandToString(text, program.parameters.operand1);
+            if (program.parameters.operation !== '') {
+                const op2 = operandToString(text, program.parameters.operand2);
+                return `${op1}${program.parameters.operation}${op2}`;
+            }
+            return op1;
+            break;
         }
-    });
-    return `CALL ${id.lexem} [${params.join(',')}]`;
+        default:
+            return '?';
+    }
+};
+
+const printProgramInstructions = (text: CanonicTextItem[], program: SyntaxAnalyzeState) => {
+    if (program.id === -1) {
+        return '';
+    }
+    const id: CanonicTextItem = text[program.id];
+    return `CALL ${id.lexem} [${paramsToString(text, program)}]`; //${params.join(',')}
 };
 
 export const LexView: React.FC<LexViewProps> = ({

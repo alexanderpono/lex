@@ -4,11 +4,41 @@ import { CallData, CanonicTextItem, SyntaxAnalyzeState, SyntaxNode, Table } from
 export class Interpreter {
     constructor(private stateManager: AppStateManager) {}
 
-    calcValue = (token: CanonicTextItem) => {
-        console.log('executeScript() token=', token);
+    runMath = (op1: number, op: string, op2: number): number => {
+        switch (op) {
+            case '+': {
+                return op1 + op2;
+            }
+            default:
+                return -1;
+        }
+    };
+
+    calcValue = (node: SyntaxAnalyzeState) => {
         let value = '';
-        if (token.tableId === Table.STRINGS) {
-            value = token.lexem;
+        switch (node.type) {
+            case SyntaxNode.EXPRESSION: {
+                const op1Val = this.calcValue(node.operand1);
+                if (node.operation !== '') {
+                    const op2Val = this.calcValue(node.operand2);
+                    const mathResult = this.runMath(
+                        parseInt(op1Val as string),
+                        node.operation,
+                        parseInt(op2Val as string)
+                    );
+                    return mathResult;
+                }
+                return op1Val;
+                break;
+            }
+
+            case SyntaxNode.ID: {
+                const text = this.stateManager.getText();
+                const ids = this.stateManager.getIds();
+                const token = text[node.valPos];
+                return token.lexem;
+                break;
+            }
         }
         console.log('executeScript() value=', value);
         return value;
@@ -18,17 +48,11 @@ export class Interpreter {
         const text = this.stateManager.getText();
         const ids = this.stateManager.getIds();
         const funcName = ids[instruction.id];
-        console.log('executeScript() funcName=', funcName);
         const rawParams = instruction.parameters;
-        console.log('executeScript() rawParams=', rawParams);
-        const params = rawParams.map((paramIndex: number) => {
-            const paramToken = text[paramIndex];
-            return this.calcValue(paramToken);
-        });
-        console.log('executeScript() params=', params);
+        const value = this.calcValue(instruction.parameters);
         return {
             funcName,
-            params
+            params: [value]
         };
     };
 
@@ -54,7 +78,6 @@ export class Interpreter {
     };
 
     executeScript = () => {
-        console.log('executeScript()');
         const program = this.stateManager.getProgram();
         if (program.type === SyntaxNode.CALL) {
             this.executeCall(this.prepareCall(program));
