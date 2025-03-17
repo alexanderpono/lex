@@ -10,7 +10,7 @@ import { AppStateManager } from '@src/AppStateManager';
 export class Language2SyntaxAnalyzer implements ISyntax {
     constructor(private stateManager: AppStateManager) {}
 
-    analyzeSyntax = () => {
+    analyzeSyntax = (): SyntaxAnalyzeState => {
         const text = this.stateManager.getText();
         console.log('analyzeSyntax() text=', text);
         const state: SyntaxAnalyzeState = {
@@ -18,6 +18,7 @@ export class Language2SyntaxAnalyzer implements ISyntax {
             pos: 0,
             type: SyntaxNode.DEFAULT
         };
+        const NO = { code: false, pos: state.pos, type: SyntaxNode.DEFAULT };
 
         const isProgram = this.isProgram(state);
         console.log('analyzeSyntax() isProgram=', isProgram);
@@ -25,8 +26,10 @@ export class Language2SyntaxAnalyzer implements ISyntax {
         if (isProgram.code && isProgram.pos === text.length) {
             console.log('analyzeSyntax() syntax check OK');
             this.stateManager.setProgram(isProgram);
+            return isProgram;
         } else {
             console.log('analyzeSyntax() syntax check failed');
+            return NO;
         }
     };
 

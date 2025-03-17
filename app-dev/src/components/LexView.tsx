@@ -129,7 +129,7 @@ const operandToString = (text: CanonicTextItem[], node: SyntaxAnalyzeState) => {
 const paramsToString = (text: CanonicTextItem[], program: SyntaxAnalyzeState) => {
     switch (program.parameters.type) {
         case SyntaxNode.STRING:
-            return text[program.parameters.id].lexem;
+            return "'" + text[program.parameters.valPos].lexem + "'";
         case SyntaxNode.EXPRESSION: {
             const op1 = operandToString(text, program.parameters.operand1);
             if (program.parameters.operation !== '') {
