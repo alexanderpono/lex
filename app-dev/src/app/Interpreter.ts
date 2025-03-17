@@ -37,7 +37,16 @@ export class Interpreter {
                 const ids = this.stateManager.getIds();
                 const token = text[node.valPos];
                 return token.lexem;
-                break;
+            }
+
+            case SyntaxNode.STRING: {
+                const text = this.stateManager.getText();
+                const token = text[node.valPos];
+                return token.lexem;
+            }
+
+            default: {
+                console.error('calcValue() unsupported node.type', node);
             }
         }
         console.log('executeScript() value=', value);
@@ -50,6 +59,8 @@ export class Interpreter {
         const funcName = ids[instruction.id];
         const rawParams = instruction.parameters;
         const value = this.calcValue(instruction.parameters);
+        console.log('prepareCall() instruction.parameters=', instruction.parameters);
+        console.log('prepareCall() value=', value);
         return {
             funcName,
             params: [value]
