@@ -13,6 +13,8 @@ describe('Language2SyntaxAnalyzer', () => {
             ${'isCall'}        | ${';'}                   | ${cases.isCall.noId}                 | ${cases.isCall.noId.param1}
             ${'isCall'}        | ${'log;'}                | ${cases.isCall.noOpen}               | ${cases.isCall.noOpen.param1}
             ${'isCall'}        | ${'log();'}              | ${cases.isCall.noParameters}         | ${cases.isCall.noParameters.param1}
+            ${'analyzeSyntax'} | ${'log(22-1);'}          | ${cases.analyzeSyntax.log22m1}       | ${null}
+            ${'analyzeSyntax'} | ${'log(22+1+2);'}        | ${cases.analyzeSyntax.log22p1p2}     | ${null}
         `('$method() returns expected from $descr', ({ method, testCase, param1 }) => {
             let program = null;
             const stateManager = castPartialTo<AppStateManager>({
@@ -25,7 +27,7 @@ describe('Language2SyntaxAnalyzer', () => {
                     program = p;
                 }
             });
-            const syntax = new Language2SyntaxAnalyzer(stateManager, false);
+            const syntax = new Language2SyntaxAnalyzer(stateManager, true);
             let result;
             if (!param1) {
                 result = syntax[method]();

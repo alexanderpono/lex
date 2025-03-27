@@ -41,7 +41,8 @@
             stringsTable: 256,
             text: 512,
             program: 1024,
-            console: 2048
+            console: 2048,
+            debugInfo: 4096
         };
         const defaultAppConfig = {
             name: '',
@@ -701,16 +702,16 @@
     </section>
 
     <section class="slide">
-        <h3>4. Лексический анализ</h3>
-        <div id="mathLex2" class="lex"></div>
-        <div id="mathLex2-controls" class="game controls"></div>
+        <h3>4. Выполнение скрипта: log(2);</h3>
+        <div id="runLog2" class="lex"></div>
+        <div id="runLog2-controls" class="game controls"></div>
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 lex.run({
                     ...defaultAppConfig,
-                    name: 'mathLex2',
-                    target: 'mathLex2',
-                    simControlsTarget: 'mathLex2-controls',
+                    name: 'runLog2',
+                    target: 'runLog2',
+                    simControlsTarget: 'runLog2-controls',
                     showSimControls: true,
                     maxCalcStep: 0,
                     endCalcStep: 8,
@@ -719,15 +720,71 @@
                     inputString: 'log(2);',
                     show: Show.simControls 
                         | Show.inputFile 
-                        | Show.limitersTable 
-                        | Show.spacesTable 
                         | Show.idsTable 
                         | Show.canonicText
+                        | Show.program
+                        | Show.console
                 });
             });
         </script>
     </section>
 
+    <section class="slide">
+        <h3>4. Выполнение скрипта: log(2+1);</h3>
+        <div id="runLog2p1" class="lex"></div>
+        <div id="runLog2p1-controls" class="game controls"></div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'runLog2p1',
+                    target: 'runLog2p1',
+                    simControlsTarget: 'runLog2p1-controls',
+                    showSimControls: true,
+                    maxCalcStep: 0,
+                    endCalcStep: 8,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
+                    inputString: 'log(2+1);',
+                    show: Show.simControls 
+                        | Show.inputFile 
+                        | Show.idsTable 
+                        | Show.canonicText
+                        | Show.program
+                        | Show.console
+                });
+            });
+        </script>
+    </section>
+
+    <section class="slide">
+        <h3>4. Выполнение скрипта: log(1+2+3);</h3>
+        <div id="runLog1p2p3" class="lex"></div>
+        <div id="runLog1p2p3-controls" class="game controls"></div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'runLog1p2p3',
+                    target: 'runLog1p2p3',
+                    simControlsTarget: 'runLog1p2p3-controls',
+                    showSimControls: true,
+                    maxCalcStep: 0,
+                    endCalcStep: 8,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
+                    inputString: 'log(22+1+2);',
+                    show: Show.simControls 
+                        | Show.inputFile 
+                        | Show.idsTable 
+                        | Show.canonicText
+                        | Show.program
+                        | Show.console
+                        | Show.debugInfo
+                });
+            });
+        </script>
+    </section>
 
     <footer class="badge">
         <a href="https://github.com/alexanderpono/">Проект на GitHub</a>
