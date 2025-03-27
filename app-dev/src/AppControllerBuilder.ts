@@ -1,4 +1,4 @@
-import { ISyntax } from './app.types';
+import { ISyntax, Show } from './app.types';
 import { Interpreter } from './app/Interpreter';
 import { LexAnalyzer } from './app/LexAnalyzer';
 
@@ -7,29 +7,18 @@ export type ObjectsState = Record<string, object>;
 export class AppControllerBuilder {
     target: string = '';
     simControlsTarget: string = '';
-    showSimControls: boolean = false;
     startState: ObjectsState;
     maxCalcStep: number = 0;
     spaces: string[] = [];
     limiters: string[] = [];
     inputString: string = '';
     endCalcStep: number = 0;
-    showInputFile: boolean = false;
-    showPrettyText: boolean = false;
-    showLimitersTable: boolean = false;
-    showSpacesTable: boolean = false;
-    showIdsTable: boolean = false;
-    showCanonicText: boolean = false;
     formatIds: boolean = false;
     formatComments: boolean = false;
-    showLineNumbers: boolean = false;
-    showStringsTable: boolean = false;
-    showText: boolean = false;
-    showProgram: boolean = false;
     syntax: ISyntax = null;
     lex: LexAnalyzer = null;
-    showConsole: boolean = false;
     interpreter: Interpreter = null;
+    show: Show = Show.default;
 
     setTarget = (target: string) => {
         this.target = target;
@@ -37,10 +26,6 @@ export class AppControllerBuilder {
     };
     setSimControlsTarget = (simControlsTarget: string) => {
         this.simControlsTarget = simControlsTarget;
-        return this;
-    };
-    setShowSimControls = (showSimControls: boolean) => {
-        this.showSimControls = showSimControls;
         return this;
     };
     setStartState = (startState: ObjectsState) => {
@@ -67,52 +52,12 @@ export class AppControllerBuilder {
         this.endCalcStep = endCalcStep;
         return this;
     };
-    setShowInputFile = (showInputFile: boolean) => {
-        this.showInputFile = showInputFile;
-        return this;
-    };
-    setShowPrettyText = (showPrettyText: boolean) => {
-        this.showPrettyText = showPrettyText;
-        return this;
-    };
-    setShowLimitersTable = (showLimitersTable: boolean) => {
-        this.showLimitersTable = showLimitersTable;
-        return this;
-    };
-    setShowSpacesTable = (showSpacesTable: boolean) => {
-        this.showSpacesTable = showSpacesTable;
-        return this;
-    };
-    setShowIdsTable = (showIdsTable: boolean) => {
-        this.showIdsTable = showIdsTable;
-        return this;
-    };
-    setShowCanonicText = (showCanonicText: boolean) => {
-        this.showCanonicText = showCanonicText;
-        return this;
-    };
     setFormatIds = (formatIds: boolean) => {
         this.formatIds = formatIds;
         return this;
     };
     setFormatComments = (formatComments: boolean) => {
         this.formatComments = formatComments;
-        return this;
-    };
-    setShowLineNumbers = (showLineNumbers: boolean) => {
-        this.showLineNumbers = showLineNumbers;
-        return this;
-    };
-    setShowStringsTable = (showStringsTable: boolean) => {
-        this.showStringsTable = showStringsTable;
-        return this;
-    };
-    setShowText = (showText: boolean) => {
-        this.showText = showText;
-        return this;
-    };
-    setShowProgram = (showProgram: boolean) => {
-        this.showProgram = showProgram;
         return this;
     };
     setSyntax = (syntax: ISyntax) => {
@@ -123,12 +68,12 @@ export class AppControllerBuilder {
         this.lex = lex;
         return this;
     };
-    setShowConsole = (showConsole: boolean) => {
-        this.showConsole = showConsole;
-        return this;
-    };
     setInterpreter = (interpreter: Interpreter) => {
         this.interpreter = interpreter;
+        return this;
+    };
+    setShow = (show: Show) => {
+        this.show = show;
         return this;
     };
 }

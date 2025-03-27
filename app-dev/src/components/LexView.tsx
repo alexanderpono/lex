@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './LexView.scss';
-import { CanonicTextItem, SyntaxAnalyzeState, SyntaxNode, Table } from '@src/app.types';
+import { CanonicTextItem, Show, SyntaxAnalyzeState, SyntaxNode, Table } from '@src/app.types';
 
 interface LexViewProps {
     inputString: string;
@@ -8,22 +8,12 @@ interface LexViewProps {
     spaces: string[];
     ids: string[];
     text: CanonicTextItem[];
-    showInputFile: boolean;
-    showPrettyText: boolean;
-    showLimitersTable: boolean;
-    showSpacesTable: boolean;
-    showIdsTable: boolean;
-    showCanonicText: boolean;
     formatIds: boolean;
     formatComments: boolean;
-    showLineNumbers: boolean;
     strings: string[];
-    showStringsTable: boolean;
-    showText: boolean;
     program: SyntaxAnalyzeState;
-    showProgram: boolean;
     consoleText: string;
-    showConsole: boolean;
+    show: Show;
 }
 
 const formatLexem = (s: string) => {
@@ -158,34 +148,24 @@ export const LexView: React.FC<LexViewProps> = ({
     spaces,
     ids,
     text,
-    showInputFile,
-    showPrettyText,
-    showLimitersTable,
-    showSpacesTable,
-    showIdsTable,
-    showCanonicText,
     formatIds,
     formatComments,
-    showLineNumbers,
     strings,
-    showStringsTable,
-    showText,
     program,
-    showProgram,
     consoleText,
-    showConsole
+    show
 }) => {
     return (
         <div className={styles.tmp}>
             <div className="tables">
-                {showInputFile && (
+                {(show & Show.inputFile) > 0 && (
                     <section>
                         <p>input file</p>
                         <pre className="inputString">{inputString ? inputString : '  '}</pre>
                     </section>
                 )}
 
-                {showLimitersTable && (
+                {(show & Show.limitersTable) > 0 && (
                     <section>
                         <p>limiters(l)</p>
                         <table className="lexTable">
@@ -209,7 +189,7 @@ export const LexView: React.FC<LexViewProps> = ({
                     </section>
                 )}
 
-                {showSpacesTable && (
+                {(show & Show.spacesTable) > 0 && (
                     <section>
                         <p>spaces(s)</p>
                         <table className="lexTable">
@@ -233,7 +213,7 @@ export const LexView: React.FC<LexViewProps> = ({
                     </section>
                 )}
 
-                {showIdsTable && (
+                {(show & Show.idsTable) > 0 && (
                     <section>
                         <p>ids(i)</p>
                         <table className="lexTable">
@@ -257,7 +237,7 @@ export const LexView: React.FC<LexViewProps> = ({
                     </section>
                 )}
 
-                {showStringsTable && (
+                {(show & Show.stringsTable) > 0 && (
                     <section className="stringsTable">
                         <p>strings(str)</p>
                         <table className="lexTable">
@@ -281,7 +261,7 @@ export const LexView: React.FC<LexViewProps> = ({
                     </section>
                 )}
 
-                {showCanonicText && (
+                {(show & Show.canonicText) > 0 && (
                     <section>
                         <p>canonic text</p>
                         <div className="text">
@@ -313,30 +293,35 @@ export const LexView: React.FC<LexViewProps> = ({
                     </section>
                 )}
 
-                {showPrettyText && (
+                {(show & Show.prettyText) > 0 && (
                     <section>
                         <p>pretty text</p>
                         <pre className="text-restored">
-                            {prettify(text, formatIds, formatComments, showLineNumbers)}
+                            {prettify(
+                                text,
+                                formatIds,
+                                formatComments,
+                                (show & Show.lineNumbers) > 0
+                            )}
                         </pre>
                     </section>
                 )}
 
-                {showText && (
+                {(show & Show.text) > 0 && (
                     <section>
                         <p>text</p>
                         <pre className="simple-text">{toText(text)}</pre>
                     </section>
                 )}
 
-                {showProgram && (
+                {(show & Show.program) > 0 && (
                     <section>
                         <p>instructions</p>
                         <pre className="program">{printProgramInstructions(text, program)}</pre>
                     </section>
                 )}
 
-                {showConsole && (
+                {(show & Show.console) > 0 && (
                     <section>
                         <p>console</p>
                         <pre className="console">{consoleText}</pre>

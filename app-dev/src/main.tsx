@@ -1,10 +1,10 @@
 import { AppFactory } from './AppFactory';
 import { AppController } from './AppController';
 import { AppControllerBuilder } from './AppControllerBuilder';
-import { SyntaxAnalyzer } from './app/SyntaxAnalyzer';
 import { LexAnalyzer } from './app/LexAnalyzer';
 import { Interpreter } from './app/Interpreter';
 import { Language2SyntaxAnalyzer } from './app/Language2SyntaxAnalyzer';
+import { Show } from './app.types';
 
 console.log('main!');
 
@@ -14,50 +14,28 @@ interface AppConfig {
     name: string;
     target: string;
     simControlsTarget: string;
-    showSimControls: boolean;
     spaces: string[];
     limiters: string[];
     maxCalcStep: number;
     inputString: string;
     endCalcStep: number;
-    showInputFile: boolean;
-    showPrettyText: boolean;
-    showLimitersTable: boolean;
-    showSpacesTable: boolean;
-    showIdsTable: boolean;
-    showCanonicText: boolean;
     formatIds: boolean;
     formatComments: boolean;
-    showLineNumbers: boolean;
-    showStringsTable: boolean;
-    showText: boolean;
-    showProgram: boolean;
-    showConsole: boolean;
+    show: Show;
 }
 
 const defaultAppConfig: AppConfig = {
     name: '',
     target: '',
     simControlsTarget: '',
-    showSimControls: false,
     spaces: [],
     limiters: [],
     maxCalcStep: 0,
     endCalcStep: 1000,
     inputString: '',
-    showInputFile: false,
-    showPrettyText: false,
-    showLimitersTable: false,
-    showSpacesTable: false,
-    showIdsTable: false,
-    showCanonicText: false,
     formatIds: false,
     formatComments: false,
-    showLineNumbers: false,
-    showStringsTable: false,
-    showText: false,
-    showProgram: false,
-    showConsole: false
+    show: Show.default
 };
 
 class LexRunner {
@@ -71,27 +49,18 @@ class LexRunner {
             new AppControllerBuilder()
                 .setTarget(config.target)
                 .setSimControlsTarget(config.simControlsTarget)
-                .setShowSimControls(config.showSimControls)
                 .setSpaces(config.spaces)
                 .setLimiters(config.limiters)
                 .setInputString(config.inputString)
                 .setEndCalcStep(config.endCalcStep)
-                .setShowInputFile(config.showInputFile)
-                .setShowPrettyText(config.showPrettyText)
-                .setShowLimitersTable(config.showLimitersTable)
-                .setShowSpacesTable(config.showSpacesTable)
-                .setShowIdsTable(config.showIdsTable)
-                .setShowCanonicText(config.showCanonicText)
                 .setFormatIds(config.formatIds)
                 .setFormatComments(config.formatComments)
-                .setShowLineNumbers(config.showLineNumbers)
-                .setShowStringsTable(config.showStringsTable)
-                .setShowText(config.showText)
-                .setShowProgram(config.showProgram)
                 .setMaxCalcStep(config.maxCalcStep)
-                .setShowConsole(config.showConsole)
-                .setSyntax(new Language2SyntaxAnalyzer(stateManager))
-                .setInterpreter(new Interpreter(stateManager))
+                .setShow(config.show)
+                .setSyntax(
+                    new Language2SyntaxAnalyzer(stateManager, (config.show & Show.debugInfo) > 0)
+                )
+                .setInterpreter(new Interpreter(stateManager, (config.show & Show.debugInfo) > 0))
                 .setLex(new LexAnalyzer(stateManager)),
             stateManager
         );
@@ -117,24 +86,22 @@ if (window['demo'] === true) {
         name: 'rs',
         target: 'viewport',
         simControlsTarget: 'controls',
-        showSimControls: true,
-        maxCalcStep: 12,
-        endCalcStep: 12,
+        maxCalcStep: 16,
+        endCalcStep: 16,
         spaces: [' ', '\n'],
         limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
-        inputString: "log(22+1);",
-        // showInputFile: true,
-        // showPrettyText: true,
-        // showLimitersTable: true,
-        showSpacesTable: false,
-        // showIdsTable: true,
-        showCanonicText: true,
+        inputString: 'log(22+1);',
+
+        // inputString: "log('Hello world');",
         formatIds: true,
         formatComments: true,
         // showLineNumbers: true,
-        // showStringsTable: true,
-        showText: true,
-        showProgram: true,
-        showConsole: true
+        show:
+            Show.simControls |
+            Show.canonicText |
+            Show.stringsTable |
+            Show.text |
+            Show.program |
+            Show.console
     });
 }

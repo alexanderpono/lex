@@ -4,6 +4,7 @@ import { AppStateManager } from './AppStateManager';
 import { AppControllerBuilder } from './AppControllerBuilder';
 import { LexView } from './components/LexView';
 import { SimControls } from './components/SimControls';
+import { Show } from './app.types';
 
 export class AppController {
     constructor(private builder: AppControllerBuilder, private stateManager: AppStateManager) {}
@@ -35,38 +36,42 @@ export class AppController {
         this.stateManager.setText([]);
         this.stateManager.setStrings([]);
 
+        const isDebug = (this.builder.show & Show.debugInfo) > 0;
         let usedIterations = this.builder.lex.parseText(this.stateManager.getInputString());
         if (this.stateManager.getInputString() === '') {
-            console.log('lex parse OK', this.stateManager.getStepNo(), usedIterations);
+            isDebug && console.log('lex parse OK', this.stateManager.getStepNo(), usedIterations);
             if (usedIterations < this.stateManager.getStepNo()) {
-                console.log('to buildStrings()');
+                isDebug && console.log('to buildStrings()');
                 this.builder.lex.buildStrings();
                 usedIterations++;
-                console.log('after buildStrings() usedIterations=', usedIterations);
+                isDebug && console.log('after buildStrings() usedIterations=', usedIterations);
             }
             if (usedIterations < this.stateManager.getStepNo()) {
-                console.log('to removeComments()');
+                isDebug && console.log('to removeComments()');
                 this.builder.lex.removeComments();
                 usedIterations++;
-                console.log('after removeComments() usedIterations=', usedIterations);
+                isDebug && console.log('after removeComments() usedIterations=', usedIterations);
             }
             if (usedIterations < this.stateManager.getStepNo()) {
-                console.log('to removeWhitespace()');
+                isDebug && console.log('to removeWhitespace()');
                 this.builder.lex.removeWhitespace();
                 usedIterations++;
-                console.log('after removeWhitespace() usedIterations=', usedIterations);
+                isDebug && console.log('after removeWhitespace() usedIterations=', usedIterations);
             }
+            isDebug && console.log('text=', JSON.stringify(this.stateManager.getText()));
+            isDebug && console.log('ids=', JSON.stringify(this.stateManager.getIds()));
+            isDebug && console.log('strings=', JSON.stringify(this.stateManager.getStrings()));
             if (usedIterations < this.stateManager.getStepNo()) {
-                console.log('to syntax()');
+                isDebug && console.log('to syntax()');
                 this.builder.syntax.analyzeSyntax();
                 usedIterations++;
-                console.log('after analyzeSyntax() usedIterations=', usedIterations);
+                isDebug && console.log('after analyzeSyntax() usedIterations=', usedIterations);
             }
             if (usedIterations < this.stateManager.getStepNo()) {
-                console.log('to executeScript()');
+                isDebug && console.log('to executeScript()');
                 this.builder.interpreter.executeScript();
                 usedIterations++;
-                console.log('after executeScript() usedIterations=', usedIterations);
+                isDebug && console.log('after executeScript() usedIterations=', usedIterations);
             }
         }
     };
@@ -78,11 +83,13 @@ export class AppController {
     };
 
     updateUI = () => {
-        if (this.builder.showSimControls) {
+        if ((this.builder.show & Show.simControls) > 0) {
             this.renderControls();
         }
         this.stateManager.mirrorState();
-        this.render();
+        if (this.builder.target) {
+            this.render();
+        }
     };
 
     onBtPrevClick = () => {
@@ -128,22 +135,12 @@ export class AppController {
                 spaces={this.stateManager.getSpaces()}
                 ids={this.stateManager.getIds()}
                 text={this.stateManager.getText()}
-                showInputFile={this.builder.showInputFile}
-                showPrettyText={this.builder.showPrettyText}
-                showLimitersTable={this.builder.showLimitersTable}
-                showSpacesTable={this.builder.showSpacesTable}
-                showIdsTable={this.builder.showIdsTable}
-                showCanonicText={this.builder.showCanonicText}
                 formatIds={this.builder.formatIds}
                 formatComments={this.builder.formatComments}
-                showLineNumbers={this.builder.showLineNumbers}
                 strings={this.stateManager.getStrings()}
-                showStringsTable={this.builder.showStringsTable}
-                showText={this.builder.showText}
                 program={this.stateManager.getProgram()}
-                showProgram={this.builder.showProgram}
-                showConsole={this.builder.showConsole}
                 consoleText={this.stateManager.getConsoleText()}
+                show={this.builder.show}
             />,
             target
         );

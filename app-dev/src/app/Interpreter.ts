@@ -2,7 +2,7 @@ import { AppStateManager } from '@src/AppStateManager';
 import { CallData, CanonicTextItem, SyntaxAnalyzeState, SyntaxNode, Table } from '@src/app.types';
 
 export class Interpreter {
-    constructor(private stateManager: AppStateManager) {}
+    constructor(private stateManager: AppStateManager, private isDebug: boolean) {}
 
     runMath = (op1: number, op: string, op2: number): number => {
         switch (op) {
@@ -49,7 +49,7 @@ export class Interpreter {
                 console.error('calcValue() unsupported node.type', node);
             }
         }
-        console.log('executeScript() value=', value);
+        this.isDebug && console.log('executeScript() value=', value);
         return value;
     };
 
@@ -59,8 +59,9 @@ export class Interpreter {
         const funcName = ids[instruction.id];
         const rawParams = instruction.parameters;
         const value = this.calcValue(instruction.parameters);
-        console.log('prepareCall() instruction.parameters=', instruction.parameters);
-        console.log('prepareCall() value=', value);
+        this.isDebug &&
+            console.log('prepareCall() instruction.parameters=', instruction.parameters);
+        this.isDebug && console.log('prepareCall() value=', value);
         return {
             funcName,
             params: [value]
@@ -72,10 +73,10 @@ export class Interpreter {
             globalFunctions: {
                 log: (...params) => {
                     const text = this.stateManager.getConsoleText();
-                    console.log('typeof params=', typeof params);
+                    this.isDebug && console.log('typeof params=', typeof params);
                     const firstLF = text ? '\n' : '';
                     this.stateManager.setConsoleText(text + firstLF + params.join(' '));
-                    console.log(params);
+                    this.isDebug && console.log(params);
                 }
             }
         };
@@ -84,7 +85,7 @@ export class Interpreter {
             console.error('function is not found:', instruction.funcName);
             return;
         }
-        console.log('instruction.params=', instruction.params);
+        this.isDebug && console.log('instruction.params=', instruction.params);
         context.globalFunctions[instruction.funcName].apply(null, instruction.params);
     };
 
