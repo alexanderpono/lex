@@ -52,7 +52,23 @@ const analyzeSyntax = {
                 code: true,
                 error: '',
                 id: -1,
-                operand1: { code: true, pos: 3, type: 'ID', valPos: 2 },
+                operand1: {
+                    code: true,
+                    pos: 3,
+                    parameters: null,
+                    id: -1,
+                    valPos: 2,
+                    type: 'EXPRESSION',
+                    error: '',
+                    operation: '',
+                    operand1: {
+                        code: true,
+                        pos: 3,
+                        type: 'ID',
+                        valPos: 2
+                    },
+                    operand2: null
+                },
                 operand2: {
                     code: true,
                     error: '',
@@ -152,7 +168,23 @@ const analyzeSyntax = {
                 code: true,
                 error: '',
                 id: -1,
-                operand1: { code: true, pos: 3, type: 'ID', valPos: 2 },
+                operand1: {
+                    code: true,
+                    pos: 3,
+                    parameters: null,
+                    id: -1,
+                    valPos: 2,
+                    type: 'EXPRESSION',
+                    error: '',
+                    operation: '',
+                    operand1: {
+                        code: true,
+                        pos: 3,
+                        type: 'ID',
+                        valPos: 2
+                    },
+                    operand2: null
+                },
                 operand2: {
                     code: true,
                     error: '',
@@ -198,7 +230,23 @@ const analyzeSyntax = {
                 code: true,
                 error: '',
                 id: -1,
-                operand1: { code: true, pos: 3, type: 'ID', valPos: 2 },
+                operand1: {
+                    code: true,
+                    pos: 3,
+                    parameters: null,
+                    id: -1,
+                    valPos: 2,
+                    type: 'EXPRESSION',
+                    error: '',
+                    operation: '',
+                    operand1: {
+                        code: true,
+                        pos: 3,
+                        type: 'ID',
+                        valPos: 2
+                    },
+                    operand2: null
+                },
                 operand2: {
                     code: true,
                     pos: 7,
@@ -211,8 +259,19 @@ const analyzeSyntax = {
                     operand1: {
                         code: true,
                         pos: 5,
-                        type: 'ID',
-                        valPos: 4
+                        parameters: null,
+                        id: -1,
+                        valPos: 4,
+                        type: 'EXPRESSION',
+                        error: '',
+                        operation: '',
+                        operand1: {
+                            code: true,
+                            pos: 5,
+                            type: 'ID',
+                            valPos: 4
+                        },
+                        operand2: null
                     },
                     operand2: {
                         code: true,
@@ -239,6 +298,50 @@ const analyzeSyntax = {
                 valPos: 6
             },
             pos: 9,
+            type: 'CALL'
+        }
+    },
+    log2mult4: {
+        spaces,
+        limiters,
+        ids: ['log', '2', '4'],
+        strings: [''],
+        text: [
+            log,
+            open,
+            { tableId: 'i', tableIndex: 1, lineNo: 1, pos: 2, lexem: '2' },
+            { tableId: 'l', tableIndex: 6, lineNo: 1, pos: 3, lexem: '*' },
+            { tableId: 'i', tableIndex: 2, lineNo: 1, pos: 4, lexem: '4' },
+            close,
+            semicolon
+        ],
+        expected: {
+            code: true,
+            id: 0,
+            parameters: {
+                code: true,
+                error: '',
+                id: -1,
+                operand1: { code: true, pos: 3, type: 'ID', valPos: 2 },
+                operand2: {
+                    code: true,
+                    error: '',
+                    id: -1,
+                    operand1: { code: true, pos: 5, type: 'ID', valPos: 4 },
+                    operand2: null,
+                    operation: '',
+                    parameters: null,
+                    pos: 5,
+                    type: 'EXPRESSION',
+                    valPos: 4
+                },
+                operation: '*',
+                parameters: null,
+                pos: 5,
+                type: 'EXPRESSION',
+                valPos: 4
+            },
+            pos: 7,
             type: 'CALL'
         }
     }

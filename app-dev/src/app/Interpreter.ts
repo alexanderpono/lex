@@ -12,6 +12,9 @@ export class Interpreter {
             case '-': {
                 return op1 - op2;
             }
+            case '*': {
+                return op1 * op2;
+            }
             default:
                 return -1;
         }

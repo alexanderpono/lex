@@ -86,11 +86,11 @@ if (window['demo'] === true) {
         name: 'rs',
         target: 'viewport',
         simControlsTarget: 'controls',
-        maxCalcStep: 16,
+        maxCalcStep: 11,
         endCalcStep: 16,
         spaces: [' ', '\n'],
         limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
-        inputString: 'log(22+1);',
+        inputString: 'log(22+1+2);',
 
         // inputString: "log('Hello world');",
         formatIds: true,
@@ -102,6 +102,7 @@ if (window['demo'] === true) {
             Show.stringsTable |
             Show.text |
             Show.program |
-            Show.console
+            Show.console |
+            Show.debugInfo
     });
 }
