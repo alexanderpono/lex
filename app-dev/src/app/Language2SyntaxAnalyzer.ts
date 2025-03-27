@@ -97,9 +97,12 @@ export class Language2SyntaxAnalyzer implements ISyntax {
 
         const isExpression = this.isExpression(state);
         if (isExpression.code) {
-            this.isDebug && console.log('isParametersList() isExpression=', isExpression);
+            this.isDebug &&
+                console.log(
+                    'isParametersList() isExpression=',
+                    JSON.stringify(isExpression, null, 4)
+                );
             return { ...isExpression };
-            // return isExpression;
         }
 
         const isString = this.isAnyString(state);

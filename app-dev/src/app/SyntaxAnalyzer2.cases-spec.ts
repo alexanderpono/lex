@@ -130,6 +130,117 @@ const analyzeSyntax = {
             pos: 5,
             type: 'CALL'
         }
+    },
+    log22m1: {
+        spaces,
+        limiters,
+        ids: ['log', '22', '1'],
+        strings: [''],
+        text: [
+            log,
+            open,
+            { tableId: 'i', tableIndex: 1, lineNo: 1, pos: 5, lexem: '22' },
+            { tableId: 'l', tableIndex: 6, lineNo: 1, pos: 7, lexem: '-' },
+            { tableId: 'i', tableIndex: 2, lineNo: 1, pos: 8, lexem: '1' },
+            close,
+            semicolon
+        ],
+        expected: {
+            code: true,
+            id: 0,
+            parameters: {
+                code: true,
+                error: '',
+                id: -1,
+                operand1: { code: true, pos: 3, type: 'ID', valPos: 2 },
+                operand2: {
+                    code: true,
+                    error: '',
+                    id: -1,
+                    operand1: { code: true, pos: 5, type: 'ID', valPos: 4 },
+                    operand2: null,
+                    operation: '',
+                    parameters: null,
+                    pos: 5,
+                    type: 'EXPRESSION',
+                    valPos: 4
+                },
+                operation: '-',
+                parameters: null,
+                pos: 5,
+                type: 'EXPRESSION',
+                valPos: 4
+            },
+            pos: 7,
+            type: 'CALL'
+        }
+    },
+    log22p1p2: {
+        spaces,
+        limiters,
+        ids: ['log', '22', '1', '2'],
+        strings: [''],
+        text: [
+            log,
+            open,
+            { tableId: 'i', tableIndex: 1, lineNo: 1, pos: 5, lexem: '22' },
+            { tableId: 'l', tableIndex: 6, lineNo: 1, pos: 7, lexem: '+' },
+            { tableId: 'i', tableIndex: 2, lineNo: 1, pos: 8, lexem: '1' },
+            { tableId: 'l', tableIndex: 6, lineNo: 1, pos: 7, lexem: '+' },
+            { tableId: 'i', tableIndex: 2, lineNo: 1, pos: 8, lexem: '2' },
+            close,
+            semicolon
+        ],
+        expected: {
+            code: true,
+            id: 0,
+            parameters: {
+                code: true,
+                error: '',
+                id: -1,
+                operand1: { code: true, pos: 3, type: 'ID', valPos: 2 },
+                operand2: {
+                    code: true,
+                    pos: 7,
+                    parameters: null,
+                    id: -1,
+                    valPos: 6,
+                    type: 'EXPRESSION',
+                    error: '',
+                    operation: '+',
+                    operand1: {
+                        code: true,
+                        pos: 5,
+                        type: 'ID',
+                        valPos: 4
+                    },
+                    operand2: {
+                        code: true,
+                        pos: 7,
+                        parameters: null,
+                        id: -1,
+                        valPos: 6,
+                        type: 'EXPRESSION',
+                        error: '',
+                        operation: '',
+                        operand1: {
+                            code: true,
+                            pos: 7,
+                            type: 'ID',
+                            valPos: 6
+                        },
+                        operand2: null
+                    }
+                },
+                operation: '+',
+                parameters: null,
+                pos: 7,
+                type: 'EXPRESSION',
+                valPos: 6
+            },
+            pos: 9,
+            type: 'CALL'
+        }
     }
 };
 
