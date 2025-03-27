@@ -148,10 +148,7 @@ export class Language2SyntaxAnalyzer implements ISyntax {
             return {
                 ...defaultSyntaxAnalyzeState,
                 ...isTherm,
-                type: SyntaxNode.EXPRESSION,
-                operand1: isTherm
-                // operation: '',
-                // operand2: null
+                type: SyntaxNode.EXPRESSION
             };
         }
 
@@ -172,10 +169,6 @@ export class Language2SyntaxAnalyzer implements ISyntax {
             operation: isPlus.code ? '+' : '-',
             operand2: isExpression
         };
-        // if (token.tableId === Table.STRINGS) {
-        //     return { code: true, pos: state.pos + 1, type: SyntaxNode.STRING };
-        // }
-        // return { code: false, pos: state.pos, type: SyntaxNode.DEFAULT };
     };
 
     isTherm = (state: SyntaxAnalyzeState): SyntaxAnalyzeState => {
@@ -187,11 +180,34 @@ export class Language2SyntaxAnalyzer implements ISyntax {
         if (!isFactor.code) {
             return NO;
         }
-        return isFactor;
-        // if (token.tableId === Table.STRINGS) {
-        //     return { code: true, pos: state.pos + 1, type: SyntaxNode.STRING };
-        // }
-        // return { code: false, pos: state.pos, type: SyntaxNode.DEFAULT };
+        const isMult = this.isLimiter(isFactor, '*');
+        const isDivide = this.isLimiter(isFactor, '/');
+        if (!isMult.code && !isDivide.code) {
+            return {
+                ...defaultSyntaxAnalyzeState,
+                ...isFactor,
+                type: SyntaxNode.EXPRESSION,
+                operand1: isFactor
+            };
+        }
+
+        const operation = isMult.code ? isMult : isDivide;
+        const isTherm = this.isTherm(operation);
+        if (!isTherm.code) {
+            return {
+                code: false,
+                pos: operation.pos,
+                type: SyntaxNode.DEFAULT,
+                error: 'term expected'
+            };
+        }
+
+        return {
+            ...isTherm,
+            operand1: isFactor,
+            operation: isMult.code ? '*' : '/',
+            operand2: isTherm
+        };
     };
 
     isFactor = (state: SyntaxAnalyzeState): SyntaxAnalyzeState => {

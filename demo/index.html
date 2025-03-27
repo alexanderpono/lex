@@ -692,7 +692,7 @@
         <p>&lt;callFunction&gt; ::= &lt;ID&gt; <strong>(</strong> <strong>)</strong> | &lt;ID&gt; (&lt;parameterList&gt;)</p>
         <p>&lt;parameterList&gt; ::= &lt;expression&gt; | &lt;string&gt; [ <strong>,</strong> &lt;parameterList&gt; ]</p>
         <p>&lt;expression&gt; ::= &lt;therm&gt; <strong>+</strong> &lt;expression&gt; | &lt;therm&gt; <strong>-</strong> &lt;expression&gt; | &lt;therm&gt;</p>
-        <p>&lt;therm&gt; ::= &lt;factor&gt; | &lt;therm&gt; <strong>*</strong> &lt;factor&gt; | &lt;therm&gt; <strong>/</strong> &lt;factor&gt;</p>
+        <p>&lt;therm&gt; ::= &lt;factor&gt; <strong>*</strong> &lt;therm&gt; | &lt;factor&gt; <strong>/</strong> &lt;therm&gt; | &lt;factor&gt;</p>
         <p>&lt;factor&gt; ::= &lt;number&gt; | <strong>(</strong> &lt;expression&gt; <strong>)</strong> | &lt;factor&gt; <strong>^</strong> &lt;factor&gt; </p>
         <p>&lt;number&gt; ::= &lt;ID&gt;</p>
         <br />
@@ -774,6 +774,35 @@
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
                     inputString: 'log(22+1+2);',
+                    show: Show.simControls 
+                        | Show.inputFile 
+                        | Show.idsTable 
+                        | Show.canonicText
+                        | Show.program
+                        | Show.console
+                        | Show.debugInfo
+                });
+            });
+        </script>
+    </section>
+
+    <section class="slide">
+        <h3>4. Выполнение скрипта: log(2*4);</h3>
+        <div id="runLog2mult4" class="lex"></div>
+        <div id="runLog2mult4-controls" class="game controls"></div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'runLog2mult4',
+                    target: 'runLog2mult4',
+                    simControlsTarget: 'runLog2mult4-controls',
+                    showSimControls: true,
+                    maxCalcStep: 0,
+                    endCalcStep: 12,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
+                    inputString: 'log(2*4);',
                     show: Show.simControls 
                         | Show.inputFile 
                         | Show.idsTable 

@@ -17,6 +17,7 @@ describe('AppController', () => {
             ${"log('Hello World');"} | ${16}     | ${'Hello World'}
             ${'log(22-1);'}          | ${16}     | ${'21'}
             ${'log(2+4-1);'}         | ${16}     | ${'5'}
+            ${'log(5*6);'}           | ${16}     | ${'30'}
         `('returns $expected from $inputString', ({ inputString, calcSteps, expected }) => {
             const stateManager = new AppStateManager();
 
