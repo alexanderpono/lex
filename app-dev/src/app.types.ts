@@ -101,3 +101,20 @@ export interface CallData {
 export interface ISyntax {
     analyzeSyntax: () => void;
 }
+
+export enum Show {
+    default = 0,
+    simControls = 1,
+    inputFile = 2,
+    prettyText = 4,
+    limitersTable = 8,
+    spacesTable = 16,
+    idsTable = 32,
+    canonicText = 64,
+    lineNumbers = 128,
+    stringsTable = 256,
+    text = 512,
+    program = 1024,
+    console = 2048,
+    debugInfo = 4096
+}

@@ -8,11 +8,11 @@ import {
 import { AppStateManager } from '@src/AppStateManager';
 
 export class Language2SyntaxAnalyzer implements ISyntax {
-    constructor(private stateManager: AppStateManager) {}
+    constructor(private stateManager: AppStateManager, private isDebug: boolean) {}
 
     analyzeSyntax = (): SyntaxAnalyzeState => {
         const text = this.stateManager.getText();
-        console.log('analyzeSyntax() text=', text);
+        this.isDebug && console.log('analyzeSyntax() text=', text);
         const state: SyntaxAnalyzeState = {
             code: false,
             pos: 0,
@@ -21,14 +21,14 @@ export class Language2SyntaxAnalyzer implements ISyntax {
         const NO = { code: false, pos: state.pos, type: SyntaxNode.DEFAULT };
 
         const isProgram = this.isProgram(state);
-        console.log('analyzeSyntax() isProgram=', isProgram);
+        this.isDebug && console.log('analyzeSyntax() isProgram=', isProgram);
 
         if (isProgram.code && isProgram.pos === text.length) {
-            console.log('analyzeSyntax() syntax check OK');
+            this.isDebug && console.log('analyzeSyntax() syntax check OK');
             this.stateManager.setProgram(isProgram);
             return isProgram;
         } else {
-            console.log('analyzeSyntax() syntax check failed');
+            this.isDebug && console.log('analyzeSyntax() syntax check failed');
             return NO;
         }
     };
@@ -44,19 +44,19 @@ export class Language2SyntaxAnalyzer implements ISyntax {
         if (!isId.code) {
             return NO;
         }
-        console.log('isCall() isId=', isId);
+        this.isDebug && console.log('isCall() isId=', isId);
         const isOpen = this.isLimiter(isId, '(');
         if (!isOpen.code) {
             return NO;
         }
         const isParametersList = this.isParametersList(isOpen);
-        console.log('isCall() isParametersList=', isParametersList);
+        this.isDebug && console.log('isCall() isParametersList=', isParametersList);
         if (!isParametersList.code) {
             return NO;
         }
 
         const isClose = this.isLimiter(isParametersList, ')');
-        console.log('isCall() isClose=', isClose);
+        this.isDebug && console.log('isCall() isClose=', isClose);
         if (!isClose.code) {
             return NO;
         }
@@ -93,19 +93,17 @@ export class Language2SyntaxAnalyzer implements ISyntax {
     };
 
     isParametersList = (state: SyntaxAnalyzeState): SyntaxAnalyzeState => {
-        // debugger;
-        // console.log('');
         const NO = { code: false, pos: state.pos, type: SyntaxNode.DEFAULT };
 
         const isExpression = this.isExpression(state);
         if (isExpression.code) {
-            console.log('isParametersList() isExpression=', isExpression);
+            this.isDebug && console.log('isParametersList() isExpression=', isExpression);
             return { ...isExpression };
             // return isExpression;
         }
 
         const isString = this.isAnyString(state);
-        console.log('isParametersList() isString=', isString);
+        this.isDebug && console.log('isParametersList() isString=', isString);
         if (!isString.code) {
             return NO;
         }
@@ -139,7 +137,7 @@ export class Language2SyntaxAnalyzer implements ISyntax {
         if (!isTherm.code) {
             return NO;
         }
-        console.log('isExpression() isTherm=', isTherm);
+        this.isDebug && console.log('isExpression() isTherm=', isTherm);
 
         const isPlus = this.isLimiter(isTherm, '+');
         const isMinus = this.isLimiter(isTherm, '-');

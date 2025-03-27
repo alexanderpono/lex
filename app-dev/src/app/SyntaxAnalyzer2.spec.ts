@@ -25,7 +25,7 @@ describe('Language2SyntaxAnalyzer', () => {
                     program = p;
                 }
             });
-            const syntax = new Language2SyntaxAnalyzer(stateManager);
+            const syntax = new Language2SyntaxAnalyzer(stateManager, false);
             let result;
             if (!param1) {
                 result = syntax[method]();

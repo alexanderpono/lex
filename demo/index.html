@@ -28,30 +28,34 @@
     </section>
 
     <script>
+        const Show = {
+            default: 0,
+            simControls: 1,
+            inputFile: 2,
+            prettyText: 4,
+            limitersTable: 8,
+            spacesTable: 16,
+            idsTable: 32,
+            canonicText: 64,
+            lineNumbers: 128,
+            stringsTable: 256,
+            text: 512,
+            program: 1024,
+            console: 2048
+        };
         const defaultAppConfig = {
             name: '',
             target: '',
             simControlsTarget: '',
-            showSimControls: false,
             spaces: [],
             limiters: [],
             maxCalcStep: 0,
             endCalcStep: 1000,
             xCalcStep: 0,
             inputString: '',
-            showInputFile: false,
-            showPrettyText: false,
-            showLimitersTable: false,
-            showSpacesTable: false,
-            showIdsTable: false,
-            showCanonicText: false,
             formatIds: false,
             formatComments: false,
-            showLineNumbers: false,
-            showStringsTable: false,
-            showText: false,
-            showProgram: false,
-            showConsole: false
+            show: Show.default
         };
     </script>
 
@@ -81,12 +85,12 @@
                     spaces: [' ', '\n'],
                     limiters: [';', '='],
                     inputString: 'let a = 1;',
-                    showInputFile: true,
-                    showPrettyText: false,
-                    showLimitersTable: true,
-                    showSpacesTable: true,
-                    showIdsTable: true,
-                    showCanonicText: true
+                    show: Show.simControls 
+                        | Show.inputFile 
+                        | Show.limitersTable 
+                        | Show.spacesTable 
+                        | Show.idsTable 
+                        | Show.canonicText
                 });
             });
         </script>
@@ -109,12 +113,12 @@
                     spaces: [' ', '\n'],
                     limiters: [';', '='],
                     inputString: 'let a = 2;\nlet b = 3;',
-                    showInputFile: true,
-                    showPrettyText: false,
-                    showLimitersTable: true,
-                    showSpacesTable: true,
-                    showIdsTable: true,
-                    showCanonicText: true
+                    show: Show.simControls 
+                        | Show.inputFile 
+                        | Show.limitersTable 
+                        | Show.spacesTable 
+                        | Show.idsTable 
+                        | Show.canonicText
                 });
             });
         </script>
@@ -137,12 +141,12 @@
                     spaces: [' ', '\n'],
                     limiters: [';', '='],
                     inputString: 'let a = 2;\n//let b = 3;',
-                    showInputFile: true,
-                    showPrettyText: false,
-                    showLimitersTable: true,
-                    showSpacesTable: true,
-                    showIdsTable: true,
-                    showCanonicText: true
+                    show: Show.simControls 
+                        | Show.inputFile 
+                        | Show.limitersTable 
+                        | Show.spacesTable 
+                        | Show.idsTable 
+                        | Show.canonicText
                 });
             });
         </script>
@@ -165,12 +169,12 @@
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/'],
                     inputString: 'let a = 2;\n//let b = 3;',
-                    showInputFile: true,
-                    showPrettyText: false,
-                    showLimitersTable: true,
-                    showSpacesTable: true,
-                    showIdsTable: true,
-                    showCanonicText: true
+                    show: Show.simControls 
+                        | Show.inputFile 
+                        | Show.limitersTable 
+                        | Show.spacesTable 
+                        | Show.idsTable 
+                        | Show.canonicText
                 });
             });
         </script>
@@ -193,12 +197,12 @@
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/', '\''],
                     inputString: 'let a = \'Hello World\';',
-                    showInputFile: true,
-                    showPrettyText: false,
-                    showLimitersTable: true,
-                    showSpacesTable: true,
-                    showIdsTable: true,
-                    showCanonicText: true
+                    show: Show.simControls 
+                        | Show.inputFile 
+                        | Show.limitersTable 
+                        | Show.spacesTable 
+                        | Show.idsTable 
+                        | Show.canonicText
                 });
             });
         </script>
@@ -221,13 +225,13 @@
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/', '\''],
                     inputString: 'let a = \'Hello World\';',
-                    showInputFile: true,
-                    showPrettyText: false,
-                    showLimitersTable: true,
-                    showSpacesTable: true,
-                    showIdsTable: true,
-                    showCanonicText: true,
-                    showStringsTable: true
+                    show: Show.simControls 
+                        | Show.inputFile 
+                        | Show.limitersTable 
+                        | Show.spacesTable 
+                        | Show.idsTable 
+                        | Show.canonicText 
+                        | Show.stringsTable
                 });
             });
         </script>
@@ -251,11 +255,10 @@
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/'],
                     inputString: 'let a = 2;\n//let b = 3;',
-                    showPrettyText: false,
-                    showLimitersTable: true,
-                    showSpacesTable: false,
-                    showIdsTable: true,
-                    showCanonicText: true
+                    show: Show.simControls 
+                        | Show.limitersTable 
+                        | Show.idsTable 
+                        | Show.canonicText
                 });
             });
         </script>
@@ -278,11 +281,11 @@
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/'],
                     inputString: 'let a = 2;\n//let b = 3;',
-                    showPrettyText: true,
-                    showLimitersTable: true,
-                    showSpacesTable: false,
-                    showIdsTable: true,
-                    showCanonicText: true
+                    show: Show.simControls 
+                        | Show.prettyText 
+                        | Show.limitersTable 
+                        | Show.idsTable 
+                        | Show.canonicText
                 });
             });
         </script>
@@ -306,12 +309,12 @@
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/'],
                     inputString: 'let a = 2;\n//let b = 3;',
-                    showPrettyText: true,
-                    showLimitersTable: true,
-                    showSpacesTable: false,
-                    showIdsTable: true,
-                    showCanonicText: true,
-                    showLineNumbers: true
+                    show: Show.simControls 
+                        | Show.prettyText 
+                        | Show.limitersTable 
+                        | Show.idsTable 
+                        | Show.canonicText 
+                        | Show.lineNumbers
                 });
             });
         </script>
@@ -334,13 +337,13 @@
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/'],
                     inputString: 'let a = 2;\n//let b = 3;',
-                    showPrettyText: true,
-                    showLimitersTable: true,
-                    showSpacesTable: false,
-                    showIdsTable: true,
-                    showCanonicText: true,
                     formatIds: true,
-                    showLineNumbers: true
+                    show: Show.simControls 
+                        | Show.prettyText 
+                        | Show.limitersTable 
+                        | Show.idsTable 
+                        | Show.canonicText 
+                        | Show.lineNumbers
                 });
             });
         </script>
@@ -363,14 +366,14 @@
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/'],
                     inputString: 'let a = 2;\n//let b = 3;',
-                    showPrettyText: true,
-                    showLimitersTable: true,
-                    showSpacesTable: false,
-                    showIdsTable: true,
-                    showCanonicText: true,
                     formatIds: true,
                     formatComments: true,
-                    showLineNumbers: true
+                    show: Show.simControls 
+                        | Show.prettyText 
+                        | Show.limitersTable 
+                        | Show.idsTable 
+                        | Show.canonicText 
+                        | Show.lineNumbers
                 });
             });
         </script>
@@ -393,15 +396,13 @@
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/', "'"],
                     inputString: "let a = 2;\n//let b = 3;\nlet b = 'Hello world';",
-                    showInputFile: false,
-                    showPrettyText: true,
-                    showLimitersTable: true,
-                    showSpacesTable: false,
-                    showIdsTable: true,
-                    showCanonicText: true,
                     formatIds: true,
                     formatComments: true,
-                    showLineNumbers: false
+                    show: Show.simControls 
+                        | Show.prettyText 
+                        | Show.limitersTable 
+                        | Show.idsTable 
+                        | Show.canonicText
                 });
             });
         </script>
@@ -424,15 +425,13 @@
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/', "'"],
                     inputString: "let a = 2;\n//let b = 3;\nlet b = 'Hello world';",
-                    showInputFile: false,
-                    showPrettyText: true,
-                    showLimitersTable: true,
-                    showSpacesTable: false,
-                    showIdsTable: true,
-                    showCanonicText: true,
                     formatIds: true,
                     formatComments: true,
-                    showLineNumbers: false
+                    show: Show.simControls 
+                        | Show.prettyText 
+                        | Show.limitersTable 
+                        | Show.idsTable 
+                        | Show.canonicText
                 });
             });
         </script>
@@ -455,15 +454,13 @@
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/', "'"],
                     inputString: "let a = 2;\n//let b = 3;\nlet b = 'Hello world';",
-                    showInputFile: false,
-                    showPrettyText: false,
-                    showLimitersTable: true,
-                    showSpacesTable: true,
-                    showIdsTable: true,
-                    showCanonicText: true,
                     formatIds: true,
                     formatComments: true,
-                    showLineNumbers: false
+                    show: Show.simControls 
+                        | Show.limitersTable 
+                        | Show.spacesTable 
+                        | Show.idsTable 
+                        | Show.canonicText
                 });
             });
         </script>
@@ -486,16 +483,14 @@
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/', "'"],
                     inputString: "let a = 2;\n//let b = 3;\nlet b = 'Hello world';",
-                    showInputFile: false,
-                    showPrettyText: false,
-                    showLimitersTable: true,
-                    showSpacesTable: true,
-                    showIdsTable: true,
-                    showCanonicText: true,
                     formatIds: true,
                     formatComments: true,
-                    showLineNumbers: false,
-                    showText: true
+                    show: Show.simControls 
+                        | Show.limitersTable 
+                        | Show.spacesTable 
+                        | Show.idsTable 
+                        | Show.canonicText
+                        | Show.text
                 });
             });
         </script>
@@ -542,16 +537,14 @@
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/', "'", '(', ')'],
                     inputString: "log('Hello world');",
-                    showInputFile: false,
-                    showPrettyText: false,
-                    showLimitersTable: true,
-                    showSpacesTable: true,
-                    showIdsTable: true,
-                    showCanonicText: true,
                     formatIds: true,
                     formatComments: true,
-                    showLineNumbers: false,
-                    showText: true
+                    show: Show.simControls 
+                        | Show.limitersTable 
+                        | Show.spacesTable 
+                        | Show.idsTable 
+                        | Show.canonicText
+                        | Show.text
                 });
             });
         </script>
@@ -574,16 +567,12 @@
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/', "'", '(', ')'],
                     inputString: "log('Hello world');",
-                    showInputFile: false,
-                    showPrettyText: false,
-                    showLimitersTable: false,
-                    showSpacesTable: false,
-                    showIdsTable: true,
-                    showCanonicText: true,
                     formatIds: true,
                     formatComments: true,
-                    showLineNumbers: false,
-                    showText: true
+                    show: Show.simControls 
+                        | Show.idsTable 
+                        | Show.canonicText
+                        | Show.text
                 });
             });
         </script>
@@ -606,17 +595,13 @@
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/', "'", '(', ')'],
                     inputString: "log('Hello world');",
-                    showInputFile: false,
-                    showPrettyText: false,
-                    showLimitersTable: false,
-                    showSpacesTable: false,
-                    showIdsTable: true,
-                    showCanonicText: true,
                     formatIds: true,
                     formatComments: true,
-                    showLineNumbers: false,
-                    showText: true,
-                    showProgram: true
+                    show: Show.simControls 
+                        | Show.idsTable 
+                        | Show.canonicText
+                        | Show.text
+                        | Show.program
                 });
             });
         </script>
@@ -639,17 +624,13 @@
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/', "'", '(', ')'],
                     inputString: "log('Hello world');",
-                    showInputFile: false,
-                    showPrettyText: false,
-                    showLimitersTable: false,
-                    showSpacesTable: false,
-                    showIdsTable: true,
-                    showCanonicText: true,
                     formatIds: true,
                     formatComments: true,
-                    showLineNumbers: false,
-                    showProgram: true,
-                    showConsole: true
+                    show: Show.simControls 
+                        | Show.idsTable 
+                        | Show.canonicText
+                        | Show.program
+                        | Show.console
                 });
             });
         </script>
@@ -672,19 +653,19 @@
                     spaces: [' ', '\n'],
                     limiters: ['+'],
                     inputString: '2 + 2',
-                    showInputFile: true,
-                    showPrettyText: false,
-                    showLimitersTable: true,
-                    showSpacesTable: true,
-                    showIdsTable: true,
-                    showCanonicText: true
+                    show: Show.simControls 
+                        | Show.inputFile 
+                        | Show.limitersTable 
+                        | Show.spacesTable 
+                        | Show.idsTable 
+                        | Show.canonicText
                 });
             });
         </script>
     </section>
 
     <section class="slide">
-        <h3>4. Как задать приоритета операций в математическом выражении?</h3>
+        <h3>4. Как задать приоритет операций в математическом выражении?</h3>
         <p><strong>1.</strong> Отразить приоритет в правилах грамматики</p>
         <p><strong>2.</strong> Использовать алгоритм "Сортировочная станция" Дейкстры</p>
         <p><strong>3.</strong>...</p>
@@ -736,12 +717,12 @@
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
                     inputString: 'log(2);',
-                    showInputFile: true,
-                    showPrettyText: false,
-                    showLimitersTable: true,
-                    showSpacesTable: true,
-                    showIdsTable: true,
-                    showCanonicText: true
+                    show: Show.simControls 
+                        | Show.inputFile 
+                        | Show.limitersTable 
+                        | Show.spacesTable 
+                        | Show.idsTable 
+                        | Show.canonicText
                 });
             });
         </script>
