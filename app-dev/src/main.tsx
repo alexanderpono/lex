@@ -90,7 +90,9 @@ if (window['demo'] === true) {
         endCalcStep: 16,
         spaces: [' ', '\n'],
         limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
-        inputString: 'log(22+1+2);',
+        // inputString: 'log(22);',
+        inputString: 'log((1+2)*3);',
+        // inputString: 'log((1+2));',
 
         // inputString: "log('Hello world');",
         formatIds: true,

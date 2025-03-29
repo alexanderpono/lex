@@ -18,6 +18,11 @@ describe('AppController', () => {
             ${'log(22-1);'}          | ${16}     | ${'21'}
             ${'log(2+4-1);'}         | ${16}     | ${'5'}
             ${'log(5*6);'}           | ${16}     | ${'30'}
+            ${'log(5*6+1);'}         | ${16}     | ${'31'}
+            ${'log(5*(6+1));'}       | ${16}     | ${'35'}
+            ${'log(1+2+3);'}         | ${16}     | ${'6'}
+            ${'log((1+2)+3);'}       | ${16}     | ${'6'}
+            ${'log(1+(2-3));'}       | ${16}     | ${'0'}
         `('returns $expected from $inputString', ({ inputString, calcSteps, expected }) => {
             const stateManager = new AppStateManager();
 

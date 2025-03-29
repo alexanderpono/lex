@@ -47,48 +47,18 @@ const analyzeSyntax = {
         ],
         expected: {
             code: true,
+            pos: 7,
+            type: 'CALL',
             id: 0,
             parameters: {
                 code: true,
-                error: '',
-                id: -1,
-                operand1: {
-                    code: true,
-                    pos: 3,
-                    parameters: null,
-                    id: -1,
-                    valPos: 2,
-                    type: 'EXPRESSION',
-                    error: '',
-                    operation: '',
-                    operand1: {
-                        code: true,
-                        pos: 3,
-                        type: 'ID',
-                        valPos: 2
-                    },
-                    operand2: null
-                },
-                operand2: {
-                    code: true,
-                    error: '',
-                    id: -1,
-                    operand1: { code: true, pos: 5, type: 'ID', valPos: 4 },
-                    operand2: null,
-                    operation: '',
-                    parameters: null,
-                    pos: 5,
-                    type: 'EXPRESSION',
-                    valPos: 4
-                },
-                operation: '+',
-                parameters: null,
                 pos: 5,
                 type: 'EXPRESSION',
-                valPos: 4
-            },
-            pos: 7,
-            type: 'CALL'
+                valPos: -1,
+                operand1: { code: true, pos: 3, type: 'ID', valPos: 2 },
+                operation: '+',
+                operand2: { code: true, pos: 5, type: 'ID', valPos: 4 }
+            }
         }
     },
     log22: {
@@ -105,21 +75,10 @@ const analyzeSyntax = {
         ],
         expected: {
             code: true,
-            id: 0,
-            parameters: {
-                code: true,
-                error: '',
-                id: -1,
-                operand1: { code: true, pos: 3, type: 'ID', valPos: 2 },
-                operand2: null,
-                operation: '',
-                parameters: null,
-                pos: 3,
-                type: 'EXPRESSION',
-                valPos: 2
-            },
             pos: 5,
-            type: 'CALL'
+            type: 'CALL',
+            id: 0,
+            parameters: { code: true, pos: 3, type: 'ID', valPos: 2 }
         }
     },
     logHelloWorld: {
@@ -163,48 +122,18 @@ const analyzeSyntax = {
         ],
         expected: {
             code: true,
+            pos: 7,
+            type: 'CALL',
             id: 0,
             parameters: {
                 code: true,
-                error: '',
-                id: -1,
-                operand1: {
-                    code: true,
-                    pos: 3,
-                    parameters: null,
-                    id: -1,
-                    valPos: 2,
-                    type: 'EXPRESSION',
-                    error: '',
-                    operation: '',
-                    operand1: {
-                        code: true,
-                        pos: 3,
-                        type: 'ID',
-                        valPos: 2
-                    },
-                    operand2: null
-                },
-                operand2: {
-                    code: true,
-                    error: '',
-                    id: -1,
-                    operand1: { code: true, pos: 5, type: 'ID', valPos: 4 },
-                    operand2: null,
-                    operation: '',
-                    parameters: null,
-                    pos: 5,
-                    type: 'EXPRESSION',
-                    valPos: 4
-                },
-                operation: '-',
-                parameters: null,
                 pos: 5,
                 type: 'EXPRESSION',
-                valPos: 4
-            },
-            pos: 7,
-            type: 'CALL'
+                valPos: -1,
+                operand1: { code: true, pos: 3, type: 'ID', valPos: 2 },
+                operation: '-',
+                operand2: { code: true, pos: 5, type: 'ID', valPos: 4 }
+            }
         }
     },
     log22p1p2: {
@@ -225,80 +154,41 @@ const analyzeSyntax = {
         ],
         expected: {
             code: true,
+            pos: 9,
+            type: 'CALL',
             id: 0,
             parameters: {
                 code: true,
-                error: '',
-                id: -1,
+                pos: 7,
+                type: 'EXPRESSION',
+                valPos: -1,
                 operand1: {
                     code: true,
                     pos: 3,
-                    parameters: null,
-                    id: -1,
-                    valPos: 2,
-                    type: 'EXPRESSION',
-                    error: '',
-                    operation: '',
-                    operand1: {
-                        code: true,
-                        pos: 3,
-                        type: 'ID',
-                        valPos: 2
-                    },
-                    operand2: null
+                    type: 'ID',
+                    valPos: 2
                 },
+                operation: '+',
                 operand2: {
                     code: true,
                     pos: 7,
-                    parameters: null,
-                    id: -1,
-                    valPos: 6,
                     type: 'EXPRESSION',
-                    error: '',
-                    operation: '+',
+                    valPos: -1,
                     operand1: {
                         code: true,
                         pos: 5,
-                        parameters: null,
-                        id: -1,
-                        valPos: 4,
-                        type: 'EXPRESSION',
-                        error: '',
-                        operation: '',
-                        operand1: {
-                            code: true,
-                            pos: 5,
-                            type: 'ID',
-                            valPos: 4
-                        },
-                        operand2: null
+                        type: 'ID',
+                        valPos: 4
                     },
+                    operation: '+',
                     operand2: {
                         code: true,
                         pos: 7,
-                        parameters: null,
-                        id: -1,
-                        valPos: 6,
-                        type: 'EXPRESSION',
-                        error: '',
-                        operation: '',
-                        operand1: {
-                            code: true,
-                            pos: 7,
-                            type: 'ID',
-                            valPos: 6
-                        },
-                        operand2: null
+                        type: 'ID',
+                        valPos: 6
                     }
-                },
-                operation: '+',
-                parameters: null,
-                pos: 7,
-                type: 'EXPRESSION',
-                valPos: 6
-            },
-            pos: 9,
-            type: 'CALL'
+                }
+            }
         }
     },
     log2mult4: {
@@ -317,32 +207,211 @@ const analyzeSyntax = {
         ],
         expected: {
             code: true,
+            pos: 7,
+            type: 'CALL',
             id: 0,
             parameters: {
                 code: true,
-                error: '',
-                id: -1,
-                operand1: { code: true, pos: 3, type: 'ID', valPos: 2 },
-                operand2: {
-                    code: true,
-                    error: '',
-                    id: -1,
-                    operand1: { code: true, pos: 5, type: 'ID', valPos: 4 },
-                    operand2: null,
-                    operation: '',
-                    parameters: null,
-                    pos: 5,
-                    type: 'EXPRESSION',
-                    valPos: 4
-                },
-                operation: '*',
-                parameters: null,
                 pos: 5,
                 type: 'EXPRESSION',
-                valPos: 4
-            },
+                valPos: -1,
+                operand1: {
+                    code: true,
+                    pos: 3,
+                    type: 'ID',
+                    valPos: 2
+                },
+                operation: '*',
+                operand2: {
+                    code: true,
+                    pos: 5,
+                    type: 'ID',
+                    valPos: 4
+                }
+            }
+        }
+    },
+    logO2C: {
+        spaces,
+        limiters,
+        ids: ['log', '2'],
+        strings: [''],
+        text: [
+            log,
+            open,
+            open,
+            { tableId: 'i', tableIndex: 1, lineNo: 1, pos: 2, lexem: '2' },
+            close,
+            close,
+            semicolon
+        ],
+        expected: {
+            code: true,
             pos: 7,
-            type: 'CALL'
+            type: 'CALL',
+            id: 0,
+            parameters: {
+                code: true,
+                pos: 5,
+                type: 'ID',
+                valPos: 3
+            }
+        }
+    },
+    logO1p2C: {
+        spaces,
+        limiters,
+        ids: ['log', '1', '2'],
+        strings: [''],
+        text: [
+            log,
+            open,
+            open,
+            { tableId: 'i', tableIndex: 1, lineNo: 1, pos: 2, lexem: '1' },
+            { tableId: 'l', tableIndex: 6, lineNo: 1, pos: 3, lexem: '+' },
+            { tableId: 'i', tableIndex: 2, lineNo: 1, pos: 4, lexem: '2' },
+            close,
+            close,
+            semicolon
+        ],
+        expected: {
+            code: true,
+            pos: 9,
+            type: 'CALL',
+            id: 0,
+            parameters: {
+                code: true,
+                pos: 7,
+                type: 'EXPRESSION',
+                valPos: -1,
+                operand1: {
+                    code: true,
+                    pos: 4,
+                    type: 'ID',
+                    valPos: 3
+                },
+                operation: '+',
+                operand2: {
+                    code: true,
+                    pos: 6,
+                    type: 'ID',
+                    valPos: 5
+                }
+            }
+        }
+    },
+    logO1p2Cp3: {
+        spaces,
+        limiters,
+        ids: ['log', '1', '2', '3'],
+        strings: [''],
+        text: [
+            log,
+            open,
+            open,
+            { tableId: 'i', tableIndex: 1, lineNo: 1, pos: 2, lexem: '1' },
+            { tableId: 'l', tableIndex: 6, lineNo: 1, pos: 3, lexem: '+' },
+            { tableId: 'i', tableIndex: 2, lineNo: 1, pos: 4, lexem: '2' },
+            close,
+            { tableId: 'l', tableIndex: 6, lineNo: 1, pos: 3, lexem: '+' },
+            { tableId: 'i', tableIndex: 2, lineNo: 1, pos: 4, lexem: '3' },
+            close,
+            semicolon
+        ],
+        expected: {
+            code: true,
+            pos: 11,
+            type: 'CALL',
+            id: 0,
+            parameters: {
+                code: true,
+                pos: 9,
+                type: 'EXPRESSION',
+                valPos: -1,
+                operand1: {
+                    code: true,
+                    pos: 7,
+                    type: 'EXPRESSION',
+                    valPos: -1,
+                    operand1: {
+                        code: true,
+                        pos: 4,
+                        type: 'ID',
+                        valPos: 3
+                    },
+                    operation: '+',
+                    operand2: {
+                        code: true,
+                        pos: 6,
+                        type: 'ID',
+                        valPos: 5
+                    }
+                },
+                operation: '+',
+                operand2: {
+                    code: true,
+                    pos: 9,
+                    type: 'ID',
+                    valPos: 8
+                }
+            }
+        }
+    },
+    logO1p2Cmult3: {
+        spaces,
+        limiters,
+        ids: ['log', '1', '2', '3'],
+        strings: [''],
+        text: [
+            log,
+            open,
+            open,
+            { tableId: 'i', tableIndex: 1, lineNo: 1, pos: 2, lexem: '1' },
+            { tableId: 'l', tableIndex: 6, lineNo: 1, pos: 3, lexem: '+' },
+            { tableId: 'i', tableIndex: 2, lineNo: 1, pos: 4, lexem: '2' },
+            close,
+            { tableId: 'l', tableIndex: 6, lineNo: 1, pos: 3, lexem: '*' },
+            { tableId: 'i', tableIndex: 2, lineNo: 1, pos: 4, lexem: '3' },
+            close,
+            semicolon
+        ],
+        expected: {
+            code: true,
+            pos: 11,
+            type: 'CALL',
+            id: 0,
+            parameters: {
+                code: true,
+                pos: 9,
+                type: 'EXPRESSION',
+                valPos: -1,
+                operand1: {
+                    code: true,
+                    pos: 7,
+                    type: 'EXPRESSION',
+                    valPos: -1,
+                    operand1: {
+                        code: true,
+                        pos: 4,
+                        type: 'ID',
+                        valPos: 3
+                    },
+                    operation: '+',
+                    operand2: {
+                        code: true,
+                        pos: 6,
+                        type: 'ID',
+                        valPos: 5
+                    }
+                },
+                operation: '*',
+                operand2: {
+                    code: true,
+                    pos: 9,
+                    type: 'ID',
+                    valPos: 8
+                }
+            }
         }
     }
 };

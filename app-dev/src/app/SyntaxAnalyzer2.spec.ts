@@ -16,6 +16,10 @@ describe('Language2SyntaxAnalyzer', () => {
             ${'analyzeSyntax'} | ${'log(22-1);'}          | ${cases.analyzeSyntax.log22m1}       | ${null}
             ${'analyzeSyntax'} | ${'log(22+1+2);'}        | ${cases.analyzeSyntax.log22p1p2}     | ${null}
             ${'analyzeSyntax'} | ${'log(2*4);'}           | ${cases.analyzeSyntax.log2mult4}     | ${null}
+            ${'analyzeSyntax'} | ${'log((2));'}           | ${cases.analyzeSyntax.logO2C}        | ${null}
+            ${'analyzeSyntax'} | ${'log((1+2));'}         | ${cases.analyzeSyntax.logO1p2C}      | ${null}
+            ${'analyzeSyntax'} | ${'log((1+2)+3);'}       | ${cases.analyzeSyntax.logO1p2Cp3}    | ${null}
+            ${'analyzeSyntax'} | ${'log((1+2)*3);'}       | ${cases.analyzeSyntax.logO1p2Cmult3} | ${null}
         `('$method() returns expected from $descr', ({ method, testCase, param1 }) => {
             let program = null;
             const stateManager = castPartialTo<AppStateManager>({
