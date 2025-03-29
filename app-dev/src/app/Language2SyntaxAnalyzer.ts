@@ -21,7 +21,8 @@ export class Language2SyntaxAnalyzer implements ISyntax {
         const NO = { code: false, pos: state.pos, type: SyntaxNode.DEFAULT };
 
         const isProgram = this.isProgram(state);
-        this.isDebug && console.log('analyzeSyntax() isProgram=', isProgram);
+        this.isDebug &&
+            console.log('analyzeSyntax() isProgram=', JSON.stringify(isProgram, null, 4));
 
         if (isProgram.code && isProgram.pos === text.length) {
             this.isDebug && console.log('analyzeSyntax() syntax check OK');
@@ -145,11 +146,7 @@ export class Language2SyntaxAnalyzer implements ISyntax {
         const isPlus = this.isLimiter(isTherm, '+');
         const isMinus = this.isLimiter(isTherm, '-');
         if (!isPlus.code && !isMinus.code) {
-            return {
-                ...defaultSyntaxAnalyzeState,
-                ...isTherm,
-                type: SyntaxNode.EXPRESSION
-            };
+            return isTherm;
         }
 
         const operation = isPlus.code ? isPlus : isMinus;
@@ -167,7 +164,9 @@ export class Language2SyntaxAnalyzer implements ISyntax {
             ...isExpression,
             operand1: isTherm,
             operation: isPlus.code ? '+' : '-',
-            operand2: isExpression
+            operand2: isExpression,
+            type: SyntaxNode.EXPRESSION,
+            valPos: defaultSyntaxAnalyzeState.valPos
         };
     };
 
@@ -183,12 +182,7 @@ export class Language2SyntaxAnalyzer implements ISyntax {
         const isMult = this.isLimiter(isFactor, '*');
         const isDivide = this.isLimiter(isFactor, '/');
         if (!isMult.code && !isDivide.code) {
-            return {
-                ...defaultSyntaxAnalyzeState,
-                ...isFactor,
-                type: SyntaxNode.EXPRESSION,
-                operand1: isFactor
-            };
+            return isFactor;
         }
 
         const operation = isMult.code ? isMult : isDivide;
@@ -206,7 +200,9 @@ export class Language2SyntaxAnalyzer implements ISyntax {
             ...isTherm,
             operand1: isFactor,
             operation: isMult.code ? '*' : '/',
-            operand2: isTherm
+            operand2: isTherm,
+            type: SyntaxNode.EXPRESSION,
+            valPos: defaultSyntaxAnalyzeState.valPos
         };
     };
 
@@ -216,27 +212,41 @@ export class Language2SyntaxAnalyzer implements ISyntax {
         const NO = { code: false, pos: state.pos, type: SyntaxNode.DEFAULT };
 
         const isNumber = this.isNumber(state);
-        if (!isNumber.code) {
+        this.isDebug && console.log('isFactor() isNumber=', isNumber);
+        if (isNumber.code) {
+            return isNumber;
+        }
+
+        const isOpen = this.isLimiter(state, '(');
+        if (!isOpen.code) {
             return NO;
         }
-        return isNumber;
-        // if (token.tableId === Table.STRINGS) {
-        //     return { code: true, pos: state.pos + 1, type: SyntaxNode.STRING };
-        // }
-        // return { code: false, pos: state.pos, type: SyntaxNode.DEFAULT };
+
+        const isExpression = this.isExpression(isOpen);
+        if (!isExpression.code) {
+            return {
+                code: false,
+                pos: isOpen.pos,
+                type: SyntaxNode.DEFAULT,
+                error: 'expression expected'
+            };
+        }
+
+        const isClose = this.isLimiter(isExpression, ')');
+        this.isDebug && console.log('isCall() isClose=', isClose);
+        if (!isClose.code) {
+            return NO;
+        }
+
+        return {
+            ...isExpression,
+            pos: isClose.pos
+        };
     };
 
     isNumber = (state: SyntaxAnalyzeState): SyntaxAnalyzeState => {
         const text = this.stateManager.getText();
         const token = text[state.pos];
-        const NO = { code: false, pos: state.pos, type: SyntaxNode.DEFAULT };
-        // debugger;
-
-        // const isNumber = this.isNumber(state);
-        // if (!isNumber.code) {
-        //     return NO;
-        // }
-        // return isNumber;
         if (token.tableId === Table.IDS && !isNaN(parseInt(token.lexem))) {
             return { code: true, pos: state.pos + 1, type: SyntaxNode.ID, valPos: state.pos };
         }

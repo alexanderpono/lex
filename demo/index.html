@@ -815,6 +815,64 @@
         </script>
     </section>
 
+    <section class="slide">
+        <h3>4. Выполнение скрипта: log(1+2*3);</h3>
+        <div id="runLog1p2mult3" class="lex"></div>
+        <div id="runLog1p2mult3-controls" class="game controls"></div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'runLog1p2mult3',
+                    target: 'runLog1p2mult3',
+                    simControlsTarget: 'runLog1p2mult3-controls',
+                    showSimControls: true,
+                    maxCalcStep: 0,
+                    endCalcStep: 12,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
+                    inputString: 'log(1+2*3);',
+                    show: Show.simControls 
+                        | Show.inputFile 
+                        | Show.idsTable 
+                        | Show.canonicText
+                        | Show.program
+                        | Show.console
+                        | Show.debugInfo
+                });
+            });
+        </script>
+    </section>
+
+    <section class="slide">
+        <h3>4. Выполнение скрипта: log((1+2)*3);</h3>
+        <div id="runLogO1p2Cmult3" class="lex"></div>
+        <div id="runLogO1p2Cmult3-controls" class="game controls"></div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'runLogO1p2Cmult3',
+                    target: 'runLogO1p2Cmult3',
+                    simControlsTarget: 'runLogO1p2Cmult3-controls',
+                    showSimControls: true,
+                    maxCalcStep: 0,
+                    endCalcStep: 12,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
+                    inputString: 'log((1+2)*3);',
+                    show: Show.simControls 
+                        | Show.inputFile 
+                        | Show.idsTable 
+                        | Show.canonicText
+                        | Show.program
+                        | Show.console
+                        | Show.debugInfo
+                });
+            });
+        </script>
+    </section>
+
     <footer class="badge">
         <a href="https://github.com/alexanderpono/">Проект на GitHub</a>
     </footer>
