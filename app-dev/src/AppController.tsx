@@ -143,6 +143,7 @@ export class AppController {
                 program={this.stateManager.getProgram()}
                 consoleText={this.stateManager.getConsoleText()}
                 show={this.builder.show}
+                targetId={this.builder.target}
             />,
             target
         );

@@ -86,25 +86,26 @@ if (window['demo'] === true) {
         name: 'rs',
         target: 'viewport',
         simControlsTarget: 'controls',
-        maxCalcStep: 11,
+        maxCalcStep: 16,
         endCalcStep: 16,
         spaces: [' ', '\n'],
         limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
         // inputString: 'log(22);',
-        inputString: 'log((1+2)*3);',
+        // inputString: 'log((1+2)*3);',
         // inputString: 'log((1+2));',
 
-        // inputString: "log('Hello world');",
+        inputString: "log('Hello world');",
         formatIds: true,
         formatComments: true,
         // showLineNumbers: true,
         show:
             Show.simControls |
-            Show.canonicText |
-            Show.stringsTable |
-            Show.text |
+            // Show.canonicText |
+            // Show.stringsTable |
+            // Show.text |
             Show.program |
-            Show.console |
-            Show.debugInfo
+            // Show.console |
+            Show.debugInfo |
+            Show.mathTree
     });
 }
