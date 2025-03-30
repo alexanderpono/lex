@@ -4,7 +4,7 @@ import { AppStateManager } from './AppStateManager';
 import { AppControllerBuilder } from './AppControllerBuilder';
 import { LexView } from './components/LexView';
 import { SimControls } from './components/SimControls';
-import { Show } from './app.types';
+import { defaultSyntaxAnalyzeState, Show } from './app.types';
 
 export class AppController {
     constructor(private builder: AppControllerBuilder, private stateManager: AppStateManager) {}
@@ -35,6 +35,8 @@ export class AppController {
         this.stateManager.setCurrentPosInLine(0);
         this.stateManager.setText([]);
         this.stateManager.setStrings([]);
+        this.stateManager.setProgram({ ...defaultSyntaxAnalyzeState });
+        this.stateManager.setConsoleText('');
 
         const isDebug = (this.builder.show & Show.debugInfo) > 0;
         let usedIterations = this.builder.lex.parseText(this.stateManager.getInputString());

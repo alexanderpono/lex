@@ -34,7 +34,7 @@ module.exports = {
             '<rootDir>/internals/__mocks__/fileMock.js',
         '\\.svg': '<rootDir>/internals/__mocks__/svg.js'
     },
-    verbose: false,
+    verbose: true,
     testPathIgnorePatterns: ['/node_modules/', 'temp'],
     transformIgnorePatterns: []
 };
