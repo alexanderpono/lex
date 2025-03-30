@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './LexView.scss';
 import { CanonicTextItem, Show, SyntaxAnalyzeState, SyntaxNode, Table } from '@src/app.types';
+import { expressionToReversePolish } from './expressionToReversePolish';
 
 interface LexViewProps {
     inputString: string;
@@ -105,33 +106,8 @@ const toText = (text: CanonicTextItem[]): React.ReactElement => {
     return <section>{els}</section>;
 };
 
-const operandToString = (text: CanonicTextItem[], node: SyntaxAnalyzeState) => {
-    if (node.type === SyntaxNode.ID) {
-        const token = text[node.valPos];
-        return token.lexem;
-    }
-    if (node.type === SyntaxNode.EXPRESSION) {
-        return operandToString(text, node.operand1);
-    }
-    return '';
-};
-
 const paramsToString = (text: CanonicTextItem[], program: SyntaxAnalyzeState) => {
-    switch (program.parameters.type) {
-        case SyntaxNode.STRING:
-            return "'" + text[program.parameters.valPos].lexem + "'";
-        case SyntaxNode.EXPRESSION: {
-            const op1 = operandToString(text, program.parameters.operand1);
-            if (program.parameters.operation !== '') {
-                const op2 = operandToString(text, program.parameters.operand2);
-                return `${op1}${program.parameters.operation}${op2}`;
-            }
-            return op1;
-            break;
-        }
-        default:
-            return '?';
-    }
+    return expressionToReversePolish(text, program, [], false).join(',');
 };
 
 const printProgramInstructions = (text: CanonicTextItem[], program: SyntaxAnalyzeState) => {
@@ -139,7 +115,7 @@ const printProgramInstructions = (text: CanonicTextItem[], program: SyntaxAnalyz
         return '';
     }
     const id: CanonicTextItem = text[program.id];
-    return `CALL ${id.lexem} [${paramsToString(text, program)}]`; //${params.join(',')}
+    return `CALL ${id.lexem} [${paramsToString(text, program.parameters)}]`;
 };
 
 export const LexView: React.FC<LexViewProps> = ({
