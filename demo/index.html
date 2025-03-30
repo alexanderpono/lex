@@ -42,7 +42,8 @@
             text: 512,
             program: 1024,
             console: 2048,
-            debugInfo: 4096
+            debugInfo: 4096,
+            mathTree: 8192
         };
         const defaultAppConfig = {
             name: '',
@@ -758,6 +759,31 @@
     </section>
 
     <section class="slide">
+        <h3>4. Дерево вычисления: 2+1</h3>
+        <div id="runLog2p1Tree" class="lex"></div>
+        <div id="runLog2p1Tree-controls" class="game controls"></div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'runLog2p1Tree',
+                    target: 'runLog2p1Tree',
+                    simControlsTarget: 'runLog2p1Tree-controls',
+                    showSimControls: true,
+                    maxCalcStep: 12,
+                    endCalcStep: 12,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
+                    inputString: 'log(2+1);',
+                    show: Show.simControls 
+                        | Show.program
+                        | Show.mathTree
+                });
+            });
+        </script>
+    </section>
+
+    <section class="slide">
         <h3>4. Выполнение скрипта: log(1+2+3);</h3>
         <div id="runLog1p2p3" class="lex"></div>
         <div id="runLog1p2p3-controls" class="game controls"></div>
@@ -781,6 +807,31 @@
                         | Show.program
                         | Show.console
                         | Show.debugInfo
+                });
+            });
+        </script>
+    </section>
+
+    <section class="slide">
+        <h3>4. Дерево вычисления: 22+1+2</h3>
+        <div id="runLog1p2p3Tree" class="lex"></div>
+        <div id="runLog1p2p3Tree-controls" class="game controls"></div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'runLog1p2p3Tree',
+                    target: 'runLog1p2p3Tree',
+                    simControlsTarget: 'runLog1p2p3Tree-controls',
+                    showSimControls: true,
+                    maxCalcStep: 14,
+                    endCalcStep: 14,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
+                    inputString: 'log(22+1+2);',
+                    show: Show.simControls 
+                        | Show.program
+                        | Show.mathTree
                 });
             });
         </script>
@@ -837,8 +888,33 @@
                         | Show.idsTable 
                         | Show.canonicText
                         | Show.program
-                        | Show.console
                         | Show.debugInfo
+                });
+            });
+        </script>
+    </section>
+
+    <section class="slide">
+        <h3>4. Вычисление выражения: 1+2*3</h3>
+        <div id="runLog1p2mult3Tree" class="lex"></div>
+        <div id="runLog1p2mult3Tree-controls" class="game controls"></div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'runLog1p2mult3Tree',
+                    target: 'runLog1p2mult3Tree',
+                    simControlsTarget: 'runLog1p2mult3Tree-controls',
+                    showSimControls: true,
+                    maxCalcStep: 14,
+                    endCalcStep: 14,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
+                    inputString: 'log(1+2*3);',
+                    show: Show.simControls 
+                        | Show.program
+                        | Show.console
+                        | Show.mathTree
                 });
             });
         </script>
@@ -868,6 +944,31 @@
                         | Show.program
                         | Show.console
                         | Show.debugInfo
+                });
+            });
+        </script>
+    </section>
+
+    <section class="slide">
+        <h3>4. Вычисление выражения: (1+2)*3</h3>
+        <div id="runLogO1p2Cmult3Tree" class="lex"></div>
+        <div id="runLogO1p2Cmult3Tree-controls" class="game controls"></div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                lex.run({
+                    ...defaultAppConfig,
+                    name: 'runLogO1p2Cmult3Tree',
+                    target: 'runLogO1p2Cmult3Tree',
+                    simControlsTarget: 'runLogO1p2Cmult3Tree-controls',
+                    showSimControls: true,
+                    maxCalcStep: 16,
+                    endCalcStep: 16,
+                    spaces: [' ', '\n'],
+                    limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
+                    inputString: 'log((1+2)*3);',
+                    show: Show.simControls 
+                        | Show.program
+                        | Show.mathTree
                 });
             });
         </script>
