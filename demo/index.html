@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Создаем лексический анализатор программы на языке JavaScript
+    <title>Как создать интерпретатор математических выражений
+
     </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,15 +18,131 @@
     <script>window.demo = true;</script>
 
     <header class="caption">
-        <h1>Создаем лексический анализатор программы на языке JavaScript
+        <h1>Как создать интерпретатор математических выражений
         </h1>
         <p>Александр Пономаренко</p></header>
 
     <section class="slide title">
         <img class="logo" src="demo-static/INNO-logo.svg" />
-        <h1>Создаем лексический анализатор программы на языке JavaScript</h1>
-        <h3 class="noindent nologo">Александр Пономаренко</h3>
+        <h1>Как создать интерпретатор математических выражений</h1>
     </section>
+
+    <section class="slide speaker">
+        <h3 class="d20 noindent">Александр Пономаренко</h3>
+        <div class="content">
+            <div class="photo-caption">
+                <div class="photo"><img src="demo-static/photo256x256.jpg" width="200" /></div>
+                <div class="position">ИТ-холдинг Т1 <br />Frontend-разработчик React</div>
+            </div>
+            <div class="experience">
+                <p class="top"><span class="number">20 лет</span></p>
+                <p class="bottom">в web-разработке</p>
+            </div>
+            <div class="games">
+                <p class="top"><span class="number">4</span></p>
+                <p class="bottom">синтаксических анализатора <br />к искусственным языкам</p>
+            </div>
+            <div class="e"></div>
+            <div class="e"></div>
+        </div>
+    </section>
+
+    <section class="slide">
+        <h3 class="noindent">Если вы решаете задачи:</h3>
+
+        <div class="picText">
+            <div class="w50">
+                <ul>
+                    <li class="maxw100">Создаете интерпретатор математических выражений
+                    </li>
+                    <li class="maxw100">Создаете интерпретатор или компилятор к существующему языку программирования
+                    </li>
+                    <li class="maxw100">Создаете собственный язык программирования 
+                        &mdash; <h4 class="nocopy">то этот доклад для вас</h3></li>
+                </ul>
+                
+            </div>
+            <div class="text">
+            </div>
+        </div>
+    </section>
+
+    <section class="slide">
+        <h3>Через 20 минут</h3>
+        <h4>Вы будете знать:</h4>
+        <ul>
+            <li>Как работает подсветка синтаксиса в IDE
+            </li>
+            <li>Как работает интерпретатор языка программирования
+            </li>
+        </ul>
+        <h4>У вас будет ссылка:</h4>
+        <ul>
+            <li>На репозиторий с реализацией интерпретатора
+            </li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h3 class="noindent">Вы сэкономите несколько часов своего времени </h3>
+
+        <div class="text">
+            <div class="w50">
+                <h4>Потому что:</h4>
+                <ul>
+                    <li class="maxw100">Предложу вам готовую 
+                        реализацию интерпретатора математических выражений
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="slide">
+        <h3 class="noindent">Сколько языков программирования вы знаете?
+        </h3>
+
+        <div class="picText">
+            <div class="w50">
+                <ul>
+                    <li class="maxw100">0</li>
+                    <li class="maxw100">1</li>
+                    <li class="maxw100">2 и более</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="slide">
+        <h3 class="noindent">Есть ли что-то общее у этих языков?
+        </h3>
+
+        <div class="picText">
+            <div class="w50">
+            </div>
+        </div>
+    </section>
+
+    <section class="slide contents">
+        <h3>Содержание</h3>
+        <p><strong>1.</strong> Немного терминов: транслятор, компилятор, транспилятор, интерпретатор</p>
+        <p><strong>2.</strong> Лексический анализатор</p>
+        <p><strong>3.</strong> Интерпретатор простейшего языка программирования (+ БНФ)</p>
+        <p><strong>4.</strong> Интерпретатор математических выражений (+ обратная польская запись + синтаксические деревья)</p>
+        <p><strong>5.</strong> Дальнейшие шаги</p>
+    </section>
+
+    <section class="slide">
+        <h3 class="noindent">Транслятор
+        </h3>
+
+        <div class="picText">
+            <div class="w50">
+                <img src="./demo-static/translator.png" />
+            </div>
+        </div>
+    </section>
+
 
     <script>
         const Show = {
@@ -61,17 +178,57 @@
         };
     </script>
 
-    <section class="slide contents">
-        <h3>Содержание</h3>
-        <p><strong>1.</strong> Лексический анализатор</p>
-        <p><strong>2.</strong> Синтаксический анализатор простейшего языка</p>
-        <p><strong>3.</strong> Интерпретатор простейшего языка</p>
-        <p><strong>4.</strong> Вычисление математических выражений</p>
+    <section class="slide">
+        <h3 class="noindent">1. Компилятор – определение №1</h3>
+
+        <div class="picText">
+            <div class="w50">
+                - это транслятор, у которого объектный код &mdash; исполняемый модуль в формате конкретной ОС
+            </div>
+        </div>
     </section>
 
+    <section class="slide">
+        <h3 class="noindent">1. Компилятор – определение №2</h3>
+    
+        <div class="picText">
+            <div class="w50">
+                - это транслятор, у которого объектный код &mdash; это программа на языке более низкого уровня
+            </div>
+        </div>
+    </section>
+    
+    <section class="slide">
+        <h3 class="noindent">1. Транспилятор</h3>
+    
+        <div class="picText">
+            <div class="w50">
+                - преобразует входную программу на языке высокого уровня в эквивалентную программу на языке высокого уровня (пример: babel)
+            </div>
+        </div>
+    </section>
+    
+    <section class="slide">
+        <h3 class="noindent">1. Интерпретатор</h3>
+    
+        <div class="picText">
+            <div class="w50">
+                = транслятор + блок исполнения только что скомпилированной программы
+            </div>
+        </div>
+    </section>
+    
+    <section class="slide contents">
+        <h3>Содержание</h3>
+        <p class="ok"><strong>1.</strong> Немного терминов: транслятор, компилятор, транспилятор, интерпретатор</p>
+        <p><strong>2.</strong> Лексический анализатор</p>
+        <p><strong>3.</strong> Интерпретатор простейшего языка программирования (+ БНФ)</p>
+        <p><strong>4.</strong> Интерпретатор математических выражений (+ обратная польская запись + синтаксические деревья)</p>
+        <p><strong>5.</strong> Дальнейшие шаги</p>
+    </section>
 
     <section class="slide">
-        <h3>1. Лексический анализ. 1 строка</h3>
+        <h3>2. Лексический анализ. 1 строка</h3>
         <div id="lex1" class="lex"></div>
         <div id="lex1-controls" class="game controls"></div>
         <script>
@@ -99,7 +256,7 @@
     </section>
 
     <section class="slide">
-        <h3>1. Лексический анализ. 2 строки</h3>
+        <h3>2. Лексический анализ. 2 строки</h3>
         <div id="lex2" class="lex"></div>
         <div id="lex2-controls" class="game controls"></div>
         <script>
@@ -127,7 +284,7 @@
     </section>
 
     <section class="slide">
-        <h3>1. Лексический анализ. Комментарий</h3>
+        <h3>2. Лексический анализ. Комментарий</h3>
         <div id="lex-comment" class="lex"></div>
         <div id="lex-comment-controls" class="game controls">Комментарий</div>
         <script>
@@ -155,7 +312,7 @@
     </section>
 
     <section class="slide">
-        <h3>1. Лексический анализ. Комментарий</h3>
+        <h3>2. Лексический анализ. Комментарий</h3>
         <div id="lex-comment2" class="lex"></div>
         <div id="lex-comment2-controls" class="game controls">Комментарий</div>
         <script>
@@ -183,7 +340,7 @@
     </section>
 
     <section class="slide">
-        <h3>1. Строковые константы</h3>
+        <h3>2. Строковые константы</h3>
         <div id="lex-const" class="lex"></div>
         <div id="lex-const-controls" class="game controls">Строковая константа</div>
         <script>
@@ -211,7 +368,7 @@
     </section>
 
     <section class="slide">
-        <h3>1. Строковые константы</h3>
+        <h3>2. Строковые константы</h3>
         <div id="lex-const2" class="lex"></div>
         <div id="lex-const2-controls" class="game controls">Строковая константа</div>
         <script>
@@ -241,7 +398,7 @@
 
 
     <section class="slide">
-        <h3>1. Как это можно использовать?</h3>
+        <h3>2. Как это можно использовать?</h3>
         <div id="lex-comment3" class="lex"></div>
         <div id="lex-comment3-controls" class="game controls"></div>
         <script>
@@ -267,7 +424,7 @@
     </section>
 
     <section class="slide">
-        <h3>1. Форматирование текста программы</h3>
+        <h3>2. Форматирование текста программы</h3>
         <div id="lex-format0" class="lex"></div>
         <div id="lex-format0-controls" class="game controls"></div>
         <script>
@@ -295,7 +452,7 @@
 
 
     <section class="slide">
-        <h3>1. Форматирование: нумерация строк</h3>
+        <h3>2. Форматирование: нумерация строк</h3>
         <div id="lex-format1" class="lex"></div>
         <div id="lex-format1-controls" class="game controls"></div>
         <script>
@@ -323,7 +480,7 @@
     </section>
 
     <section class="slide">
-        <h3>1. Форматирование: идентификаторы</h3>
+        <h3>2. Форматирование: идентификаторы</h3>
         <div id="lex-format2" class="lex"></div>
         <div id="lex-format2-controls" class="game controls"></div>
         <script>
@@ -352,7 +509,7 @@
     </section>
 
     <section class="slide">
-        <h3>1. Форматирование: комментарии</h3>
+        <h3>2. Форматирование: комментарии</h3>
         <div id="lex-format3" class="lex"></div>
         <div id="lex-format3-controls" class="game controls"></div>
         <script>
@@ -382,7 +539,7 @@
     </section>
 
     <section class="slide">
-        <h3>1. Убираем из текста комментарии</h3>
+        <h3>2. Убираем из текста комментарии</h3>
         <div id="lex-remove-comments" class="lex"></div>
         <div id="lex-remove-comments-controls" class="game controls">Убираем комментарии</div>
         <script>
@@ -411,7 +568,7 @@
     </section>
 
     <section class="slide">
-        <h3>1. Убираем из текста комментарии</h3>
+        <h3>2. Убираем из текста комментарии</h3>
         <div id="lex-remove-comments2" class="lex"></div>
         <div id="lex-remove-comments2-controls" class="game controls">Убираем комментарии</div>
         <script>
@@ -440,7 +597,7 @@
     </section>
 
     <section class="slide">
-        <h3>1. Убираем из текста whitespace</h3>
+        <h3>2. Убираем из текста whitespace</h3>
         <div id="lex-remove-whitespace" class="lex"></div>
         <div id="lex-remove-whitespace-controls" class="game controls">Убираем пробелы</div>
         <script>
@@ -469,7 +626,7 @@
     </section>
 
     <section class="slide">
-        <h3>1. Убираем из текста whitespace</h3>
+        <h3>2. Убираем из текста whitespace</h3>
         <div id="lex-remove-whitespace2" class="lex"></div>
         <div id="lex-remove-whitespace2-controls" class="game controls">Убираем пробелы</div>
         <script>
@@ -498,21 +655,33 @@
         </script>
     </section>
 
+    <section class="slide contents">
+        <h3>Содержание</h3>
+        <p class="ok"><strong>1.</strong> Немного терминов: транслятор, компилятор, транспилятор, интерпретатор</p>
+        <p class="ok"><strong>2.</strong> Лексический анализатор</p>
+        <p><strong>3.</strong> Интерпретатор простейшего языка программирования (+ БНФ)</p>
+        <p><strong>4.</strong> Интерпретатор математических выражений (+ обратная польская запись + синтаксические деревья)</p>
+        <p><strong>5.</strong> Дальнейшие шаги</p>
+    </section>
+
+
+
+
     <section class="slide">
-        <h3>2. Синтаксический анализ</h3>
-        <p>2.1. БНФ-нотация описания грамматик языков</p>
-        <p>2.2. Грамматика простого языка</p>
+        <h3>3. Синтаксический анализ</h3>
+        <p>3.1. БНФ-нотация описания грамматик языков</p>
+        <p>3.2. Грамматика простого языка</p>
         <p></p>
         <p></p>
     </section>
 
     <section class="slide">
-        <h3>2. Простейшая программа</h3>
+        <h3>3. Простейшая программа</h3>
         <pre>log('Hello world');</pre>
     </section>
 
     <section class="slide">
-        <h3>2. Грамматика простого языка</h3>
+        <h3>3. Грамматика простого языка <br />в нотации БНФ</h3>
         <p>&lt;Program&gt; ::= &lt;callFunction&gt;</p>
         <p>&lt;callFunction&gt; ::= &lt;ID&gt; <strong>(</strong> <strong>)</strong> | &lt;ID&gt; (&lt;parameterList&gt;)</p>
         <p>&lt;parameterList&gt; ::= &lt;string&gt; | &lt;string&gt; <strong>,</strong> &lt;parameterList&gt;</p>
@@ -523,7 +692,41 @@
     </section>
 
     <section class="slide">
-        <h3>2. Программа на простом языке</h3>
+        <h3>3. Что из этого верно?</h3>
+
+        <div class="picText">
+            <div class="w50">
+                <p>БНФ – это:</p>
+                <ul>
+                    <li class="maxw100">Бекуса-Наура форма</li>
+                    <li class="maxw100">Бекуса нормальная форма</li>
+                </ul>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="slide">
+        <h3>3. Что из этого верно?</h3>
+
+        <div class="picText">
+            <div class="w50">
+                <p>БНФ – это:</p>
+                <ul>
+                    <li class="maxw100">Бекуса-Наура форма</li>
+                    <li class="maxw100">Бекуса нормальная форма</li>
+                </ul>
+                <p>Оба варианта верные</p>
+            </div>
+        </div>
+
+    </section>
+
+
+
+    
+    <section class="slide">
+        <h3>3. Программа на простом языке</h3>
         <div id="syntax-gramma" class="lex"></div>
         <div id="syntax-gramma-controls" class="game controls"></div>
         <script>
@@ -553,7 +756,7 @@
     </section>
 
     <section class="slide">
-        <h3>2. Синтаксический анализ и компиляция</h3>
+        <h3>3. Синтаксический анализ и компиляция</h3>
         <div id="syntax-2" class="lex"></div>
         <div id="syntax-2-controls" class="game controls"></div>
         <script>
@@ -581,7 +784,7 @@
     </section>
 
     <section class="slide">
-        <h3>2. Синтаксический анализ и компиляция</h3>
+        <h3>3. Синтаксический анализ и компиляция</h3>
         <div id="syntax-3" class="lex"></div>
         <div id="syntax-3-controls" class="game controls"></div>
         <script>
@@ -885,9 +1088,9 @@
                     inputString: 'log(1+2*3);',
                     show: Show.simControls 
                         | Show.inputFile 
-                        | Show.idsTable 
                         | Show.canonicText
                         | Show.program
+                        | Show.console
                         | Show.debugInfo
                 });
             });
@@ -939,7 +1142,6 @@
                     inputString: 'log((1+2)*3);',
                     show: Show.simControls 
                         | Show.inputFile 
-                        | Show.idsTable 
                         | Show.canonicText
                         | Show.program
                         | Show.console

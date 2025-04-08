@@ -257,9 +257,71 @@ p, label, li {
     margin-left: 1.5rem;
 }
 
-.slide.speaker p, .slide.inspiration p {
-    max-width: 100%;
+.speaker .content {
+    display: grid;
+    grid-template-areas: "photo photo" "experience games" "e e";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 200px 200px;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    padding: 0px 0px 50px 0px;
 }
+.speaker .photo-caption {
+    grid-area: photo;
+    display: flex;
+}
+
+.speaker .photo {
+    position: initial;
+    margin: 0px 50px 0px 0px;
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+    overflow: hidden;
+}
+
+.speaker .experience {
+    grid-area: experience;
+    background: var(--corporate-color);
+    border-radius: 10px;
+}
+
+.speaker .games {
+    grid-area: games;
+    background: var(--corporate-color);
+    border-radius: 10px;
+}
+
+.speaker p {
+    color: white;
+}
+
+.speaker .top {
+    padding: 40px 20px 10px 20px;
+}
+.speaker .bottom {
+    padding: 0px 20px 0px 20px;
+}
+.speaker .number {
+    font-size: 300%;
+    font-weight: bold;
+}
+.speaker .units {
+    font-size: 150%;
+    font-weight: bold;
+}
+.speaker .position {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: var(--corporate-color);
+}
+
+.speaker .text {
+    margin-top: 35px;
+}
+
+
 
 .progress {
     --color-blue: #00aae6;
