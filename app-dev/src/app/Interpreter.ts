@@ -77,7 +77,7 @@ export class Interpreter {
     executeCall = (instruction: CallData) => {
         const context = {
             globalFunctions: {
-                log: (...params) => {
+                print: (...params) => {
                     const text = this.stateManager.getConsoleText();
                     this.isDebug && console.log('typeof params=', typeof params);
                     const firstLF = text ? '\n' : '';

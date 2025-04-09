@@ -677,7 +677,7 @@
 
     <section class="slide">
         <h3>3. Простейшая программа</h3>
-        <pre>log('Hello world');</pre>
+        <pre>print('Hello world');</pre>
     </section>
 
     <section class="slide">
@@ -711,20 +711,38 @@
 
         <div class="picText">
             <div class="w50">
-                <p>БНФ – это:</p>
                 <ul>
-                    <li class="maxw100">Бекуса-Наура форма</li>
-                    <li class="maxw100">Бекуса нормальная форма</li>
+                    <li class="maxw100">БНФ &mdash; Бекуса-Наура форма</li>
+                    <li class="maxw100">БНФ &mdash; Бекуса нормальная форма</li>
                 </ul>
-                <p>Оба варианта верные</p>
             </div>
+            <div class="text">
+                <br />
+                <mark>Оба варианта верные</mark>
+            </div>
+
         </div>
+
+    </section>
+
+    <section class="slide">
+        <h3>3. Описание грамматики</h3>
+
+        <p><strong>1.</strong> Это – постановка задачи для синтаксического анализа</p>
+        <p><strong>2.</strong> Важно: избегать левой рекурсии</p>
+        <p>&nbsp;</p>
+        <p>&lt;callFunction&gt; ::= &lt;ID&gt; <strong>(</strong> <strong>)</strong> | &lt;ID&gt; <strong>(</strong>&lt;parameterList&gt;<strong>)</strong></p>
+        <p>&lt;parameterList&gt; ::= &lt;string&gt; | &lt;string&gt; <strong>,</strong> &lt;parameterList&gt;</p>
+        <br />
+        <p>&lt;ID&gt; &mdash; идентификатор</p>
+        <p><strong>( ) ,</strong> &mdash; разделители из таблицы limiters лексического анализатора</p>
+        <p>| &mdash; обозначение альтернативы</p>
 
     </section>
 
 
 
-    
+
     <section class="slide">
         <h3>3. Программа на простом языке</h3>
         <div id="syntax-gramma" class="lex"></div>
@@ -737,19 +755,20 @@
                     target: 'syntax-gramma',
                     simControlsTarget: 'syntax-gramma-controls',
                     showSimControls: true,
-                    maxCalcStep: 12,
+                    maxCalcStep: 0,
                     endCalcStep: 12,
                     spaces: [' ', '\n'],
-                    limiters: [';', '=', '/', "'", '(', ')'],
-                    inputString: "log('Hello world');",
+                    limiters: [';', "'", '(', ')'],
+                    inputString: "print('Hello world');",
                     formatIds: true,
                     formatComments: true,
                     show: Show.simControls 
+                        | Show.inputFile
                         | Show.limitersTable 
                         | Show.spacesTable 
                         | Show.idsTable 
                         | Show.canonicText
-                        | Show.text
+                        | Show.stringsTable
                 });
             });
         </script>
@@ -771,13 +790,14 @@
                     endCalcStep: 12,
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/', "'", '(', ')'],
-                    inputString: "log('Hello world');",
+                    inputString: "print('Hello world');",
                     formatIds: true,
                     formatComments: true,
                     show: Show.simControls 
                         | Show.idsTable 
                         | Show.canonicText
                         | Show.text
+                        | Show.program
                 });
             });
         </script>
@@ -799,7 +819,7 @@
                     endCalcStep: 13,
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/', "'", '(', ')'],
-                    inputString: "log('Hello world');",
+                    inputString: "print('Hello world');",
                     formatIds: true,
                     formatComments: true,
                     show: Show.simControls 
@@ -824,11 +844,11 @@
                     target: 'exec',
                     simControlsTarget: 'exec-controls',
                     showSimControls: true,
-                    maxCalcStep: 14,
-                    endCalcStep: 14,
+                    maxCalcStep: 13,
+                    endCalcStep: 13,
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/', "'", '(', ')'],
-                    inputString: "log('Hello world');",
+                    inputString: "print('Hello world');",
                     formatIds: true,
                     formatComments: true,
                     show: Show.simControls 
@@ -841,8 +861,18 @@
         </script>
     </section>
 
+    <section class="slide contents">
+        <h3>Содержание</h3>
+        <p class="ok"><strong>1.</strong> Немного терминов: транслятор, компилятор, транспилятор, интерпретатор</p>
+        <p class="ok"><strong>2.</strong> Лексический анализатор</p>
+        <p class="ok"><strong>3.</strong> Интерпретатор простейшего языка программирования (+ БНФ)</p>
+        <p><strong>4.</strong> Интерпретатор математических выражений (+ обратная польская запись + синтаксические деревья)</p>
+        <p><strong>5.</strong> Дальнейшие шаги</p>
+    </section>
+
+
     <section class="slide">
-        <h3>4. Лексический анализ</h3>
+        <h3>4. Лексический анализ выражения 2 + 2</h3>
         <div id="mathLex1" class="lex"></div>
         <div id="mathLex1-controls" class="game controls"></div>
         <script>
@@ -853,7 +883,7 @@
                     target: 'mathLex1',
                     simControlsTarget: 'mathLex1-controls',
                     showSimControls: true,
-                    maxCalcStep: 8,
+                    maxCalcStep: 0,
                     endCalcStep: 8,
                     spaces: [' ', '\n'],
                     limiters: ['+'],
@@ -870,6 +900,15 @@
     </section>
 
     <section class="slide">
+        <h3>4. Приоритет математических операций</h3>
+        <p>(чем номер больше — тем приоритет выше)</p>
+        <p>&nbsp;</p>
+        <p><strong>1.</strong> + -</p>
+        <p><strong>2.</strong> * /</p>
+        <p><strong>3.</strong> ^</p>
+    </section>
+
+    <section class="slide">
         <h3>4. Как задать приоритет операций в математическом выражении?</h3>
         <p><strong>1.</strong> Отразить приоритет в правилах грамматики</p>
         <p><strong>2.</strong> Использовать алгоритм "Сортировочная станция" Дейкстры</p>
@@ -879,7 +918,7 @@
     </section>
 
     <section class="slide">
-        <h3>2. Грамматика математического выражения</h3>
+        <h3>4. Грамматика математического выражения</h3>
         <p>&lt;MathExpression&gt; ::= &lt;therm&gt; | &lt;MathExpression&gt; <strong>+</strong> &lt;therm&gt; &lt;MathExpression&gt; <strong>-</strong> &lt;therm&gt; </p>
         <p>&lt;therm&gt; ::= &lt;factor&gt; | &lt;therm&gt; <strong>*</strong> &lt;factor&gt; | &lt;therm&gt; <strong>/</strong> &lt;factor&gt;</p>
         <p>&lt;factor&gt; ::= &lt;number&gt; | <strong>(</strong> &lt;MathExpression&gt; <strong>)</strong> | &lt;factor&gt; <strong>^</strong> &lt;factor&gt; </p>
@@ -891,7 +930,7 @@
     </section>
 
     <section class="slide">
-        <h3>2. Простой язык с математическими выражениями</h3>
+        <h3>4. Простой язык с математическими выражениями</h3>
         <p>&lt;Program&gt; ::= &lt;callFunction&gt;</p>
         <p>&lt;callFunction&gt; ::= &lt;ID&gt; <strong>(</strong> <strong>)</strong> | &lt;ID&gt; (&lt;parameterList&gt;)</p>
         <p>&lt;parameterList&gt; ::= &lt;expression&gt; | &lt;string&gt; [ <strong>,</strong> &lt;parameterList&gt; ]</p>
@@ -906,7 +945,7 @@
     </section>
 
     <section class="slide">
-        <h3>4. Выполнение скрипта: log(2);</h3>
+        <h3>4. Выполнение скрипта: print(2);</h3>
         <div id="runLog2" class="lex"></div>
         <div id="runLog2-controls" class="game controls"></div>
         <script>
@@ -921,7 +960,7 @@
                     endCalcStep: 8,
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
-                    inputString: 'log(2);',
+                    inputString: 'print(2);',
                     show: Show.simControls 
                         | Show.inputFile 
                         | Show.idsTable 
@@ -934,7 +973,7 @@
     </section>
 
     <section class="slide">
-        <h3>4. Выполнение скрипта: log(2+1);</h3>
+        <h3>4. Выполнение скрипта: print(2+1);</h3>
         <div id="runLog2p1" class="lex"></div>
         <div id="runLog2p1-controls" class="game controls"></div>
         <script>
@@ -949,7 +988,7 @@
                     endCalcStep: 8,
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
-                    inputString: 'log(2+1);',
+                    inputString: 'print(2+1);',
                     show: Show.simControls 
                         | Show.inputFile 
                         | Show.idsTable 
@@ -959,6 +998,44 @@
                 });
             });
         </script>
+    </section>
+
+    <section class="slide">
+        <h3>4. Обратная польская запись</h3>
+
+        <div class="picText">
+            <div class="w50">
+                <p>&mdash; позволяет записать математическое выражение  виде тройки {операнд1, операнд2, мат.операция}</p>
+                <br />
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>2 + 1&nbsp;</td><td>2, 1, +</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td><td></td>
+                        </tr>
+                        <tr>
+                            <td>2 + 1 + 3&nbsp;&nbsp;</td><td><strong>2, 1, +</strong>, 3, +</td>
+                        </tr>
+                        <tr>
+                            <td><strong></strong></td><td><strong>3,</strong> 3, +</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td><td></td>
+                        </tr>
+                        <tr>
+                            <td>2 + 4 * 3</td><td>2, <strong>4, 3, *,</strong> +</td>
+                        </tr>
+                        <tr>
+                            <td><strong></strong></td><td>2, <strong>12,</strong> +</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
     </section>
 
     <section class="slide">
@@ -977,7 +1054,7 @@
                     endCalcStep: 12,
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
-                    inputString: 'log(2+1);',
+                    inputString: 'print(2+1);',
                     show: Show.simControls 
                         | Show.program
                         | Show.mathTree
@@ -987,7 +1064,7 @@
     </section>
 
     <section class="slide">
-        <h3>4. Выполнение скрипта: log(1+2+3);</h3>
+        <h3>4. Выполнение скрипта: print(22+1+2);</h3>
         <div id="runLog1p2p3" class="lex"></div>
         <div id="runLog1p2p3-controls" class="game controls"></div>
         <script>
@@ -1002,7 +1079,7 @@
                     endCalcStep: 8,
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
-                    inputString: 'log(22+1+2);',
+                    inputString: 'print(22+1+2);',
                     show: Show.simControls 
                         | Show.inputFile 
                         | Show.idsTable 
@@ -1031,7 +1108,7 @@
                     endCalcStep: 14,
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
-                    inputString: 'log(22+1+2);',
+                    inputString: 'print(22+1+2);',
                     show: Show.simControls 
                         | Show.program
                         | Show.mathTree
@@ -1041,7 +1118,7 @@
     </section>
 
     <section class="slide">
-        <h3>4. Выполнение скрипта: log(2*4);</h3>
+        <h3>4. Выполнение скрипта: print(2*4);</h3>
         <div id="runLog2mult4" class="lex"></div>
         <div id="runLog2mult4-controls" class="game controls"></div>
         <script>
@@ -1056,7 +1133,7 @@
                     endCalcStep: 12,
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
-                    inputString: 'log(2*4);',
+                    inputString: 'print(2*4);',
                     show: Show.simControls 
                         | Show.inputFile 
                         | Show.idsTable 
@@ -1070,7 +1147,7 @@
     </section>
 
     <section class="slide">
-        <h3>4. Выполнение скрипта: log(1+2*3);</h3>
+        <h3>4. Выполнение скрипта: print(1+2*3);</h3>
         <div id="runLog1p2mult3" class="lex"></div>
         <div id="runLog1p2mult3-controls" class="game controls"></div>
         <script>
@@ -1085,7 +1162,7 @@
                     endCalcStep: 12,
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
-                    inputString: 'log(1+2*3);',
+                    inputString: 'print(1+2*3);',
                     show: Show.simControls 
                         | Show.inputFile 
                         | Show.canonicText
@@ -1113,7 +1190,7 @@
                     endCalcStep: 14,
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
-                    inputString: 'log(1+2*3);',
+                    inputString: 'print(1+2*3);',
                     show: Show.simControls 
                         | Show.program
                         | Show.console
@@ -1124,7 +1201,7 @@
     </section>
 
     <section class="slide">
-        <h3>4. Выполнение скрипта: log((1+2)*3);</h3>
+        <h3>4. Выполнение скрипта: print((1+2)*3);</h3>
         <div id="runLogO1p2Cmult3" class="lex"></div>
         <div id="runLogO1p2Cmult3-controls" class="game controls"></div>
         <script>
@@ -1139,7 +1216,7 @@
                     endCalcStep: 12,
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
-                    inputString: 'log((1+2)*3);',
+                    inputString: 'print((1+2)*3);',
                     show: Show.simControls 
                         | Show.inputFile 
                         | Show.canonicText
@@ -1152,7 +1229,7 @@
     </section>
 
     <section class="slide">
-        <h3>4. Вычисление выражения: (1+2)*3</h3>
+        <h3>4. Дерево вычисления: (1+2)*3</h3>
         <div id="runLogO1p2Cmult3Tree" class="lex"></div>
         <div id="runLogO1p2Cmult3Tree-controls" class="game controls"></div>
         <script>
@@ -1167,7 +1244,7 @@
                     endCalcStep: 16,
                     spaces: [' ', '\n'],
                     limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
-                    inputString: 'log((1+2)*3);',
+                    inputString: 'print((1+2)*3);',
                     show: Show.simControls 
                         | Show.program
                         | Show.mathTree
