@@ -166,14 +166,14 @@ export const LexView: React.FC<LexViewProps> = ({
             <div className="tables">
                 {(show & Show.inputFile) > 0 && (
                     <section>
-                        <p>input file</p>
+                        <p className="table-caption">input file</p>
                         <pre className="inputString">{inputString ? inputString : '  '}</pre>
                     </section>
                 )}
 
                 {(show & Show.limitersTable) > 0 && (
                     <section>
-                        <p>limiters(l)</p>
+                        <p className="table-caption">limiters(l)</p>
                         <table className="lexTable">
                             <thead>
                                 <tr>
@@ -197,7 +197,7 @@ export const LexView: React.FC<LexViewProps> = ({
 
                 {(show & Show.spacesTable) > 0 && (
                     <section>
-                        <p>spaces(s)</p>
+                        <p className="table-caption">spaces(s)</p>
                         <table className="lexTable">
                             <thead>
                                 <tr>
@@ -221,7 +221,7 @@ export const LexView: React.FC<LexViewProps> = ({
 
                 {(show & Show.idsTable) > 0 && (
                     <section>
-                        <p>ids(i)</p>
+                        <p className="table-caption">ids(i)</p>
                         <table className="lexTable">
                             <thead>
                                 <tr>
@@ -245,7 +245,7 @@ export const LexView: React.FC<LexViewProps> = ({
 
                 {(show & Show.stringsTable) > 0 && (
                     <section className="stringsTable">
-                        <p>strings(str)</p>
+                        <p className="table-caption">strings(str)</p>
                         <table className="lexTable">
                             <thead>
                                 <tr>
@@ -269,8 +269,8 @@ export const LexView: React.FC<LexViewProps> = ({
 
                 {(show & Show.canonicText) > 0 && (
                     <section>
-                        <p>canonic text</p>
-                        <div className="text">
+                        <p className="table-caption">canonic text</p>
+                        <div className="vscroll">
                             <table className="lexTable">
                                 <thead>
                                     <tr>
@@ -301,7 +301,7 @@ export const LexView: React.FC<LexViewProps> = ({
 
                 {(show & Show.prettyText) > 0 && (
                     <section>
-                        <p>pretty text</p>
+                        <p className="table-caption">pretty text</p>
                         <pre className="text-restored">
                             {prettify(
                                 text,
@@ -315,14 +315,14 @@ export const LexView: React.FC<LexViewProps> = ({
 
                 {(show & Show.text) > 0 && (
                     <section>
-                        <p>text</p>
+                        <p className="table-caption">text</p>
                         <pre className="simple-text">{toText(text)}</pre>
                     </section>
                 )}
 
                 {(show & Show.program) > 0 && (
                     <section>
-                        <p>instructions</p>
+                        <p className="table-caption">instructions</p>
                         <pre className="program">
                             {printProgramInstructions(text, program, reversePolish)}
                         </pre>
@@ -331,13 +331,13 @@ export const LexView: React.FC<LexViewProps> = ({
 
                 {(show & Show.console) > 0 && (
                     <section>
-                        <p>console</p>
+                        <p className="table-caption">console</p>
                         <pre className="console">{consoleText}</pre>
                     </section>
                 )}
                 {(show & Show.mathTree) > 0 && (
                     <section>
-                        <p>mathTree</p>
+                        <p className="table-caption">mathTree</p>
                         <div id={`${targetId}-tree`}>tree</div>
                     </section>
                 )}
