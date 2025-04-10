@@ -179,21 +179,21 @@
     </script>
 
     <section class="slide">
-        <h3 class="noindent">1. Компилятор – определение №1</h3>
+        <h3 class="noindent">1. Компилятор &mdash; определение №1</h3>
 
         <div class="picText">
             <div class="w50">
-                - это транслятор, у которого объектный код &mdash; исполняемый модуль в формате конкретной ОС
+                &mdash; это транслятор, у которого объектный код &mdash; исполняемый модуль в формате конкретной ОС
             </div>
         </div>
     </section>
 
     <section class="slide">
-        <h3 class="noindent">1. Компилятор – определение №2</h3>
+        <h3 class="noindent">1. Компилятор &mdash; определение №2</h3>
     
         <div class="picText">
             <div class="w50">
-                - это транслятор, у которого объектный код &mdash; это программа на языке более низкого уровня
+                &mdash; это транслятор, у которого объектный код &mdash; это программа на языке более низкого уровня
             </div>
         </div>
     </section>
@@ -963,7 +963,6 @@
                     inputString: 'print(2);',
                     show: Show.simControls 
                         | Show.inputFile 
-                        | Show.idsTable 
                         | Show.canonicText
                         | Show.program
                         | Show.console
@@ -991,7 +990,6 @@
                     inputString: 'print(2+1);',
                     show: Show.simControls 
                         | Show.inputFile 
-                        | Show.idsTable 
                         | Show.canonicText
                         | Show.program
                         | Show.console
@@ -1082,7 +1080,7 @@
                     inputString: 'print(22+1+2);',
                     show: Show.simControls 
                         | Show.inputFile 
-                        | Show.idsTable 
+                        // | Show.idsTable 
                         | Show.canonicText
                         | Show.program
                         | Show.console
@@ -1252,6 +1250,59 @@
             });
         </script>
     </section>
+
+    <section class="slide contents">
+        <h3>Содержание</h3>
+        <p class="ok"><strong>1.</strong> Немного терминов: транслятор, компилятор, транспилятор, интерпретатор</p>
+        <p class="ok"><strong>2.</strong> Лексический анализатор</p>
+        <p class="ok"><strong>3.</strong> Интерпретатор простейшего языка программирования (+ БНФ)</p>
+        <p class="ok"><strong>4.</strong> Интерпретатор математических выражений (+ обратная польская запись + синтаксические деревья)</p>
+        <p><strong>5.</strong> Дальнейшие шаги</p>
+    </section>
+
+    <section class="slide contents">
+        <h3>5. Дальнейшие шаги</h3>
+        <p><strong>1.</strong> Определение переменных (пока глобальные)</p>
+        <p><strong>2.</strong> Ветвление: условный оператор if-then-else</p>
+        <p><strong>3.</strong> Цикл for</p>
+        <p><strong>4.</strong> Подпрограммы (функции)</p>
+        <p><strong>5.</strong> Стек вызовов</p>
+        <p><strong>6.</strong> Event loop</p>
+        <p><strong>7.</strong> Типы данных: string, number, boolean</p>
+        <p><strong>8.</strong> Пустые значения: null, undefined</p>
+        <p><strong>9.</strong> Объекты, классы</p>
+        <p><strong>10.</strong> Массивы</p>
+        <p><strong>11.</strong> Оператор new, garbage collector</p>
+        <p>...</p>
+    </section>
+
+    <section class="slide contents">
+        <h3>Выводы</h3>
+
+        <div class="picText">
+            <div class="w60">
+                <p><strong>1.</strong> IDE могут использовать результат работы лексического анализатора (токенизатора) для подсветки программы</p>
+                <p><strong>2.</strong> Описали язык программирования и  создали интерпретатор к нему</p>
+                <p><strong>3.</strong> Посмотрели, как устроен интерпретатор языка программирования и как он работает </p>
+            </div>
+        </div>
+
+    </section>
+    
+    <section class="slide contents">
+        <h3>Вопросы?</h3>
+
+        <div class="picText">
+            <div class="w60">
+            </div>
+        </div>
+
+    </section>
+    
+    
+    
+    
+    
 
     <footer class="badge">
         <a href="https://github.com/alexanderpono/">Проект на GitHub</a>
