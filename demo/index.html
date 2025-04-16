@@ -177,7 +177,7 @@
 
         <div class="picText">
             <div class="w50">
-                <img src="./demo-static/translator.png" />
+                <img src="./demo-static/translator.svg" />
             </div>
         </div>
     </section>
@@ -225,6 +225,12 @@
                 &mdash; это транслятор, у которого объектный код &mdash; исполняемый модуль в формате конкретной ОС
             </div>
         </div>
+        <div class="picText">
+            <div class="w50">
+                <br />
+                <img src="./demo-static/compiler.svg" />
+            </div>
+        </div>
     </section>
 
     <section class="slide">
@@ -233,6 +239,12 @@
         <div class="picText">
             <div class="w50">
                 &mdash; это транслятор, у которого объектный код &mdash; это программа на языке более низкого уровня
+            </div>
+        </div>
+        <div class="picText">
+            <div class="w50">
+                <br />
+                <img src="./demo-static/compiler.svg" />
             </div>
         </div>
     </section>
@@ -245,7 +257,12 @@
                 &mdash; преобразует входную программу на языке высокого уровня в эквивалентную программу на языке высокого уровня (пример: babel)
             </div>
         </div>
-    </section>
+        <div class="picText">
+            <div class="w50">
+                <img src="./demo-static/compiler.svg" />
+            </div>
+        </div>
+</section>
     
     <section class="slide">
         <h3 class="noindent">1. Интерпретатор</h3>
@@ -253,6 +270,12 @@
         <div class="picText">
             <div class="w50">
                 = транслятор + блок исполнения только что скомпилированной программы
+            </div>
+        </div>
+        <div class="picText">
+            <div class="w50">
+                <br />
+                <img src="./demo-static/interpreter.svg" />
             </div>
         </div>
     </section>
@@ -272,7 +295,7 @@
 
         <div class="picText">
             <div class="w50">
-                <img src="./demo-static/translator.png" />
+                <img src="./demo-static/lexicAnalyser.svg" />
             </div>
         </div>
     </section>
@@ -720,7 +743,7 @@
 
         <div class="picText">
             <div class="w50">
-                <img src="./demo-static/translator.png" />
+                <img src="./demo-static/syntaxAnalyser.svg" />
             </div>
         </div>
     </section>
@@ -841,7 +864,7 @@
 
         <div class="picText">
             <div class="w50">
-                <img src="./demo-static/translator.png" />
+                <img src="./demo-static/compilation.svg" />
             </div>
         </div>
     </section>
@@ -906,18 +929,18 @@
     </section>
 
     <section class="slide">
-        <h3 class="noindent">3. Исполнение программы
+        <h3 class="noindent">3. Выполнение программы
         </h3>
 
         <div class="picText">
             <div class="w50">
-                <img src="./demo-static/translator.png" />
+                <img src="./demo-static/execution.svg" />
             </div>
         </div>
     </section>
 
     <section class="slide">
-        <h3>3. Исполнение программы</h3>
+        <h3>3. Выполнение программы</h3>
         <div id="exec" class="lex"></div>
         <div id="exec-controls" class="game controls"></div>
         <script>
@@ -956,7 +979,7 @@
 
 
     <section class="slide">
-        <h3>4. Лексический анализ выражения 2 + 2</h3>
+        <h3>4. Лексический анализ выражения <br />2 + 2</h3>
         <div id="mathLex1" class="lex"></div>
         <div id="mathLex1-controls" class="game controls"></div>
         <script>
@@ -1218,7 +1241,6 @@
                     inputString: 'print(2*4);',
                     show: Show.simControls 
                         | Show.inputFile 
-                        | Show.idsTable 
                         | Show.canonicText
                         | Show.program
                         | Show.console
