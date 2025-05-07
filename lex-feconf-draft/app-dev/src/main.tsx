@@ -108,4 +108,5 @@ if (window['demo'] === true) {
             Show.debugInfo |
             Show.mathTree
     });
+
 }
