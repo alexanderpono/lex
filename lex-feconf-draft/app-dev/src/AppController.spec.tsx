@@ -11,18 +11,18 @@ const limiters = [';', '=', '/', "'", '(', ')', '+', '-', '*'];
 describe('AppController', () => {
     describe('writes to console', () => {
         test.each`
-            inputString              | calcSteps | expected
-            ${'log(22+1);'}          | ${16}     | ${'23'}
-            ${'log(22);'}            | ${16}     | ${'22'}
-            ${"log('Hello World');"} | ${16}     | ${'Hello World'}
-            ${'log(22-1);'}          | ${16}     | ${'21'}
-            ${'log(2+4-1);'}         | ${16}     | ${'5'}
-            ${'log(5*6);'}           | ${16}     | ${'30'}
-            ${'log(5*6+1);'}         | ${16}     | ${'31'}
-            ${'log(5*(6+1));'}       | ${16}     | ${'35'}
-            ${'log(1+2+3);'}         | ${16}     | ${'6'}
-            ${'log((1+2)+3);'}       | ${16}     | ${'6'}
-            ${'log(1+(2-3));'}       | ${16}     | ${'0'}
+            inputString                | calcSteps | expected
+            ${'print(22+1);'}          | ${16}     | ${'23'}
+            ${'print(22);'}            | ${16}     | ${'22'}
+            ${"print('Hello World');"} | ${16}     | ${'Hello World'}
+            ${'print(22-1);'}          | ${16}     | ${'21'}
+            ${'print(2+4-1);'}         | ${16}     | ${'5'}
+            ${'print(5*6);'}           | ${16}     | ${'30'}
+            ${'print(5*6+1);'}         | ${16}     | ${'31'}
+            ${'print(5*(6+1));'}       | ${16}     | ${'35'}
+            ${'print(1+2+3);'}         | ${16}     | ${'6'}
+            ${'print((1+2)+3);'}       | ${16}     | ${'6'}
+            ${'print(1+(2-3));'}       | ${16}     | ${'0'}
         `('returns $expected from $inputString', ({ inputString, calcSteps, expected }) => {
             const stateManager = new AppStateManager();
 
