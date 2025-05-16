@@ -1,12 +1,17 @@
 #include <iostream>
-#include "functions.h"
+#include "AppStateManager.h"
 
 using namespace std;
 
 
 int main(){
-    print_hello();
-    cout << endl;
-    cout << "The factorial of 5 is " << factorial(5) << endl;
+    cout << "Hello World!" << endl;
+
+    AppStateManager *stateManager = new AppStateManager();
+    StringVector spaces = {" ", "\t", "\n"};
+    stateManager->setStepNo(1);
+    stateManager->setSpaces(spaces);
+    AppState state = stateManager->getAppState();
+    cout << state.toString();
     return 0;
 }
