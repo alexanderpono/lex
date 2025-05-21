@@ -3,6 +3,7 @@
 
 #include "StringVector.h"
 #include "CompiledLineVector.h"
+#include "CanonicTextItemVector.h"
 
 class AppState {
     public:
@@ -16,9 +17,12 @@ class AppState {
         std::string inputString;
         unsigned int lineNo;
         unsigned int currentPosInLine;
+        CanonicTextItemVector text;
 
         std::string toString();
         std::string strVectorToString(StringVector ar);
+        std::string canocicTextVectorToString(CanonicTextItemVector text);
+    private:
         std::string compiledLineVectorToString(CompiledLineVector compiled);
         std::string tableToString(Table t);
 };

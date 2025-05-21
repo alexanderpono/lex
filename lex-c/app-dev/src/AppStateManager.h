@@ -4,6 +4,7 @@
 #include "StringVector.h"
 #include "AppState.h"
 #include "CompiledLineVector.h"
+#include "CanonicTextItemVector.h"
 
 class AppStateManager {
     public:
@@ -24,6 +25,7 @@ class AppStateManager {
         AppStateManager *setIds(StringVector ids);
         AppStateManager *setStrings(StringVector strings);
         AppStateManager *setCompiled(CompiledLineVector compiled);
+        AppStateManager *setText(CanonicTextItemVector text);
 
 };
 

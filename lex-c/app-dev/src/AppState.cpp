@@ -11,7 +11,8 @@ std::string AppState::toString() {
         + "],\n   inputString: \"" + this->inputString 
         + "\",\n   lineNo: " + std::to_string(this->lineNo) 
         + ",\n   currentPosInLine: " + std::to_string(this->currentPosInLine) 
-        + "\n}");
+        + ",\n   text: [" + this->canocicTextVectorToString(this->text)
+        + "],\n}");
     return result;
 }
 
@@ -30,7 +31,7 @@ std::string AppState::compiledLineVectorToString(CompiledLineVector compiled) {
     std::string colon = "";
     for(const CompiledLine& line : compiled) {
         result = result + colon 
-        + "{ " + this->tableToString(line.tableId) + ":" + std::to_string(line.tableIndex) + ", lexem: \"" + line.lexem + "\" }";
+        + "{ " + this->tableToString(line.tableId) + "/" + std::to_string(line.tableIndex) + ", \"" + line.lexem + "\" }";
         colon = ",\n      ";
     }
     return result != "" ? "\n      " + result + "\n   ": result;
@@ -55,3 +56,16 @@ std::string AppState::tableToString(Table t) {
             return "";
     }
 }
+
+std::string AppState::canocicTextVectorToString(CanonicTextItemVector text) {
+    std::string result;
+    std::string colon = "";
+    for(const CanonicTextItem& item : text) {
+        result = result + colon 
+        + "{ " + this->tableToString(item.tableId) + "/" + std::to_string(item.tableIndex) + ", \"" + item.lexem + "\", [" + std::to_string(item.lineNo) + ":" + std::to_string(item.pos) + "] }";
+        colon = ",\n      ";
+    }
+    return result != "" ? "\n      " + result + "\n   ": result;
+
+}
+

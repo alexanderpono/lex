@@ -6,12 +6,9 @@ AppStateManager::AppStateManager() {
     this->appState.lineNo = 0;
     this->appState.currentPosInLine = 0;
 };
-
 AppState AppStateManager::getAppState() {
     return appState;
 };
-
-
 AppStateManager *AppStateManager::setStepNo(unsigned int stepNo) {
     this->appState.stepNo = stepNo;
     return this;
@@ -44,8 +41,11 @@ AppStateManager *AppStateManager::setStrings(StringVector strings) {
     this->appState.strings = strings;
     return this;
 };
-
 AppStateManager *AppStateManager::setCompiled(CompiledLineVector compiled) {
     this->appState.compiled = compiled;
+    return this;
+}
+AppStateManager *AppStateManager::setText(CanonicTextItemVector text) {
+    this->appState.text = text;
     return this;
 }

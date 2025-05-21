@@ -12,13 +12,6 @@ struct CanonicTextItem {
     int pos;
     std::string lexem;
 
-    CanonicTextItem() {
-        tableId = Table::DEFAULT;
-        tableIndex = -1;
-        lineNo = -1;
-        pos = -1;
-        lexem = "";
-    }
 };
 typedef std::vector<CanonicTextItem> CanonicTextItemVector;
 

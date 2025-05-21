@@ -30,6 +30,15 @@ int main(){
                 "id1"
             })
         }))
+        ->setText(CanonicTextItemVector({
+            CanonicTextItem({
+                Table::LIMITERS,
+                2,
+                1,
+                1,
+                "lll"
+            })
+        }))
     ;
 
     AppState state = stateManager->getAppState();
