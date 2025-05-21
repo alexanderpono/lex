@@ -9,6 +9,12 @@ AppStateManager::AppStateManager() {
 AppState AppStateManager::getAppState() {
     return appState;
 };
+StringVector AppStateManager::getLimiters() {
+    return this->appState.limiters;
+};
+StringVector AppStateManager::getSpaces() {
+    return this->appState.spaces;
+};
 AppStateManager *AppStateManager::setStepNo(unsigned int stepNo) {
     this->appState.stepNo = stepNo;
     return this;

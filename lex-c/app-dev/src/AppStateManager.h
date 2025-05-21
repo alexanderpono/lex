@@ -16,6 +16,9 @@ class AppStateManager {
     public:
         AppState getAppState();
 
+        StringVector getLimiters();
+        StringVector getSpaces();
+
         AppStateManager *setStepNo(unsigned int stepNo);
         AppStateManager *setLineNo(unsigned int lineNo);
         AppStateManager *setCurrentPosInLine(unsigned int currentPosInLine);
