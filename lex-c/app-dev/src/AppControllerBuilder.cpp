@@ -16,5 +16,8 @@ AppControllerBuilder *AppControllerBuilder::setLex(LexAnalyzer *lex) {
     this->lex = lex;
     return this;
 };
-
+AppControllerBuilder *AppControllerBuilder::setInputString(std::string inputString) {
+    this->inputString = inputString;
+    return this; 
+};
 

@@ -10,11 +10,13 @@ class AppControllerBuilder {
         StringVector spaces;
         StringVector limiters;
         LexAnalyzer *lex;
+        std::string inputString;
 
         AppControllerBuilder *setMaxCalcStep(unsigned int maxCalcStep);
         AppControllerBuilder *setLimiters(StringVector limiters);
         AppControllerBuilder *setSpaces(StringVector spaces);
         AppControllerBuilder *setLex(LexAnalyzer *lex);
+        AppControllerBuilder *setInputString(std::string inputString);
 };
 
 #endif //_APP_CONTROLLER_BUILDER_H_
