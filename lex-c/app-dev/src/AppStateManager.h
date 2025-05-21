@@ -3,35 +3,27 @@
 
 #include "StringVector.h"
 #include "AppState.h"
+#include "CompiledLineVector.h"
 
 class AppStateManager {
     public:
-        AppStateManager() {
-            this->appState.stepNo = 0;
-            this->appState.lineNo = 0;
-            this->appState.currentPosInLine = 0;
-        };
+        AppStateManager();
 
     private:
         AppState appState;
 
     public:
-        unsigned int getStepNo();
-        StringVector getSpaces();
-        StringVector getLimiters();
-        StringVector getIds();
-        StringVector getStrings();
-// //         getCompiled = () => this.compiled;
-        std::string getInputString();
-        unsigned int getLineNo();
-        unsigned int getCurrentPosInLine();
         AppState getAppState();
-//         getText = () => this.text;
-//         getProgram = () => this.program;
-//         getConsoleText = () => this.consoleText;
 
-        void setStepNo(unsigned int stepNo);
-        void setSpaces(StringVector spaces);
+        AppStateManager *setStepNo(unsigned int stepNo);
+        AppStateManager *setLineNo(unsigned int lineNo);
+        AppStateManager *setCurrentPosInLine(unsigned int currentPosInLine);
+        AppStateManager *setInputString(std::string inputString);
+        AppStateManager *setSpaces(StringVector spaces);
+        AppStateManager *setLimiters(StringVector limiters);
+        AppStateManager *setIds(StringVector ids);
+        AppStateManager *setStrings(StringVector strings);
+        AppStateManager *setCompiled(CompiledLineVector compiled);
 
 };
 

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "AppStateManager.h"
+#include "Table.h"
 
 using namespace std;
 
@@ -8,9 +9,29 @@ int main(){
     cout << "Hello World!" << endl;
 
     AppStateManager *stateManager = new AppStateManager();
-    StringVector spaces = {" ", "\t", "\n"};
-    stateManager->setStepNo(1);
-    stateManager->setSpaces(spaces);
+    stateManager
+        ->setStepNo(11)
+        ->setLineNo(22)
+        ->setCurrentPosInLine(33)
+        ->setInputString("input string!")
+        ->setSpaces(StringVector({" ", "\t", "\n"}))
+        ->setLimiters(StringVector({";"}))
+        ->setIds(StringVector({"id"}))
+        ->setStrings(StringVector({"string"}))
+        ->setCompiled(CompiledLineVector({
+            CompiledLine({
+                Table::LIMITERS,
+                2,
+                "lll"
+            }),
+            CompiledLine({
+                Table::IDS,
+                22,
+                "id1"
+            })
+        }))
+    ;
+
     AppState state = stateManager->getAppState();
     cout << state.toString();
     return 0;
