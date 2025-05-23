@@ -92,6 +92,7 @@ void LexAnalyzer::parseText(std::string srcText) {
     this->stateManager->setIds(document->ids);
     this->stateManager->setLineNo(lineNo);
     this->stateManager->setCurrentPosInLine(currentPosInLine);
+    delete document;
 }
 
 void LexAnalyzer::getIndex(std::string s, CompiledLineVector compiled, IndexData *result) {
@@ -157,3 +158,100 @@ void LexAnalyzer::addLimiterOrSpaceToText(
     doc->text.push_back(newTextItem);
 };
 
+void LexAnalyzer::buildStrings() {
+    CanonicTextItemVector srcText = this->stateManager->getText();
+    std::string state = "work";
+    CanonicTextItemVector buffer({});
+
+    AppDocument *document = new AppDocument();
+    document->spaces = this->stateManager->getSpaces();
+    document->limiters = this->stateManager->getLimiters();
+    document->ids = StringVector({});
+    document->compiled = this->stateManager->getCompiled();
+    document->text = CanonicTextItemVector({});
+    document->strings = StringVector({});    
+
+    CanonicTextItemVector::iterator token;
+    for (token = srcText.begin(); token != srcText.end(); token++ ) {
+        if (state == "work" && token->lexem == "'") {
+            state = "openedString";
+            continue;
+        }
+        if (state == "openedString" && token->lexem == "'") {
+            std::string newId = this->concatString(buffer);
+
+            CanonicTextItem token = buffer[0];
+            this->addStringToText(newId, token.lineNo, token.pos, document);
+            buffer = CanonicTextItemVector({});
+            state = "work";
+            continue;
+        }
+        if (state == "openedString" && token->lexem == "\n") {
+            std::cout << "Незавершенная строковая константа" << std::endl;
+
+            CanonicTextItemVector::iterator bufToken;
+            for (bufToken = buffer.begin(); bufToken != buffer.end(); bufToken++ ) {
+                document->text.push_back(*bufToken);
+            };
+        
+            buffer = CanonicTextItemVector({});
+            continue;
+        }
+        if (state == "openedString") {
+            buffer.push_back(*token);
+            continue;
+        }
+        if (state == "work") {
+            if (token->tableId == Table::IDS) {
+                this->addIdToText(token->lexem, token->lineNo, token->pos, document);
+            } else {
+                document->text.push_back(*token);
+            }
+            continue;
+        }
+    }    
+
+    this->stateManager->setText(document->text);
+    this->stateManager->setIds(document->ids);
+    this->stateManager->setStrings(document->strings);
+
+    delete document;
+};
+
+std::string LexAnalyzer::concatString (CanonicTextItemVector srcText) {
+    std::string result;
+    CanonicTextItemVector::iterator token;
+    for (token = srcText.begin(); token != srcText.end(); token++ ) {
+        result = result + token->lexem;
+    }
+    return result;
+};
+
+void LexAnalyzer::addStringToText (
+    std::string newId,
+    int lineNo,
+    int currentPosInLine,
+    AppDocument *doc
+) {
+    StringVector::iterator curString;
+    for (curString = doc->strings.begin(); curString != doc->strings.end(); curString++ ) {
+        if (*curString == newId) {
+            break;
+        }
+    }
+    CanonicTextItem newTextItem({
+        Table::STRINGS,
+        -1,
+        lineNo,
+        currentPosInLine,
+        newId
+    });
+
+    if (curString == doc->strings.end()) {
+        doc->strings.push_back(newId);
+        newTextItem.tableIndex = doc->strings.size() - 1;
+    } else {
+        newTextItem.tableIndex = curString - doc->strings.begin();
+    }
+    doc->text.push_back(newTextItem);
+};

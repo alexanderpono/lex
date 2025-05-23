@@ -64,3 +64,6 @@ std::string AppStateManager::getInputString() {
 CompiledLineVector AppStateManager::getCompiled() {
     return this->appState.compiled;
 }
+CanonicTextItemVector AppStateManager::getText() {
+    return this->appState.text;
+}

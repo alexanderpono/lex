@@ -22,10 +22,18 @@ class LexAnalyzer {
             int currentPosInLine,
             AppDocument *doc
         );
+        std::string concatString (CanonicTextItemVector srcText);
+        void addStringToText (
+            std::string newId,
+            int lineNo,
+            int currentPosInLine,
+            AppDocument *doc
+        );    
     public:
         LexAnalyzer(AppStateManager *stateManager);
         void compile();
         void parseText(std::string srcText);
+        void buildStrings();
 };
 
 #endif //_APP_LEX_ANALYZER_H_

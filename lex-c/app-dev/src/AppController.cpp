@@ -1,4 +1,5 @@
 #include "AppController.h"
+#include <iostream>
 
 AppController::AppController(AppControllerBuilder *builder, AppStateManager *stateManager) {
     this->builder = builder;
@@ -23,5 +24,11 @@ void AppController::reRun() {
 
     this->builder->lex->parseText(this->stateManager->getInputString());
 
+    if (this->stateManager->getInputString() != "") {
+        return;
+    }
+    std::cout << "lex parse OK" << std::endl;
+    std::cout << "to buildStrings()" << std::endl;
+    this->builder->lex->buildStrings();
 }
 

@@ -33,6 +33,7 @@ class AppStateManager {
         unsigned int getStepNo();
         std::string getInputString();
         CompiledLineVector getCompiled();
+        CanonicTextItemVector getText();
 
 };
 
