@@ -30,6 +30,9 @@ class AppStateManager {
         AppStateManager *setCompiled(CompiledLineVector compiled);
         AppStateManager *setText(CanonicTextItemVector text);
 
+        unsigned int getStepNo();
+        std::string getInputString();
+
 };
 
 #endif //_APP_STATE_MANAGER_H_

@@ -14,7 +14,6 @@ int main(){
         ->setStepNo(11)
         ->setLineNo(22)
         ->setCurrentPosInLine(33)
-        ->setInputString("print();")
         ->setSpaces(StringVector({" ", "\t", "\n"}))
         ->setLimiters(StringVector({";"}))
         ->setIds(StringVector({"id"}))
@@ -36,6 +35,7 @@ int main(){
         ->setLimiters(StringVector({";"}))
         ->setSpaces(StringVector({" ", "\t", "\n"}))
         ->setLex(new LexAnalyzer(stateManager))
+        ->setInputString("print();")
     ;
 
     AppController *ctrl = new AppController(builder, stateManager);

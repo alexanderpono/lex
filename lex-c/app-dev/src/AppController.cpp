@@ -21,7 +21,7 @@ void AppController::reRun() {
     this->stateManager->setText(CanonicTextItemVector({}));
     this->stateManager->setStrings(StringVector({}));
 
-    // this->builder->lex->parseText(this->stateManager->getInputString());
+    this->builder->lex->parseText(this->stateManager->getInputString());
 
 }
 

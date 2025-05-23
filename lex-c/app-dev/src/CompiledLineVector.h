@@ -10,6 +10,8 @@ class CompiledLine {
         Table tableId;
         unsigned int tableIndex;
         std::string lexem;
+
+        void setDefault();
 };
 typedef std::vector<CompiledLine> CompiledLineVector;
 

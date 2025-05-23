@@ -55,3 +55,9 @@ AppStateManager *AppStateManager::setText(CanonicTextItemVector text) {
     this->appState.text = text;
     return this;
 }
+unsigned int AppStateManager::getStepNo() {
+    return this->appState.stepNo;
+};
+std::string AppStateManager::getInputString() {
+    return this->appState.inputString;
+}
