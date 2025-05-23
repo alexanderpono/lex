@@ -14,10 +14,6 @@ int main(){
         ->setStepNo(11)
         ->setLineNo(22)
         ->setCurrentPosInLine(33)
-        ->setSpaces(StringVector({" ", "\t", "\n"}))
-        ->setLimiters(StringVector({";"}))
-        ->setIds(StringVector({"id"}))
-        ->setStrings(StringVector({"string"}))
         ->setText(CanonicTextItemVector({
             CanonicTextItem({
                 Table::LIMITERS,
@@ -32,7 +28,7 @@ int main(){
     AppControllerBuilder *builder = new AppControllerBuilder();
     builder
         ->setMaxCalcStep(11)
-        ->setLimiters(StringVector({";"}))
+        ->setLimiters(StringVector({";", "(", ")"}))
         ->setSpaces(StringVector({" ", "\t", "\n"}))
         ->setLex(new LexAnalyzer(stateManager))
         ->setInputString("print();")

@@ -61,3 +61,6 @@ unsigned int AppStateManager::getStepNo() {
 std::string AppStateManager::getInputString() {
     return this->appState.inputString;
 }
+CompiledLineVector AppStateManager::getCompiled() {
+    return this->appState.compiled;
+}

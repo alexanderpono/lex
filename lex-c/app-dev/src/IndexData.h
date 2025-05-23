@@ -7,7 +7,7 @@
 class IndexData {
     public:
         int pos;
-        CompiledLine *lexem;
+        int compiledLineIndex;
 };
 
 #endif //_APP_DOCUMENT_H_

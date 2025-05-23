@@ -8,7 +8,7 @@
 class CompiledLine {
     public:
         Table tableId;
-        unsigned int tableIndex;
+        int tableIndex;
         std::string lexem;
 
         void setDefault();

@@ -14,7 +14,7 @@ void LexAnalyzer::compile() {
     StringVector spaces = this->stateManager->getSpaces();
 
     CompiledLineVector compiled;
-    unsigned int i = 0;
+    int i = 0;
     for (StringVector::iterator lim = limiters.begin(); lim != limiters.end(); ++lim) {
         compiled.push_back(
             CompiledLine({
@@ -52,7 +52,7 @@ void LexAnalyzer::parseText(std::string srcText) {
     document->spaces = this->stateManager->getSpaces();
     document->limiters = this->stateManager->getLimiters();
     document->ids = StringVector({});
-    document->compiled = CompiledLineVector({});
+    document->compiled = this->stateManager->getCompiled();
     document->text = CanonicTextItemVector({});
     document->strings = StringVector({});
 
@@ -60,6 +60,27 @@ void LexAnalyzer::parseText(std::string srcText) {
         IndexData indexData;
         this->getIndex(buf, document->compiled, &indexData);
         if (indexData.pos != NOT_FOUND) {
+            bool limiterOrSpaceNotInBufStart = indexData.pos > 0;
+            if (limiterOrSpaceNotInBufStart) {
+                std::string newId = buf.substr(0, indexData.pos);
+                this->addIdToText(newId, lineNo, currentPosInLine, document);
+                currentPosInLine += newId.length();
+                buf = buf.substr(indexData.pos);
+            } else {
+                this->addLimiterOrSpaceToText(
+                    indexData,
+                    lineNo,
+                    currentPosInLine,
+                    document
+                );
+                CompiledLine compiledLine = document->compiled[indexData.compiledLineIndex];
+                currentPosInLine += compiledLine.lexem.length();
+                buf = buf.substr(compiledLine.lexem.length());
+                if (compiledLine.lexem == "\n") {
+                    lineNo++;
+                    currentPosInLine = 1;
+                }
+            }
         } else {
             this->addIdToText(buf, lineNo, currentPosInLine, document);
             buf = "";
@@ -87,10 +108,8 @@ void LexAnalyzer::getIndex(std::string s, CompiledLineVector compiled, IndexData
         }
     }
     result->pos = bestIndex;
-    result->lexem = bestCompiledLine;
+    result->compiledLineIndex = bestCompiledLine != NULL ? bestCompiledLine - &*compiled.begin() : -1;
 };
-
-// bool isFound(std::string id){ return id === > 10;}
 
 void LexAnalyzer::addIdToText (
     std::string newId,
@@ -98,9 +117,6 @@ void LexAnalyzer::addIdToText (
     int currentPosInLine,
     AppDocument *doc
 ) {
-    auto hello { [](){std::cout << "Hello" << std::endl;} };
-    auto condition { [newId](std::string id){return id == newId;} };
-
     StringVector::iterator curId;
     for (curId = doc->ids.begin(); curId != doc->ids.end(); curId++ ) {
         if (*curId == newId) {
@@ -122,20 +138,22 @@ void LexAnalyzer::addIdToText (
         newTextItem.tableIndex = curId - doc->ids.begin();
     }
     doc->text.push_back(newTextItem);
-    // int posInIds = std::find_if(doc->ids.begin(), doc->ids.end(), [newId](std::string id){return id == newId;});
-    // const newDoc = { ...doc };
-    // let newTextItem: CanonicTextItem = {
-    //     tableId: Table.IDS,
-    //     tableIndex: posInIds,
-    //     lineNo,
-    //     pos: currentPosInLine,
-    //     lexem: newId
-    // };
-    // if (posInIds < 0) {
-    //     newDoc.ids = [...newDoc.ids, newId];
-    //     newTextItem.tableIndex = newDoc.ids.length - 1;
-    // }
-
-    // newDoc.text = [...newDoc.text, newTextItem];
-    // return newDoc;
 };
+
+void LexAnalyzer::addLimiterOrSpaceToText(
+    IndexData indexData,
+    int lineNo,
+    int currentPosInLine,
+    AppDocument *doc
+) {
+    CompiledLine compiledLine = doc->compiled[indexData.compiledLineIndex];
+    CanonicTextItem newTextItem({
+        compiledLine.tableId,
+        compiledLine.tableIndex,
+        lineNo,
+        currentPosInLine,
+        compiledLine.lexem
+    });
+    doc->text.push_back(newTextItem);
+};
+

@@ -16,6 +16,12 @@ class LexAnalyzer {
             int currentPosInLine,
             AppDocument *doc
         );
+        void addLimiterOrSpaceToText(
+            IndexData indexData,
+            int lineNo,
+            int currentPosInLine,
+            AppDocument *doc
+        );
     public:
         LexAnalyzer(AppStateManager *stateManager);
         void compile();
