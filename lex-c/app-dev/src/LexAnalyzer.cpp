@@ -163,13 +163,13 @@ void LexAnalyzer::buildStrings() {
     std::string state = "work";
     CanonicTextItemVector buffer({});
 
-    AppDocument *document = new AppDocument();
-    document->spaces = this->stateManager->getSpaces();
-    document->limiters = this->stateManager->getLimiters();
-    document->ids = StringVector({});
-    document->compiled = this->stateManager->getCompiled();
-    document->text = CanonicTextItemVector({});
-    document->strings = StringVector({});    
+    AppDocument document;
+    document.spaces = this->stateManager->getSpaces();
+    document.limiters = this->stateManager->getLimiters();
+    document.ids = StringVector({});
+    document.compiled = this->stateManager->getCompiled();
+    document.text = CanonicTextItemVector({});
+    document.strings = StringVector({});    
 
     CanonicTextItemVector::iterator token;
     for (token = srcText.begin(); token != srcText.end(); token++ ) {
@@ -181,7 +181,7 @@ void LexAnalyzer::buildStrings() {
             std::string newId = this->concatString(buffer);
 
             CanonicTextItem token = buffer[0];
-            this->addStringToText(newId, token.lineNo, token.pos, document);
+            this->addStringToText(newId, token.lineNo, token.pos, &document);
             buffer = CanonicTextItemVector({});
             state = "work";
             continue;
@@ -191,7 +191,7 @@ void LexAnalyzer::buildStrings() {
 
             CanonicTextItemVector::iterator bufToken;
             for (bufToken = buffer.begin(); bufToken != buffer.end(); bufToken++ ) {
-                document->text.push_back(*bufToken);
+                document.text.push_back(*bufToken);
             };
         
             buffer = CanonicTextItemVector({});
@@ -203,19 +203,17 @@ void LexAnalyzer::buildStrings() {
         }
         if (state == "work") {
             if (token->tableId == Table::IDS) {
-                this->addIdToText(token->lexem, token->lineNo, token->pos, document);
+                this->addIdToText(token->lexem, token->lineNo, token->pos, &document);
             } else {
-                document->text.push_back(*token);
+                document.text.push_back(*token);
             }
             continue;
         }
     }    
 
-    this->stateManager->setText(document->text);
-    this->stateManager->setIds(document->ids);
-    this->stateManager->setStrings(document->strings);
-
-    delete document;
+    this->stateManager->setText(document.text);
+    this->stateManager->setIds(document.ids);
+    this->stateManager->setStrings(document.strings);
 };
 
 std::string LexAnalyzer::concatString (CanonicTextItemVector srcText) {
@@ -261,13 +259,13 @@ void LexAnalyzer::removeComments() {
     std::string state = "work";
     CanonicTextItemVector buffer({});
 
-    AppDocument *document = new AppDocument();
-    document->spaces = this->stateManager->getSpaces();
-    document->limiters = this->stateManager->getLimiters();
-    document->ids = StringVector({});
-    document->compiled = this->stateManager->getCompiled();
-    document->text = CanonicTextItemVector({});
-    document->strings = StringVector({});    
+    AppDocument document;
+    document.spaces = this->stateManager->getSpaces();
+    document.limiters = this->stateManager->getLimiters();
+    document.ids = StringVector({});
+    document.compiled = this->stateManager->getCompiled();
+    document.text = CanonicTextItemVector({});
+    document.strings = StringVector({});    
 
     CanonicTextItemVector::iterator token;
     for (token = srcText.begin(); token != srcText.end(); token++ ) {
@@ -281,38 +279,76 @@ void LexAnalyzer::removeComments() {
             continue;
         }
         if (state == "comment" && token->lexem == "\n") {
-            document->text.push_back(*token);
+            document.text.push_back(*token);
             state = "work";
             continue;
         }
         if (state == "firstSlash") {
             CanonicTextItem buf0 = buffer[0];
-            document->text.push_back(buf0);
+            document.text.push_back(buf0);
             buffer = CanonicTextItemVector({});
-            document->text.push_back(*token);
+            document.text.push_back(*token);
             state = "work";
             continue;
         }
         if (state == "work") {
             switch (token->tableId) {
                 case Table::IDS:
-                    this->addIdToText(token->lexem, token->lineNo, token->pos, document);
+                    this->addIdToText(token->lexem, token->lineNo, token->pos, &document);
                     break;
 
                 case Table::STRINGS:
-                    this->addStringToText(token->lexem, token->lineNo, token->pos, document);
+                    this->addStringToText(token->lexem, token->lineNo, token->pos, &document);
                     break;
 
                 default:
-                    document->text.push_back(*token);
+                    document.text.push_back(*token);
                     break;
             }
             continue;
         }
 
     };
-    this->stateManager->setText(document->text);
-    this->stateManager->setIds(document->ids);
-    this->stateManager->setStrings(document->strings);
+    this->stateManager->setText(document.text);
+    this->stateManager->setIds(document.ids);
+    this->stateManager->setStrings(document.strings);
 };
 
+void LexAnalyzer::removeWhitespace() {
+    CanonicTextItemVector srcText = this->stateManager->getText();
+    std::string state = "work";
+
+    AppDocument document;
+    document.spaces = this->stateManager->getSpaces();
+    document.limiters = this->stateManager->getLimiters();
+    document.ids = StringVector({});
+    document.compiled = this->stateManager->getCompiled();
+    document.text = CanonicTextItemVector({});
+    document.strings = StringVector({});    
+
+    CanonicTextItemVector::iterator token;
+    for (token = srcText.begin(); token != srcText.end(); token++ ) {
+        if (state == "work" && token->tableId == Table::SPACES) {
+            state = "work";
+            continue;
+        }
+        if (state == "work") {
+            switch (token->tableId) {
+                case Table::IDS:
+                    this->addIdToText(token->lexem, token->lineNo, token->pos, &document);
+                    break;
+
+                case Table::STRINGS:
+                    this->addStringToText(token->lexem, token->lineNo, token->pos, &document);
+                    break;
+
+                default:
+                    document.text.push_back(*token);
+            }
+            continue;
+        }
+    };
+    this->stateManager->setText(document.text);
+    this->stateManager->setIds(document.ids);
+    this->stateManager->setStrings(document.strings);
+};

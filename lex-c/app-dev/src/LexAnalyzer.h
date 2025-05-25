@@ -35,6 +35,7 @@ class LexAnalyzer {
         void parseText(std::string srcText);
         void buildStrings();
         void removeComments();
+        void removeWhitespace();
 };
 
 #endif //_APP_LEX_ANALYZER_H_

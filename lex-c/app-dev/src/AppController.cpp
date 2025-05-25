@@ -30,5 +30,6 @@ void AppController::reRun() {
     std::cout << "lex parse OK" << std::endl;
     this->builder->lex->buildStrings();
     this->builder->lex->removeComments();
+    this->builder->lex->removeWhitespace();
 }
 
