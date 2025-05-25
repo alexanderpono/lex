@@ -28,7 +28,7 @@ void AppController::reRun() {
         return;
     }
     std::cout << "lex parse OK" << std::endl;
-    std::cout << "to buildStrings()" << std::endl;
     this->builder->lex->buildStrings();
+    this->builder->lex->removeComments();
 }
 

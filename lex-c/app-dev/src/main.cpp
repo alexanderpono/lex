@@ -13,11 +13,11 @@ int main(){
 
     AppControllerBuilder *builder = new AppControllerBuilder();
     builder
-        ->setMaxCalcStep(11)
-        ->setLimiters(StringVector({";", "(", ")", "'"}))
+        ->setMaxCalcStep(20)
+        ->setLimiters(StringVector({";", "(", ")", "'", "/"}))
         ->setSpaces(StringVector({" ", "\t", "\n"}))
         ->setLex(new LexAnalyzer(stateManager))
-        ->setInputString("print('Hello world!');")
+        ->setInputString("print ('Hello world!') ; \n//alert();")
     ;
 
     AppController *ctrl = new AppController(builder, stateManager);

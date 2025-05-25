@@ -255,3 +255,64 @@ void LexAnalyzer::addStringToText (
     }
     doc->text.push_back(newTextItem);
 };
+
+void LexAnalyzer::removeComments() {
+    CanonicTextItemVector srcText = this->stateManager->getText();
+    std::string state = "work";
+    CanonicTextItemVector buffer({});
+
+    AppDocument *document = new AppDocument();
+    document->spaces = this->stateManager->getSpaces();
+    document->limiters = this->stateManager->getLimiters();
+    document->ids = StringVector({});
+    document->compiled = this->stateManager->getCompiled();
+    document->text = CanonicTextItemVector({});
+    document->strings = StringVector({});    
+
+    CanonicTextItemVector::iterator token;
+    for (token = srcText.begin(); token != srcText.end(); token++ ) {
+        if (state == "work" && token->lexem == "/") {
+            buffer.push_back(*token);
+            state = "firstSlash";
+            continue;
+        }
+        if (state == "firstSlash" && token->lexem == "/") {
+            state = "comment";
+            continue;
+        }
+        if (state == "comment" && token->lexem == "\n") {
+            document->text.push_back(*token);
+            state = "work";
+            continue;
+        }
+        if (state == "firstSlash") {
+            CanonicTextItem buf0 = buffer[0];
+            document->text.push_back(buf0);
+            buffer = CanonicTextItemVector({});
+            document->text.push_back(*token);
+            state = "work";
+            continue;
+        }
+        if (state == "work") {
+            switch (token->tableId) {
+                case Table::IDS:
+                    this->addIdToText(token->lexem, token->lineNo, token->pos, document);
+                    break;
+
+                case Table::STRINGS:
+                    this->addStringToText(token->lexem, token->lineNo, token->pos, document);
+                    break;
+
+                default:
+                    document->text.push_back(*token);
+                    break;
+            }
+            continue;
+        }
+
+    };
+    this->stateManager->setText(document->text);
+    this->stateManager->setIds(document->ids);
+    this->stateManager->setStrings(document->strings);
+};
+

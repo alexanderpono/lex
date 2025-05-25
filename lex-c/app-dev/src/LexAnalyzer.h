@@ -34,6 +34,7 @@ class LexAnalyzer {
         void compile();
         void parseText(std::string srcText);
         void buildStrings();
+        void removeComments();
 };
 
 #endif //_APP_LEX_ANALYZER_H_
