@@ -4,6 +4,7 @@
 #include "StringVector.h"
 #include "CompiledLineVector.h"
 #include "CanonicTextItemVector.h"
+#include "SyntaxAnalyzeState.h"
 
 class AppState {
     public:
@@ -18,6 +19,7 @@ class AppState {
         unsigned int lineNo;
         unsigned int currentPosInLine;
         CanonicTextItemVector text;
+        SyntaxAnalyzeState program;
 
         std::string toString();
         std::string strVectorToString(StringVector ar);

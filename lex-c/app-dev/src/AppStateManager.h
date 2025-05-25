@@ -5,6 +5,7 @@
 #include "AppState.h"
 #include "CompiledLineVector.h"
 #include "CanonicTextItemVector.h"
+#include "SyntaxAnalyzeState.h"
 
 class AppStateManager {
     public:
@@ -29,6 +30,7 @@ class AppStateManager {
         AppStateManager *setStrings(StringVector strings);
         AppStateManager *setCompiled(CompiledLineVector compiled);
         AppStateManager *setText(CanonicTextItemVector text);
+        AppStateManager *setProgram(SyntaxAnalyzeState *program);
 
         unsigned int getStepNo();
         std::string getInputString();

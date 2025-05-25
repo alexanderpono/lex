@@ -20,4 +20,7 @@ AppControllerBuilder *AppControllerBuilder::setInputString(std::string inputStri
     this->inputString = inputString;
     return this; 
 };
-
+AppControllerBuilder *AppControllerBuilder::setSyntax(SyntaxAnalyzer *syntax) {
+    this->syntax = syntax;
+    return this;
+};

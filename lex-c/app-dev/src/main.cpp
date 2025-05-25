@@ -18,6 +18,7 @@ int main(){
         ->setSpaces(StringVector({" ", "\t", "\n"}))
         ->setLex(new LexAnalyzer(stateManager))
         ->setInputString("print ('Hello world!') ; \n//alert();")
+        ->setSyntax(new SyntaxAnalyzer(stateManager, true))
     ;
 
     AppController *ctrl = new AppController(builder, stateManager);

@@ -67,3 +67,7 @@ CompiledLineVector AppStateManager::getCompiled() {
 CanonicTextItemVector AppStateManager::getText() {
     return this->appState.text;
 }
+AppStateManager *AppStateManager::setProgram(SyntaxAnalyzeState *program) {
+    this->appState.program.code = program->code;
+    return this;
+}

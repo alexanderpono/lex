@@ -31,5 +31,9 @@ void AppController::reRun() {
     this->builder->lex->buildStrings();
     this->builder->lex->removeComments();
     this->builder->lex->removeWhitespace();
+
+    SyntaxAnalyzeState isSyntaxOk;
+    isSyntaxOk.clear();
+    this->builder->syntax->analyzeSyntax(&isSyntaxOk);
 }
 
