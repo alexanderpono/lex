@@ -5,6 +5,7 @@ import { AppControllerBuilder } from './AppControllerBuilder';
 import { Language2SyntaxAnalyzer } from './app/Language2SyntaxAnalyzer';
 import { Interpreter } from './app/Interpreter';
 import { LexAnalyzer } from './app/LexAnalyzer';
+import { EditorController } from './editor/EditorController';
 
 const spaces = [' ', '\n'];
 const limiters = [';', '=', '/', "'", '(', ')', '+', '-', '*'];
@@ -35,15 +36,14 @@ describe('AppController', () => {
                     .setMaxCalcStep(calcSteps)
                     .setSyntax(new Language2SyntaxAnalyzer(stateManager, false))
                     .setInterpreter(new Interpreter(stateManager, false))
-                    .setLex(new LexAnalyzer(stateManager)),
+                    .setLex(new LexAnalyzer(stateManager))
+                    .setEditorController(new EditorController('2', false)),
                 stateManager
             );
 
             app.run();
 
-            // console.log('program=', JSON.stringify(stateManager.getAppState().program, null, 4));
             const consoleText = stateManager.getConsoleText();
-            // console.log('consoleText=', consoleText);
 
             expect(consoleText).toBe(expected);
         });

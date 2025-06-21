@@ -1,12 +1,14 @@
 import { ISyntax, Show } from './app.types';
 import { Interpreter } from './app/Interpreter';
 import { LexAnalyzer } from './app/LexAnalyzer';
+import { EditorController } from './editor/EditorController';
 
 export type ObjectsState = Record<string, object>;
 
 export class AppControllerBuilder {
     target: string = '';
     simControlsTarget: string = '';
+    editorTarget: string = '';
     startState: ObjectsState;
     maxCalcStep: number = 0;
     spaces: string[] = [];
@@ -19,6 +21,7 @@ export class AppControllerBuilder {
     lex: LexAnalyzer = null;
     interpreter: Interpreter = null;
     show: Show = Show.default;
+    editorController: EditorController = null;
 
     setTarget = (target: string) => {
         this.target = target;
@@ -26,6 +29,10 @@ export class AppControllerBuilder {
     };
     setSimControlsTarget = (simControlsTarget: string) => {
         this.simControlsTarget = simControlsTarget;
+        return this;
+    };
+    setEditorTarget = (editorTarget: string) => {
+        this.editorTarget = editorTarget;
         return this;
     };
     setStartState = (startState: ObjectsState) => {
@@ -74,6 +81,10 @@ export class AppControllerBuilder {
     };
     setShow = (show: Show) => {
         this.show = show;
+        return this;
+    };
+    setEditorController = (editorController: EditorController) => {
+        this.editorController = editorController;
         return this;
     };
 }

@@ -5,6 +5,7 @@ import { LexAnalyzer } from './app/LexAnalyzer';
 import { Interpreter } from './app/Interpreter';
 import { Language2SyntaxAnalyzer } from './app/Language2SyntaxAnalyzer';
 import { Show } from './app.types';
+import { EditorController } from './editor/EditorController';
 
 console.log('main!');
 
@@ -14,6 +15,7 @@ interface AppConfig {
     name: string;
     target: string;
     simControlsTarget: string;
+    editorTarget: string;
     spaces: string[];
     limiters: string[];
     maxCalcStep: number;
@@ -28,6 +30,7 @@ const defaultAppConfig: AppConfig = {
     name: '',
     target: '',
     simControlsTarget: '',
+    editorTarget: '',
     spaces: [],
     limiters: [],
     maxCalcStep: 0,
@@ -49,6 +52,7 @@ class LexRunner {
             new AppControllerBuilder()
                 .setTarget(config.target)
                 .setSimControlsTarget(config.simControlsTarget)
+                .setEditorTarget(config.editorTarget)
                 .setSpaces(config.spaces)
                 .setLimiters(config.limiters)
                 .setInputString(config.inputString)
@@ -61,7 +65,10 @@ class LexRunner {
                     new Language2SyntaxAnalyzer(stateManager, (config.show & Show.debugInfo) > 0)
                 )
                 .setInterpreter(new Interpreter(stateManager, (config.show & Show.debugInfo) > 0))
-                .setLex(new LexAnalyzer(stateManager)),
+                .setLex(new LexAnalyzer(stateManager))
+                .setEditorController(
+                    new EditorController(config.editorTarget, (config.show & Show.editor) > 0)
+                ),
             stateManager
         );
 
@@ -86,27 +93,29 @@ if (window['demo'] === true) {
         name: 'rs',
         target: 'viewport',
         simControlsTarget: 'controls',
-        maxCalcStep: 16,
+        editorTarget: 'editor',
+        maxCalcStep: 0,
         endCalcStep: 16,
         spaces: [' ', '\n'],
         limiters: [';', '=', '/', "'", '(', ')', '+', '-', '*'],
-        // inputString: 'log(22);',
+        inputString: 'print(22);',
         // inputString: 'log((1+2)*3);',
         // inputString: 'log((1+2));',
 
-        inputString: "log('Hello world');",
+        // inputString: "log('Hello world');",
         formatIds: true,
         formatComments: true,
         // showLineNumbers: true,
         show:
-            Show.simControls |
+            // Show.simControls |
             // Show.canonicText |
             // Show.stringsTable |
             // Show.text |
-            Show.program |
+            // Show.inputFile |
+            // Show.program |
             // Show.console |
-            Show.debugInfo |
-            Show.mathTree
+            Show.debugInfo | Show.editor
+        // Show.prettyText
+        // Show.mathTree
     });
-
 }

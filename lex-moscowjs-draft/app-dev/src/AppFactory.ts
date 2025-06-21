@@ -1,4 +1,5 @@
 import { AppStateManager } from './AppStateManager';
+import { EditorStateManager } from './editor/EditorStateManager';
 
 export class AppFactory {
     private stateManagers: AppStateManager[] = [];

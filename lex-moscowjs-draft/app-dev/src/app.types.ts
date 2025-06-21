@@ -117,5 +117,6 @@ export enum Show {
     program = 1024,
     console = 2048,
     debugInfo = 4096,
-    mathTree = 8192
+    mathTree = 8192,
+    editor = 16384
 }

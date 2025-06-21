@@ -1,0 +1,56 @@
+.editor {
+    width: 200px;
+    height: 200px;
+    border: 1px solid red;
+
+    &:focus {
+        border: 1px solid blue;
+    }
+    &:active {
+        border: 1px solid green;
+    }
+    &:focus-within {
+        border: 1px solid blue;
+    }
+
+    overflow: auto;
+    position: relative;
+}
+
+.text {
+    background: green;
+    margin: 0px;
+    line-height: 100%;
+}
+
+.sampleChar {
+    background: red;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    margin: 0px;
+    line-height: 100%;
+}
+
+.cursor {
+    position: absolute;
+    line-height: 100%;
+    -webkit-animation: blink 1s linear infinite;
+    animation: blink 1s linear infinite;
+    margin: 0px;
+    left: 0px;
+}
+.cursorChar {
+    margin-left: -4px;
+}
+
+@-webkit-keyframes blink {
+  50% { color: rgb(34, 34, 34); }
+  51% { color: rgba(34, 34, 34, 0); }
+  100% { color: rgba(34, 34, 34, 0); }
+}
+@keyframes blink {
+  50% { color: rgb(34, 34, 34); }
+  51% { color: rgba(34, 34, 34, 0); }
+  100% { color: rgba(34, 34, 34, 0); }
+}

@@ -10,6 +10,7 @@ export class AppController {
     constructor(private builder: AppControllerBuilder, private stateManager: AppStateManager) {}
 
     run = () => {
+        this.builder.editorController.run();
         this.stateManager.setStepNo(this.builder.maxCalcStep);
         this.stateManager.setLimiters(this.builder.limiters);
         this.stateManager.setSpaces(this.builder.spaces);
