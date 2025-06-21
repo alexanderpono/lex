@@ -3,7 +3,6 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 
 import { defaultPoint2D, EditorControllerForUI, Point2D } from './EditorController.types';
-// import { EditorStateManager } from './EditorStateManager';
 import { getStore } from '@src/store/store';
 import { EditorView } from '@src/components/EditorView/EditorView';
 import { EditorStateManager } from '@src/store/EditorStateManager';
@@ -23,7 +22,9 @@ export class EditorController implements EditorControllerForUI {
     private state: State = State.WORK;
     private STT: SttRecord[] = [
         [State.WORK, 'Enter', 'handleKbEnter', State.WORK],
-        [State.WORK, 'Backspace', 'handleKbBackspace', State.WORK]
+        [State.WORK, 'Backspace', 'handleKbBackspace', State.WORK],
+        [State.WORK, 'ArrowLeft', 'handleKbArrowLeft', State.WORK],
+        [State.WORK, 'ArrowRight', 'handleKbArrowRight', State.WORK]
     ];
     private sampleSize: Point2D = { ...defaultPoint2D };
     private editorStateManager: EditorStateManager = null;
@@ -80,7 +81,6 @@ export class EditorController implements EditorControllerForUI {
 
     isPrintable = (keyCode: number): boolean => {
         return (
-            // keyCode === 13 ||
             keyCode === 32 ||
             (keyCode >= 48 && keyCode <= 90) ||
             (keyCode >= 48 && keyCode <= 90) ||
@@ -92,7 +92,6 @@ export class EditorController implements EditorControllerForUI {
     handleKeyDown = (e) => {
         console.log(`Нажата клавиша: ${e.key}`, e.keyCode);
         const rawText = this.editorStateManager.getEditor().rawText;
-        console.log('keyDown() rawText=', rawText);
 
         const isPrintable = this.isPrintable(e.keyCode);
         if (isPrintable) {
@@ -106,13 +105,13 @@ export class EditorController implements EditorControllerForUI {
             const recordIndex = this.findSttRecord(e.key);
             if (recordIndex >= 0) {
                 const sttRecord = this.STT[recordIndex];
-                this[sttRecord[HANDLER]](sttRecord, e);
+                this[sttRecord[HANDLER]]();
                 this.state = sttRecord[NEW_STATE];
             }
         }
     };
 
-    handleKbEnter = (sttRecord: SttRecord, e) => {
+    handleKbEnter = () => {
         const rawText = this.editorStateManager.getEditor().rawText;
         const insertPos = this.editorStateManager.getEditor().cursorPos;
         const newText = this.insertCharAtPosition(rawText, insertPos, '\n');
@@ -120,6 +119,20 @@ export class EditorController implements EditorControllerForUI {
         this.editorStateManager.cursorPos(newCursorPos);
         this.editorStateManager.rawText(newText);
         this.storeLocal(newText);
+    };
+
+    handleKbArrowLeft = () => {
+        const rawText = this.editorStateManager.getEditor().rawText;
+        const pos = this.editorStateManager.getEditor().cursorPos;
+        const newCursorPos = this.getPrevCursorPos(rawText, pos);
+        this.editorStateManager.cursorPos(newCursorPos);
+    };
+
+    handleKbArrowRight = () => {
+        const rawText = this.editorStateManager.getEditor().rawText;
+        const pos = this.editorStateManager.getEditor().cursorPos;
+        const newCursorPos = this.getNextCursorPos(rawText, pos);
+        this.editorStateManager.cursorPos(newCursorPos);
     };
 
     insertCharAtPosition = (text: string, insertPos: Point2D, char: string): string => {
@@ -149,7 +162,7 @@ export class EditorController implements EditorControllerForUI {
         return newText;
     };
 
-    getPrevPos = (text: string, pos: Point2D): Point2D => {
+    getPrevCursorPos = (text: string, pos: Point2D): Point2D => {
         if (pos.x >= 2) {
             return { ...pos, x: pos.x - 1 };
         } else if (pos.y > 1) {
@@ -160,11 +173,22 @@ export class EditorController implements EditorControllerForUI {
         return pos;
     };
 
-    handleKbBackspace = (sttRecord: SttRecord, e) => {
+    getNextCursorPos = (text: string, pos: Point2D): Point2D => {
+        let lines = text.split('\n');
+        const curLine = lines[pos.y - 1];
+        if (pos.x <= curLine.length) {
+            return { ...pos, x: pos.x + 1 };
+        } else if (pos.y < lines.length + 1) {
+            return { x: 1, y: pos.y + 1 };
+        }
+        return pos;
+    };
+
+    handleKbBackspace = () => {
         const rawText = this.editorStateManager.getEditor().rawText;
         const pos = this.editorStateManager.getEditor().cursorPos;
         const newText = this.removeCharAtPrevPosition(rawText, pos);
-        const newCursorPos = this.getPrevPos(rawText, pos); //{ x: pos.x - 1, y: pos.y };
+        const newCursorPos = this.getPrevCursorPos(rawText, pos);
         this.editorStateManager.rawText(newText);
         this.editorStateManager.cursorPos(newCursorPos);
         this.storeLocal(newText);
