@@ -26,8 +26,11 @@ export class EditorController implements EditorControllerForUI {
         [State.WORK, 'Backspace', 'handleKbBackspace', State.WORK]
     ];
     private sampleSize: Point2D = { ...defaultPoint2D };
+    private editorStateManager: EditorStateManager = null;
 
-    constructor(private editorTargetId: string, private showEditor: boolean) {}
+    constructor(private editorTargetId: string, private showEditor: boolean) {
+        this.editorStateManager = EditorStateManager.create();
+    }
 
     findSttRecord = (eventName: string): number => {
         const index = this.STT.findIndex((rule: SttRecord) => {
@@ -41,7 +44,7 @@ export class EditorController implements EditorControllerForUI {
 
         console.log('EditorController::run() editorTargetId=', this.editorTargetId);
         const rawText = this.getStoreLocal();
-        EditorStateManager.create().rawText(rawText);
+        this.editorStateManager.rawText(rawText);
         this.render();
     };
 
@@ -55,11 +58,7 @@ export class EditorController implements EditorControllerForUI {
             <Provider store={getStore()}>
                 {this.showEditor && (
                     <section>
-                        <EditorView
-                            ctrl={this}
-                            // editorState={editorState}
-                            targetId={this.editorTargetId}
-                        />
+                        <EditorView ctrl={this} targetId={this.editorTargetId} />
                     </section>
                 )}
             </Provider>,
@@ -92,17 +91,19 @@ export class EditorController implements EditorControllerForUI {
 
     handleKeyDown = (e) => {
         console.log(`Нажата клавиша: ${e.key}`, e.keyCode);
-        const rawText = EditorStateManager.create().getEditor().rawText;
+        const rawText = this.editorStateManager.getEditor().rawText;
         console.log('keyDown() rawText=', rawText);
 
         const isPrintable = this.isPrintable(e.keyCode);
         if (isPrintable) {
-            const newText = `${rawText}${e.key}`;
-            EditorStateManager.create().rawText(newText);
+            const insertPos = this.editorStateManager.getEditor().cursorPos;
+            const newText = this.insertCharAtPosition(rawText, insertPos, e.key);
+            this.editorStateManager.rawText(newText);
+            const newCursorPos = { ...insertPos, x: insertPos.x + 1 };
+            this.editorStateManager.cursorPos(newCursorPos);
             this.storeLocal(newText);
         } else {
             const recordIndex = this.findSttRecord(e.key);
-            console.log('recordIndex=', recordIndex);
             if (recordIndex >= 0) {
                 const sttRecord = this.STT[recordIndex];
                 this[sttRecord[HANDLER]](sttRecord, e);
@@ -112,26 +113,65 @@ export class EditorController implements EditorControllerForUI {
     };
 
     handleKbEnter = (sttRecord: SttRecord, e) => {
-        console.log('handleKbEnter() sttRecord, e=', sttRecord, e);
-        const rawText = EditorStateManager.create().getEditor().rawText;
-        const newText = `${rawText}\n`;
-        EditorStateManager.create().rawText(newText);
+        const rawText = this.editorStateManager.getEditor().rawText;
+        const insertPos = this.editorStateManager.getEditor().cursorPos;
+        const newText = this.insertCharAtPosition(rawText, insertPos, '\n');
+        const newCursorPos = { x: 1, y: insertPos.y + 1 };
+        this.editorStateManager.cursorPos(newCursorPos);
+        this.editorStateManager.rawText(newText);
         this.storeLocal(newText);
     };
 
+    insertCharAtPosition = (text: string, insertPos: Point2D, char: string): string => {
+        const lines = text.split('\n');
+        const curLine = lines[insertPos.y - 1];
+        const newLine =
+            curLine.substring(0, insertPos.x - 1) + char + curLine.substring(insertPos.x - 1);
+        lines[insertPos.y - 1] = newLine;
+        const newText = lines.join('\n');
+        return newText;
+    };
+
+    removeCharAtPrevPosition = (text: string, pos: Point2D): string => {
+        let lines = text.split('\n');
+        const curLine = lines[pos.y - 1];
+        let newLine = curLine;
+        if (pos.x >= 2) {
+            newLine = curLine.substring(0, pos.x - 2) + curLine.substring(pos.x - 1);
+            lines[pos.y - 1] = newLine;
+        } else if (pos.y > 1) {
+            const prevLine = lines[pos.y - 2];
+            const newPrevLine = prevLine + curLine.substring(pos.x - 1);
+            lines[pos.y - 2] = newPrevLine;
+            lines = [...lines.slice(0, pos.y - 1), ...lines.slice(pos.y)];
+        }
+        const newText = lines.join('\n');
+        return newText;
+    };
+
+    getPrevPos = (text: string, pos: Point2D): Point2D => {
+        if (pos.x >= 2) {
+            return { ...pos, x: pos.x - 1 };
+        } else if (pos.y > 1) {
+            let lines = text.split('\n');
+            const prevLine = lines[pos.y - 2];
+            return { x: prevLine.length + 1, y: pos.y - 1 };
+        }
+        return pos;
+    };
+
     handleKbBackspace = (sttRecord: SttRecord, e) => {
-        console.log('handleKbBackspace() sttRecord, e=', sttRecord, e);
-        const rawText = EditorStateManager.create().getEditor().rawText;
-        const newText = rawText
-            .split('')
-            .slice(0, rawText.length - 1)
-            .join('');
-        EditorStateManager.create().rawText(newText);
+        const rawText = this.editorStateManager.getEditor().rawText;
+        const pos = this.editorStateManager.getEditor().cursorPos;
+        const newText = this.removeCharAtPrevPosition(rawText, pos);
+        const newCursorPos = this.getPrevPos(rawText, pos); //{ x: pos.x - 1, y: pos.y };
+        this.editorStateManager.rawText(newText);
+        this.editorStateManager.cursorPos(newCursorPos);
         this.storeLocal(newText);
     };
 
     getMaxCursorPosFromText = (): Point2D => {
-        const rawText = EditorStateManager.create().getEditor().rawText;
+        const rawText = this.editorStateManager.getEditor().rawText;
         const lines = rawText.split('\n');
         const maxY = lines.length;
         const lastLine = lines.length > 1 ? lines[lines.length - 1] : [];
@@ -148,18 +188,18 @@ export class EditorController implements EditorControllerForUI {
         if (newCursorPos.y > maxCursorPos.y) {
             newCursorPos = { ...maxCursorPos };
         } else {
-            const rawText = EditorStateManager.create().getEditor().rawText;
+            const rawText = this.editorStateManager.getEditor().rawText;
             const lines = rawText.split('\n');
             const curLine = lines[newCursorPos.y - 1];
             if (newCursorPos.x > curLine.length) {
                 newCursorPos.x = curLine.length + 1;
             }
         }
-        EditorStateManager.create().cursorPos(newCursorPos);
+        this.editorStateManager.cursorPos(newCursorPos);
     };
 
     onUIMount = (sampleSize: Point2D) => {
         this.sampleSize = sampleSize;
-        EditorStateManager.create().cursorPos({ x: 1, y: 1 });
+        this.editorStateManager.cursorPos({ x: 1, y: 1 });
     };
 }
