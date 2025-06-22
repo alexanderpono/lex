@@ -205,10 +205,20 @@ export class EditorController implements EditorControllerForUI {
     };
 
     onClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        const xFloat = e.clientX / this.sampleSize.x;
-        const yFloat = e.clientY / this.sampleSize.y;
+        const el = e.nativeEvent.target as HTMLElement;
+        const elType = el.dataset['type'];
+        let clickX = e.nativeEvent.offsetX;
+        let clickY = e.nativeEvent.offsetY;
+        if (elType === 'cursorChar' || elType === 'cursor') {
+            const cursorPos = this.editorStateManager.getEditor().cursorPos;
+            const sampleSize = this.sampleSize;
+            const cursorY = (cursorPos.y - 1) * sampleSize.y;
+            clickY += cursorY;
+        }
+        const xFloat = clickX / this.sampleSize.x;
+        const yFloat = clickY / this.sampleSize.y;
         const maxCursorPos = this.getMaxCursorPosFromText();
-        let newCursorPos = { x: Math.round(xFloat), y: Math.round(yFloat) };
+        let newCursorPos = { x: Math.round(xFloat) + 1, y: Math.floor(yFloat) + 1 };
         if (newCursorPos.y > maxCursorPos.y) {
             newCursorPos = { ...maxCursorPos };
         } else {

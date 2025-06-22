@@ -4,6 +4,7 @@ interface CssExports {
   'blink': string;
   'cursor': string;
   'cursorChar': string;
+  'editArea': string;
   'editor': string;
   'sampleChar': string;
   'text': string;

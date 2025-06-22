@@ -38,21 +38,31 @@ export const EditorView: React.FC<EditorViewProps> = ({ ctrl, targetId }) => {
     const arLength = cursorPos.x - 1 >= 0 ? cursorPos.x - 1 : 0;
     const cursorSpaces = new Array(arLength).fill(' ').join('');
     return (
-        <div
-            className={styles.editor}
-            id={myHtmlId}
-            onClick={onClick}
-            tabIndex={1}
-            onKeyDown={ctrl.handleKeyDown}
-        >
-            <pre className={styles.text}>{rawText}</pre>
-            <pre className={styles.sampleChar} id={sampleHtmlId}>
-                {' '}
-            </pre>
-            <pre className={styles.cursor} id={cursorHtmlId} style={{ top: cursorY }}>
-                {cursorSpaces}
-                <span className={styles.cursorChar}>&#8739;</span>
-            </pre>
+        <div className={styles.editor} id={myHtmlId}>
+            <div
+                className={styles.editArea}
+                onClick={onClick}
+                tabIndex={1}
+                onKeyDown={ctrl.handleKeyDown}
+            >
+                <pre
+                    className={styles.cursor}
+                    id={cursorHtmlId}
+                    style={{ top: cursorY }}
+                    data-type={'cursor'}
+                >
+                    {cursorSpaces}
+                    <span className={styles.cursorChar} data-type={'cursorChar'}>
+                        &#8739;
+                    </span>
+                </pre>
+                <pre className={styles.text} data-type={'text'}>
+                    {rawText}
+                </pre>
+                <pre className={styles.sampleChar} id={sampleHtmlId}>
+                    {' '}
+                </pre>
+            </div>
         </div>
     );
 };

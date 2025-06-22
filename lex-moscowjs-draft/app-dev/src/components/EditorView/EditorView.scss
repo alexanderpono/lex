@@ -1,35 +1,29 @@
 .editor {
     width: 200px;
     height: 200px;
-    border: 1px solid red;
-
-    &:focus {
-        border: 1px solid blue;
-    }
-    &:active {
-        border: 1px solid green;
-    }
-    &:focus-within {
-        border: 1px solid blue;
-    }
-
+    padding: 2px 0px 0px 2px;
     overflow: auto;
+    outline: none;
+}
+.editArea {
     position: relative;
+    outline: none;
 }
 
 .text {
     background: green;
     margin: 0px;
     line-height: 100%;
+    outline: none;
 }
 
 .sampleChar {
-    background: red;
     position: absolute;
     left: 0px;
     top: 0px;
     margin: 0px;
     line-height: 100%;
+    visibility: hidden;
 }
 
 .cursor {
