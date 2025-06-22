@@ -13,5 +13,10 @@ export const edSelect = {
     },
     cursorPos: (state: RootState) => {
         return state.editor.cursorPos;
+    },
+    lineNumbers: (state: RootState): string => {
+        const rawText = state.editor.rawText;
+        const lines = rawText.split('\n');
+        return lines.map((_, index) => index + 1).join('\n');
     }
 };

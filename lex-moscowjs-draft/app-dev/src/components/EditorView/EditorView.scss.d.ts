@@ -6,6 +6,7 @@ interface CssExports {
   'cursorChar': string;
   'editArea': string;
   'editor': string;
+  'lineNumbersArea': string;
   'sampleChar': string;
   'text': string;
 }

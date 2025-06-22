@@ -1,20 +1,36 @@
 .editor {
     width: 200px;
     height: 200px;
-    padding: 2px 0px 0px 2px;
+    padding: 0px 0px 0px 0px;
     overflow: auto;
     outline: none;
+    display: flex;
+    flex-direction: row;
+    background: #1f1f1f;
 }
 .editArea {
     position: relative;
     outline: none;
 }
+.lineNumbersArea {
+    color: #63737e;
+    line-height: 100%;
+    margin: 0px;
+    overflow: hidden;
+    padding: 0px 8px 0px 0px;
+
+    pre {
+        margin: 0px;
+        line-height: 100%;
+        text-align: right;
+    }
+}
 
 .text {
-    background: green;
     margin: 0px;
     line-height: 100%;
     outline: none;
+    color: #68c7f7;
 }
 
 .sampleChar {
@@ -27,6 +43,7 @@
 }
 
 .cursor {
+    color: white;
     position: absolute;
     line-height: 100%;
     -webkit-animation: blink 1s linear infinite;
@@ -39,12 +56,12 @@
 }
 
 @-webkit-keyframes blink {
-  50% { color: rgb(34, 34, 34); }
-  51% { color: rgba(34, 34, 34, 0); }
-  100% { color: rgba(34, 34, 34, 0); }
+  50% { color: rgb(255, 255, 255); }
+  51% { color: rgba(255, 255, 255, 0); }
+  100% { color: rgba(255, 255, 255, 0); }
 }
 @keyframes blink {
-  50% { color: rgb(34, 34, 34); }
-  51% { color: rgba(34, 34, 34, 0); }
-  100% { color: rgba(34, 34, 34, 0); }
+  50% { color: rgb(255, 255, 255); }
+  51% { color: rgba(255, 255, 255, 0); }
+  100% { color: rgba(255, 255, 255, 0); }
 }

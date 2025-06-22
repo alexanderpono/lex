@@ -59,7 +59,7 @@ export class EditorController implements EditorControllerForUI {
             <Provider store={getStore()}>
                 {this.showEditor && (
                     <section>
-                        <EditorView ctrl={this} targetId={this.editorTargetId} />
+                        <EditorView ctrl={this} />
                     </section>
                 )}
             </Provider>,
