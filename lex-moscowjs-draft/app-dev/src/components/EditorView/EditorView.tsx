@@ -3,6 +3,7 @@ import styles from './EditorView.scss';
 import { defaultPoint2D, EditorControllerForUI, Point2D } from '@src/editor/EditorController.types';
 import { useSelector } from 'react-redux';
 import { edSelect } from '@src/store/editorReducer.selectors';
+import { CanonicTextItem, Table } from '@src/app.types';
 
 interface EditorViewProps {
     ctrl: EditorControllerForUI;
@@ -10,6 +11,8 @@ interface EditorViewProps {
 
 export const EditorView: React.FC<EditorViewProps> = ({ ctrl }) => {
     const rawText = useSelector(edSelect.rawText);
+    const tokenList = useSelector(edSelect.tokenList);
+    const prettyText = prettify(tokenList, true, true, false);
     const cursorPos = useSelector(edSelect.cursorPos);
     const lineNumbers = useSelector(edSelect.lineNumbers);
     const sampleCharRef = React.useRef();
@@ -59,7 +62,7 @@ export const EditorView: React.FC<EditorViewProps> = ({ ctrl }) => {
                     </span>
                 </pre>
                 <pre className={styles.text} data-type={'text'}>
-                    {rawText}
+                    {prettyText}
                 </pre>
                 <pre className={styles.sampleChar} ref={sampleCharRef}>
                     {' '}
@@ -68,3 +71,97 @@ export const EditorView: React.FC<EditorViewProps> = ({ ctrl }) => {
         </div>
     );
 };
+
+function prettify(
+    text: CanonicTextItem[],
+    formatIds: boolean,
+    formatComments: boolean,
+    showLineNumbers: boolean
+): React.ReactElement {
+    let lineNo = 0;
+    let curLineContent = [];
+    let lines = [];
+    let isComment = false;
+    const getIdClassName = () => (formatIds ? (isComment ? 'comment' : 'id') : '');
+    const getLimiterClassName = () => (formatComments ? (isComment ? 'comment' : 'limiter') : '');
+    text.forEach((token: CanonicTextItem, index: number) => {
+        if (token.lineNo > lineNo) {
+            if (curLineContent.length > 0) {
+                const prevLine = (
+                    <p key={lineNo} data-type="p" data-line={lineNo}>
+                        {curLineContent}
+                    </p>
+                );
+                lines.push(prevLine);
+            }
+            curLineContent = [];
+            isComment = false;
+            lineNo = token.lineNo;
+            if (showLineNumbers) {
+                curLineContent.push(<span className="line-number" key={0}>{`${lineNo}: `}</span>);
+            }
+        }
+        let formattedLexem = (
+            <span key={token.pos} data-type="span" data-line={lineNo}>
+                {token.lexem}
+            </span>
+        );
+        if (token.tableId === Table.IDS) {
+            formattedLexem = (
+                <span
+                    key={token.pos}
+                    className={getIdClassName()}
+                    data-type="span"
+                    data-line={lineNo}
+                >
+                    {token.lexem}
+                </span>
+            );
+        }
+        if (token.tableId === Table.STRINGS) {
+            formattedLexem = (
+                <span
+                    key={token.pos}
+                    className={getIdClassName()}
+                    data-type="span"
+                    data-line={lineNo}
+                >
+                    '{token.lexem}'
+                </span>
+            );
+        }
+        if (token.tableId === Table.LIMITERS) {
+            if (token.lexem === '/') {
+                if (index + 1 < text.length) {
+                    const nextToken = text[index + 1];
+                    if (nextToken.lexem === '/' && nextToken.lineNo === token.lineNo) {
+                        if (formatComments) {
+                            isComment = true;
+                        }
+                    }
+                }
+            }
+            formattedLexem = (
+                <span
+                    key={token.pos}
+                    className={getLimiterClassName()}
+                    data-type="span"
+                    data-line={lineNo}
+                >
+                    {token.lexem}
+                </span>
+            );
+        }
+        curLineContent.push(formattedLexem);
+    });
+    if (curLineContent.length > 0) {
+        const prevLine = (
+            <p key={lineNo} data-type="p" data-line={lineNo}>
+                {curLineContent}
+            </p>
+        );
+        lines.push(prevLine);
+    }
+
+    return <section>{lines}</section>;
+}

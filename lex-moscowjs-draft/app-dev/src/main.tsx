@@ -67,7 +67,11 @@ class LexRunner {
                 .setInterpreter(new Interpreter(stateManager, (config.show & Show.debugInfo) > 0))
                 .setLex(new LexAnalyzer(stateManager))
                 .setEditorController(
-                    new EditorController(config.editorTarget, (config.show & Show.editor) > 0)
+                    new EditorController(
+                        config.editorTarget,
+                        (config.show & Show.editor) > 0,
+                        config.name
+                    )
                 ),
             stateManager
         );

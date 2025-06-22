@@ -6,6 +6,9 @@ import { defaultPoint2D, EditorControllerForUI, Point2D } from './EditorControll
 import { getStore } from '@src/store/store';
 import { EditorView } from '@src/components/EditorView/EditorView';
 import { EditorStateManager } from '@src/store/EditorStateManager';
+import { AppFactory } from '@src/AppFactory';
+import { LexAnalyzer } from '@src/app/LexAnalyzer';
+import { AppStateManager } from '@src/AppStateManager';
 
 enum State {
     DEFAULT = '',
@@ -28,9 +31,19 @@ export class EditorController implements EditorControllerForUI {
     ];
     private sampleSize: Point2D = { ...defaultPoint2D };
     private editorStateManager: EditorStateManager = null;
+    private lex: LexAnalyzer = null;
+    private appStateManager: AppStateManager = null;
 
-    constructor(private editorTargetId: string, private showEditor: boolean) {
+    constructor(private editorTargetId: string, private showEditor: boolean, private name: string) {
         this.editorStateManager = EditorStateManager.create();
+
+        const factory = AppFactory.create();
+        this.appStateManager = factory.getStateManager(name);
+        this.appStateManager.setSpaces([' ', '\n']);
+        this.appStateManager.setLimiters([';', '=', '/', "'", '(', ')', '+', '-', '*']);
+        this.appStateManager.setStepNo(1000);
+        this.lex = new LexAnalyzer(this.appStateManager);
+        this.lex.compile();
     }
 
     findSttRecord = (eventName: string): number => {
@@ -47,6 +60,8 @@ export class EditorController implements EditorControllerForUI {
         const rawText = this.getStoreLocal();
         this.editorStateManager.rawText(rawText);
         this.render();
+        this.lex.parseText(rawText);
+        this.editorStateManager.tokenList(this.appStateManager.getText());
     };
 
     render = () => {
@@ -101,6 +116,8 @@ export class EditorController implements EditorControllerForUI {
             const newCursorPos = { ...insertPos, x: insertPos.x + 1 };
             this.editorStateManager.cursorPos(newCursorPos);
             this.storeLocal(newText);
+            this.lex.parseText(newText);
+            this.editorStateManager.tokenList(this.appStateManager.getText());
         } else {
             const recordIndex = this.findSttRecord(e.key);
             if (recordIndex >= 0) {
@@ -119,6 +136,8 @@ export class EditorController implements EditorControllerForUI {
         this.editorStateManager.cursorPos(newCursorPos);
         this.editorStateManager.rawText(newText);
         this.storeLocal(newText);
+        this.lex.parseText(newText);
+        this.editorStateManager.tokenList(this.appStateManager.getText());
     };
 
     handleKbArrowLeft = () => {
@@ -192,6 +211,8 @@ export class EditorController implements EditorControllerForUI {
         this.editorStateManager.rawText(newText);
         this.editorStateManager.cursorPos(newCursorPos);
         this.storeLocal(newText);
+        this.lex.parseText(newText);
+        this.editorStateManager.tokenList(this.appStateManager.getText());
     };
 
     getMaxCursorPosFromText = (): Point2D => {
@@ -214,6 +235,14 @@ export class EditorController implements EditorControllerForUI {
             const sampleSize = this.sampleSize;
             const cursorY = (cursorPos.y - 1) * sampleSize.y;
             clickY += cursorY;
+        }
+        if (elType === 'span' || elType === 'p') {
+            const lineNo = parseInt(el.dataset['line']);
+            if (!isNaN(lineNo)) {
+                const sampleSize = this.sampleSize;
+                const cursorY = (lineNo - 1) * sampleSize.y;
+                clickY += cursorY;
+            }
         }
         const xFloat = clickX / this.sampleSize.x;
         const yFloat = clickY / this.sampleSize.y;
